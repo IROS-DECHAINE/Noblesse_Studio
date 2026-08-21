@@ -16,7 +16,6 @@
     "postinstall": "node scripts/repair-pnpm-links.mjs && node node_modules/electron/install.js",
     "predev": "node scripts/sync-data.mjs",
     "dev": "vite --host 127.0.0.1",
-    "prebuild": "node scripts/sync-data.mjs",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test",

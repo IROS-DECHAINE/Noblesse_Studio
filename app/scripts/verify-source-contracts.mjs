@@ -34,6 +34,8 @@ const [packageJson, main, preload, html, virtualGrid, coffre, windowsTaskbarIden
 if (!/^\d+\.\d+\.\d+$/u.test(packageJson.version)) fail('la version du paquet doit suivre SemVer.')
 if (Number(packageJson.version.split('.')[0]) < 1) fail('une livraison finale ne peut pas rester en version 0.x.')
 if (packageJson.private !== true) fail('le paquet applicatif doit rester privé.')
+if (packageJson.scripts?.prebuild) fail('le build reproductible ne doit pas dépendre d’un Vault local privé.')
+if (packageJson.scripts?.predev !== 'node scripts/sync-data.mjs') fail('le catalogue web local doit être synchronisé uniquement avant le mode développement.')
 if (!packageJson.build?.files?.includes('assets/noblesse-vault.ico')) fail('l’icône runtime doit être incluse dans app.asar.')
 if (packageJson.build?.electronDist !== 'node_modules/electron/dist') fail('le packaging Windows doit utiliser le moteur Electron local vérifié.')
 if (packageJson.build?.afterPack !== 'scripts/after-pack.mjs') fail('le packaging doit supprimer l’application d’accueil générique Electron.')
