@@ -19,7 +19,7 @@ jobs:
       CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CSC_KEY_PASSWORD }}
     steps:
       - name: Récupérer le dépôt
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Exiger le certificat de signature
         shell: pwsh
         run: if ([string]::IsNullOrWhiteSpace($env:CSC_LINK)) { throw 'Le secret WINDOWS_CSC_LINK est obligatoire pour une livraison.' }
