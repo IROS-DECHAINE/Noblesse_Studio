@@ -8,8 +8,11 @@ import { buildSurfaceCatalog } from './catalog.js'
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
 const vaultRoot = path.resolve(currentDir, '..', '..', '..', 'library', 'storage')
 const packId = 'Fab_Realistic_Wall_Brick_2K_V104'
+const localVaultAvailable = await access(path.join(vaultRoot, 'catalog.json')).then(() => true, () => false)
 
-test('the published Fab selection exactly mirrors the visually curated groups', async () => {
+test('the published Fab selection exactly mirrors the visually curated groups', {
+  skip: localVaultAvailable ? false : 'Le Vault local géré est volontairement absent du dépôt Git.',
+}, async () => {
   const catalog = JSON.parse(await readFile(path.join(vaultRoot, 'catalog.json'), 'utf8'))
   const selection = JSON.parse(await readFile(path.join(vaultRoot, 'packs', packId, 'publication-selection.json'), 'utf8'))
   const nativeAssets = catalog.assets.filter((asset) => asset.pack_id === packId && asset.asset_type === 'UnrealMaterialInstance')

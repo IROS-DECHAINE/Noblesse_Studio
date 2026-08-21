@@ -122,6 +122,19 @@ const pathExists = async (target) => {
   }
 }
 
+const assertNoSymlinkComponents = async (absolutePath) => {
+  const resolved = path.resolve(absolutePath)
+  const parsed = path.parse(resolved)
+  let cursor = parsed.root
+  for (const segment of resolved.slice(parsed.root.length).split(path.sep).filter(Boolean)) {
+    cursor = path.join(cursor, segment)
+    const details = await lstat(cursor)
+    if (details.isSymbolicLink()) {
+      throw libraryError('SYMLINK_NOT_ALLOWED', 'Les chemins traversant un lien symbolique ne sont pas acceptés.')
+    }
+  }
+}
+
 const sha256Text = (value) => createHash('sha256').update(value).digest('hex')
 
 const sha256File = async (file) => {
@@ -439,10 +452,8 @@ export class DocumentLibrary {
     if (details.size > this.maxFileBytes) {
       throw libraryError('FILE_TOO_LARGE', `Le document dépasse la limite de ${this.maxFileBytes} octets.`)
     }
+    await assertNoSymlinkComponents(resolved)
     const resolvedReal = await realpath(resolved)
-    if (normalizeForComparison(resolvedReal) !== normalizeForComparison(resolved)) {
-      throw libraryError('SYMLINK_NOT_ALLOWED', 'Les chemins traversant un lien symbolique ne sont pas acceptés.')
-    }
     if (expectedRealPath && normalizeForComparison(resolvedReal) !== normalizeForComparison(expectedRealPath)) {
       throw libraryError('LINK_TARGET_CHANGED', 'La cible du document lié a changé.')
     }

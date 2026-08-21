@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
@@ -79,7 +79,7 @@ test('loads PreviewDescriptorV1 lazily and confines every preview source to the 
 
     const preview = await resolveVaultPreviewSource('packs/Test/sources/base.png')
     assert.equal(preview.mimeType, 'image/png')
-    assert.equal(preview.filePath, path.join(sourceFolder, 'base.png'))
+    assert.equal(preview.filePath, await realpath(path.join(sourceFolder, 'base.png')))
     assert.equal(preview.size, 4)
 
     assert.throws(() => resolveVaultSource('../outside.png'), /invalide/)
