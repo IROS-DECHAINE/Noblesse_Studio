@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noblesse.studio/contracts/finance/treasury-transaction.v1.schema.json",
+  "title": "TreasuryTransactionV1",
+  "description": "Écriture du registre de trésorerie Noblesse Studio. Les faits plateforme restent définis séparément par MoneyFact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "transaction_id",
+    "revision",
+    "flow",
+    "kind",
+    "amount_minor",
+    "currency",
+    "effective_date",
+    "project_id",
+    "category_id",
+    "label",
+    "counterparty",
+    "notes",
+    "lifecycle",
+    "financial_status",
+    "settlement",
+    "verification",
+    "source",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "transaction_id": {
+      "type": "string",
+      "pattern": "^txn_[a-z0-9][a-z0-9_-]{7,95}$"
+    },
+    "revision": { "type": "integer", "minimum": 1 },
+    "flow": { "enum": ["INFLOW", "OUTFLOW"] },
+    "kind": {
+      "enum": [
+        "OPERATING_EXPENSE",
+        "REVENUE",
+        "TRANSFER",
+        "REFUND",
+        "FEE",
+        "TAX",
+        "PAYOUT",
+        "ADJUSTMENT"
+      ]
+    },
+    "amount_minor": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "effective_date": { "type": "string", "format": "date" },
+    "project_id": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+        { "type": "null" }
+      ]
+    },
+    "category_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+    },
+    "label": { "type": "string", "minLength": 2, "maxLength": 120 },
+    "counterparty": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 120 },
+        { "type": "null" }
+      ]
+    },
+    "notes": {
+      "oneOf": [
+        { "type": "string", "maxLength": 1000 },
+        { "type": "null" }
+      ]
+    },
+    "lifecycle": { "enum": ["POSTED", "REVERSED"] },
+    "financial_status": { "enum": ["ESTIMATED", "ACTUAL", "PAID", "REVERSED"] },
+    "settlement": { "enum": ["UNKNOWN", "UNPAID", "PAID"] },
+    "verification": { "enum": ["DECLARED", "SOURCE_VERIFIED", "BANK_RECONCILED"] },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "provider_id",
+        "external_id",
+        "source_reference",
+        "observed_at",
+        "raw_hash"
+      ],
+      "properties": {
+        "type": { "enum": ["MANUAL", "LEGACY_IMPORT", "BANK_IMPORT", "PLATFORM_STATEMENT"] },
+        "provider_id": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "external_id": {
+          "oneOf": [
+            { "type": "string", "minLength": 1, "maxLength": 200 },
+            { "type": "null" }
+          ]
+        },
+        "source_reference": {
+          "oneOf": [
+            { "type": "string", "minLength": 1, "maxLength": 500 },
+            { "type": "null" }
+          ]
+        },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "raw_hash": {
+          "oneOf": [
+            { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

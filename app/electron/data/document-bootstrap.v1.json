@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "id": "studio",
+      "displayName": "Noblesse Studio"
+    },
+    {
+      "id": "primebot-rush",
+      "displayName": "PrimeBot Rush"
+    },
+    {
+      "id": "prime-industry",
+      "displayName": "Prime Industry"
+    },
+    {
+      "id": "how-many-boxes",
+      "displayName": "How Many Boxes Can You Carry?"
+    }
+  ],
+  "documents": [
+    {
+      "id": "studio-portfolio-governance-2026-08-14",
+      "projectId": "studio",
+      "title": "Gouvernance du portfolio Noblesse Studio",
+      "sourcePath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\docs\\features\\NOBLESSE_STUDIO_PORTFOLIO_GOVERNANCE_CANON_2026-08-14.md",
+      "canonicalStatus": "CANON",
+      "tags": ["studio", "gouvernance", "canon"]
+    },
+    {
+      "id": "studio-recruitment-publication-tracking-2026-08-14",
+      "projectId": "studio",
+      "title": "Suivi de publication et recrutement Noblesse Studio",
+      "sourcePath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\docs\\features\\NOBLESSE_STUDIO_X_RECRUITMENT_PUBLICATION_TRACKING_2026-08-14.md",
+      "canonicalStatus": "REFERENCE",
+      "tags": ["studio", "recrutement", "publication"]
+    },
+    {
+      "id": "primebot-current-canon-index",
+      "projectId": "primebot-rush",
+      "title": "Index canon actuel PrimeBot Rush",
+      "sourcePath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\docs\\CURRENT_CANON_INDEX.md",
+      "canonicalStatus": "CANON",
+      "tags": ["primebot", "index", "canon"]
+    },
+    {
+      "id": "primebot-gameplay-feel-audit",
+      "projectId": "primebot-rush",
+      "title": "Audit du ressenti de jeu",
+      "sourcePath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\docs\\GAMEPLAY_FEEL_AUDIT.md",
+      "canonicalStatus": "CANON",
+      "tags": ["primebot", "gameplay", "audit"]
+    },
+    {
+      "id": "primebot-mvp-spec",
+      "projectId": "primebot-rush",
+      "title": "Spécification MVP PrimeBot Rush",
+      "sourcePath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\docs\\MVP_SPEC.md",
+      "canonicalStatus": "CANON",
+      "tags": ["primebot", "mvp", "canon"]
+    },
+    {
+      "id": "primebot-bot-economy-canon",
+      "projectId": "primebot-rush",
+      "title": "Économie des bots",
+      "sourcePath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\docs\\BOT_ECONOMY_CANON.md",
+      "canonicalStatus": "CANON",
+      "tags": ["primebot", "économie", "bots"]
+    },
+    {
+      "id": "prime-industry-canon",
+      "projectId": "prime-industry",
+      "title": "Canon Prime Industry",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\PrimeIndustry\\docs\\CANON.md",
+      "canonicalStatus": "CANON",
+      "tags": ["prime-industry", "canon"]
+    },
+    {
+      "id": "prime-industry-current-state",
+      "projectId": "prime-industry",
+      "title": "État actuel Prime Industry",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\PrimeIndustry\\docs\\CURRENT_STATE.md",
+      "canonicalStatus": "CANON",
+      "tags": ["prime-industry", "état"]
+    },
+    {
+      "id": "prime-industry-decisions",
+      "projectId": "prime-industry",
+      "title": "Décisions Prime Industry",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\PrimeIndustry\\docs\\DECISIONS.md",
+      "canonicalStatus": "CANON",
+      "tags": ["prime-industry", "décisions"]
+    },
+    {
+      "id": "prime-industry-handoff",
+      "projectId": "prime-industry",
+      "title": "Transmission Prime Industry",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\PrimeIndustry\\docs\\HANDOFF.md",
+      "canonicalStatus": "REFERENCE",
+      "tags": ["prime-industry", "handoff"]
+    },
+    {
+      "id": "how-many-boxes-current-state",
+      "projectId": "how-many-boxes",
+      "title": "État actuel How Many Boxes Can You Carry?",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\HowManyBoxesCanYouCarry\\docs\\CURRENT_STATE.md",
+      "canonicalStatus": "CANON",
+      "tags": ["how-many-boxes", "état"]
+    },
+    {
+      "id": "how-many-boxes-decisions",
+      "projectId": "how-many-boxes",
+      "title": "Décisions How Many Boxes Can You Carry?",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\HowManyBoxesCanYouCarry\\docs\\DECISIONS.md",
+      "canonicalStatus": "CANON",
+      "tags": ["how-many-boxes", "décisions"]
+    },
+    {
+      "id": "how-many-boxes-economy",
+      "projectId": "how-many-boxes",
+      "title": "Économie How Many Boxes Can You Carry?",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\HowManyBoxesCanYouCarry\\docs\\ECONOMY.md",
+      "canonicalStatus": "CANON",
+      "tags": ["how-many-boxes", "économie"]
+    },
+    {
+      "id": "how-many-boxes-compliance-matrix",
+      "projectId": "how-many-boxes",
+      "title": "Matrice de conformité du canon V4",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\HowManyBoxesCanYouCarry\\docs\\CANON_V4_COMPLIANCE_MATRIX.md",
+      "canonicalStatus": "CANON",
+      "tags": ["how-many-boxes", "canon", "validation"]
+    },
+    {
+      "id": "how-many-boxes-handoff",
+      "projectId": "how-many-boxes",
+      "title": "Transmission How Many Boxes Can You Carry?",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\HowManyBoxesCanYouCarry\\docs\\HANDOFF.md",
+      "canonicalStatus": "REFERENCE",
+      "tags": ["how-many-boxes", "handoff"]
+    },
+    {
+      "id": "how-many-boxes-playtest-log",
+      "projectId": "how-many-boxes",
+      "title": "Journal de playtest How Many Boxes Can You Carry?",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\GAMES\\HowManyBoxesCanYouCarry\\docs\\PLAYTEST_LOG.md",
+      "canonicalStatus": "REFERENCE",
+      "tags": ["how-many-boxes", "playtest"]
+    },
+    {
+      "id": "how-many-boxes-investor-dossier",
+      "projectId": "how-many-boxes",
+      "title": "Dossier investisseur How Many Boxes Can You Carry?",
+      "sourcePath": "D:\\NO_BLESSE Studio\\Roblox\\Director\\output\\pdf\\how-many-boxes-can-you-carry-dossier-investisseur.pdf",
+      "canonicalStatus": "REFERENCE",
+      "tags": ["how-many-boxes", "pdf", "investisseur"]
+    }
+  ]
+}

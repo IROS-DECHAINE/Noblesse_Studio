@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "bootstrap_id": "noblesse-finance-bootstrap-2026-08-21",
+  "source_reference": "docs/PROJECT_FINANCE_LOG.md",
+  "source_hash": "sha256:96d2c33dcf0fdc04f23b60f479542743f7c91e9dfc404b4f13d6742045310b3c",
+  "entries": [
+    {
+      "schema_version": 1,
+      "transaction_id": "txn_legacy_worker_rift_gpt_pro_20260603",
+      "revision": 1,
+      "flow": "OUTFLOW",
+      "kind": "OPERATING_EXPENSE",
+      "amount_minor": 10000,
+      "currency": "EUR",
+      "effective_date": "2026-06-03",
+      "project_id": "primebot-rush",
+      "category_id": "ai-software",
+      "label": "GPT Pro",
+      "counterparty": "OpenAI",
+      "notes": "Premier coût explicite de production IA consigné pour WORKER_RIFT.",
+      "lifecycle": "POSTED",
+      "financial_status": "PAID",
+      "settlement": "PAID",
+      "verification": "SOURCE_VERIFIED",
+      "source": {
+        "type": "LEGACY_IMPORT",
+        "provider_id": "noblesse-docs",
+        "external_id": "project-finance-log:2026-06-03:gpt-pro:100-eur",
+        "source_reference": "docs/PROJECT_FINANCE_LOG.md",
+        "observed_at": "2026-08-21T00:00:00+02:00",
+        "raw_hash": "sha256:96d2c33dcf0fdc04f23b60f479542743f7c91e9dfc404b4f13d6742045310b3c"
+      },
+      "created_at": "2026-08-21T00:00:00+02:00",
+      "updated_at": "2026-08-21T00:00:00+02:00"
+    }
+  ]
+}

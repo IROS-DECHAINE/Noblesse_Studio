@@ -1,0 +1,69 @@
+{
+  "name": "noblesse-vault-catalog",
+  "private": true,
+  "version": "0.2.0",
+  "description": "Application locale Noblesse Studio pour piloter les projets, les documents, les finances, le planning et la bibliothèque d’assets.",
+  "author": "Noblesse Studio",
+  "packageManager": "pnpm@10.32.1",
+  "type": "module",
+  "main": "electron/main.mjs",
+  "scripts": {
+    "rebuild-indexes": "node scripts/rebuild-library-index.mjs",
+    "verify-foundation": "node scripts/verify-foundation.mjs",
+    "sync-data": "node scripts/sync-data.mjs",
+    "postinstall": "node scripts/repair-pnpm-links.mjs && node node_modules/electron/install.js",
+    "predev": "node scripts/sync-data.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "prebuild": "node scripts/sync-data.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test",
+    "calendar": "node scripts/calendar-cli.mjs",
+    "desktop": "electron .",
+    "desktop:dev": "cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:4178 electron .",
+    "desktop:pack": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win nsis --x64",
+    "desktop:portable": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win portable --x64",
+    "desktop:dir": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win dir --x64"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^3.10.1",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "cross-env": "^7.0.3",
+    "electron": "^43.4.1",
+    "electron-builder": "^26.15.3",
+    "vite": "^6.0.5"
+  },
+  "build": {
+    "appId": "studio.noblesse.desktop",
+    "productName": "Noblesse Studio",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "shared/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "assets/noblesse-vault.ico",
+      "artifactName": "Noblesse-Studio-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Noblesse Studio"
+    }
+  }
+}

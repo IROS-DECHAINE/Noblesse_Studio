@@ -1,0 +1,2388 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-21T16:54:26.837Z",
+  "category": "textures",
+  "count": 119,
+  "items": [
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-BC",
+      "name": "T_PB_BaseClassic_ArtDeco_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "480341beb8d55c30c27b9ccfec2e1f302a922770735bb11b292556e39d289ba0",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-N",
+      "name": "T_PB_BaseClassic_ArtDeco_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "ebf8fd8738cd21512e06e72d72bb3206a6b1abd1db2e6a8dbba2a9e9f4921080",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-ORM",
+      "name": "T_PB_BaseClassic_ArtDeco_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "7ac9595e68523d38d8628ef49657d6be0819509f82e7f7916f8db4b795c544d1",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-F-BC",
+      "name": "T_PB_BaseClassic_ArtDeco_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "fd6b3bfdaf12430ab1292e10be730e1db6945c89fb83afb71b927f69fa09b8db",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-F-N",
+      "name": "T_PB_BaseClassic_ArtDeco_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "0b4d8b2ba74738709f826201d8eca9f56892634bfc3a344360e7696ae5240e14",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-F-ORM",
+      "name": "T_PB_BaseClassic_ArtDeco_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "00da8d51dfe922cb08ee0bebd5f3fac4513e21099d6b4ee6f13e249ebced9f99",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-W-BC",
+      "name": "T_PB_BaseClassic_ArtDeco_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "4705bde84689eb5b18b790461bb585a53891b81f1cb1b722ae9019977a44e1a4",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-W-N",
+      "name": "T_PB_BaseClassic_ArtDeco_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "879505ad989dc2baf41579397d1313b99793b96ea229da50e20e8970371a79cb",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-W-ORM",
+      "name": "T_PB_BaseClassic_ArtDeco_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "34eb75c13e0554f0d71b4454aac385024365bc2a6c94b1d80017e492ceb84ce3",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/ArtDeco/PB_BaseClassic_ArtDeco_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-C-BC",
+      "name": "T_PB_BaseClassic_Brick_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "ecce24b308897eb324c228cc83ab6cf499599b6d1b783f093f053c40b589a6a7",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-C-N",
+      "name": "T_PB_BaseClassic_Brick_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2e8673be4540f4169fc51cc41c226146948949386633c6ecba2379749c47d501",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-C-ORM",
+      "name": "T_PB_BaseClassic_Brick_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "62018dae9903491ccf308960c6cd0ff6e393cb2360f2940d76b78b2b81ad235d",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-F-BC",
+      "name": "T_PB_BaseClassic_Brick_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "6b27df9d34935e2eb294368014fc5b0bb350288e93da71219bef7a3cafa755aa",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-F-N",
+      "name": "T_PB_BaseClassic_Brick_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "f2bf52ac546768bff84de17ff8cc3d00c37ca2e5b7ec6c4805b288bba88e3e4e",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-F-ORM",
+      "name": "T_PB_BaseClassic_Brick_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "6b7ca3058e81c7e79495863201d4e4dffb5e947d14dcb8642e97166a707627c4",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-W-BC",
+      "name": "T_PB_BaseClassic_Brick_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "70ed47e70b969448363d43a211ba790b758da76ef50b0cc9e816f7ab4d5a69c6",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-W-N",
+      "name": "T_PB_BaseClassic_Brick_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "40fb6c9f2b4771f4218426d6757f6ab32f0fea2709f1bf9b22052d95e29756a9",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-W-ORM",
+      "name": "T_PB_BaseClassic_Brick_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "dbdd2899f1a27a84a78b95dad6f53c8dc37803ee8587ea396089b0c3bac080f2",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Brick/PB_BaseClassic_Brick_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Brick/PB_BaseClassic_Brick_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-C-BC",
+      "name": "T_PB_BaseClassic_Concrete_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "195c0eef1b4b3645a6ed3c51176d773ca213c47f1dfb753fbcafe05544d7c490",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-C-N",
+      "name": "T_PB_BaseClassic_Concrete_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "86c130587f6fe67fa7a62c2b26c81197f3e0407643c45afb0297694fa75a432f",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-C-ORM",
+      "name": "T_PB_BaseClassic_Concrete_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c38386bae3e1ed8afdcfef026cfae60dba522bdf2833760a6e38858181bf7f39",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-F-BC",
+      "name": "T_PB_BaseClassic_Concrete_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "093009ab389b023d5e2d57072905f2313a2c3c6d8ea74f2175ae132ae3c7a381",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-F-N",
+      "name": "T_PB_BaseClassic_Concrete_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b3a40e0892b9f1082c88fd205f3f549d138bfda074c937572db2ce9b686d66b6",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-F-ORM",
+      "name": "T_PB_BaseClassic_Concrete_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "670b926479172c3961f4ec8ef7eb0c5686247c07b6e36600fa663d48e076e81f",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-W-BC",
+      "name": "T_PB_BaseClassic_Concrete_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2cc570f422ce87b35738859cbeb6e0386d769759065883b66ab1cb5d6c96b63d",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-W-N",
+      "name": "T_PB_BaseClassic_Concrete_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "cad7a14d1b6ec51eedef7d8eddcfb662ddfdaec5dd6204fa80ffe8f41bd29519",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-W-ORM",
+      "name": "T_PB_BaseClassic_Concrete_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "42b7be1f3ef41d52f3b9acb68156876519eaa9fdbb01d598bcc9c4261f052dfa",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Concrete/PB_BaseClassic_Concrete_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Concrete/PB_BaseClassic_Concrete_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-C-BC",
+      "name": "T_PB_BaseClassic_Marble_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "d0550fa091c0d8274fc358540ec66d85e9b1d48d7118542049a5ca1374806e49",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-C-N",
+      "name": "T_PB_BaseClassic_Marble_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e77c3c3cdc9d0b7dcfa846743587e10973ee0669c7bedfa371da1da54ef48c34",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-C-ORM",
+      "name": "T_PB_BaseClassic_Marble_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c94009bc220c7ad0bf6e78fd01861d786a0e8f729ae96c3274d7ae3bc77a701f",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-F-BC",
+      "name": "T_PB_BaseClassic_Marble_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "1c530fda58fd763023c0300ceba63317545adf12138d3f9e5304720671920b50",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-F-N",
+      "name": "T_PB_BaseClassic_Marble_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "3e1fc179acccbf1b057fea05ec421d04440e669be145ffa133cc519664730a93",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-F-ORM",
+      "name": "T_PB_BaseClassic_Marble_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e9b095f54db56670284389cfdfd2f57d38f0d9f6a00264b2f3f60505352c66ad",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-W-BC",
+      "name": "T_PB_BaseClassic_Marble_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "3e2d036cad99191846c414354bb743cf75de4a2353a40c5146c4b38da2ee800d",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-W-N",
+      "name": "T_PB_BaseClassic_Marble_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "a9b169e56ca3a458cbf47e9e089e89926fb57353fb908f4d7364ab3e7c2e8869",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-W-ORM",
+      "name": "T_PB_BaseClassic_Marble_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "f46e372df08c13688bfa96220338f2eac9ba890695cd5a039fa6c71c2562511d",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Marble/PB_BaseClassic_Marble_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Marble/PB_BaseClassic_Marble_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-C-BC",
+      "name": "T_PB_BaseClassic_Oak_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b695f219a0bb42684a68798fcc93d1af6db8e28e606a4d562f613f524ed2a083",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-C-N",
+      "name": "T_PB_BaseClassic_Oak_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "ea0c2159c4c3c11128a9f69eeb5ec5e0e8e4bba4a5212dad885fbe4d0b044480",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-C-ORM",
+      "name": "T_PB_BaseClassic_Oak_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b1d4dc134876e4346c430eeb33e4d267c747b926b594777e9042cf8b4f45d284",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-F-BC",
+      "name": "T_PB_BaseClassic_Oak_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "12b5415959c93a1990b97b3118c6d775dce8502b51a5c1d3d52d0beb1d95446b",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-F-N",
+      "name": "T_PB_BaseClassic_Oak_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e99e60467d396d1f317f0349a3868a370255387a39d265477a54c8c997cdefa7",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-F-ORM",
+      "name": "T_PB_BaseClassic_Oak_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "a9ffb0b1152c093f28844635f3a65ec500a6754c044d447e64252f5f5bd80cc5",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-W-BC",
+      "name": "T_PB_BaseClassic_Oak_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "71d3f3304ad64ebb57c4af273aeba1e3865247a85dcb3aaee658159d0fe883f7",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-W-N",
+      "name": "T_PB_BaseClassic_Oak_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "d5cd47986517a00365a1d13344b00fbb508766010258c25b0f851bcb4aa49e51",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-W-ORM",
+      "name": "T_PB_BaseClassic_Oak_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "d8073a5e53aee82c01d3d20207086e47b0cf9c80867a6d7a63d785a3b4985479",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Oak/PB_BaseClassic_Oak_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Oak/PB_BaseClassic_Oak_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-C-BC",
+      "name": "T_PB_BaseClassic_Slate_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "1a13d3c29ec10c6ae1786e8bd89e908e1bfe261b89b0ebfdcb4d06839d433795",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-C-N",
+      "name": "T_PB_BaseClassic_Slate_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "034da4adb8530ff704e9c6649b40747d9b0fd650a193d6aab535229d5989b16c",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-C-ORM",
+      "name": "T_PB_BaseClassic_Slate_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2151b4dd476398dc83a8a30b07e5483277eeb7dfd96ddca750374574de684504",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-F-BC",
+      "name": "T_PB_BaseClassic_Slate_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "9a9de0899de1aba9571ba352b5f704a5fd0b1c4af1625fd38594aaa49adecc67",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-F-N",
+      "name": "T_PB_BaseClassic_Slate_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e7899335c9630c0824d566c4e3b6737076f07fc6c3f105c9525bf9b42b5a0fe5",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-F-ORM",
+      "name": "T_PB_BaseClassic_Slate_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e33ad6c44da574ffdbcd593b0062bf323e1fedf47bd1a4559a4a41c62f7a1ad8",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-W-BC",
+      "name": "T_PB_BaseClassic_Slate_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c23edaa1c2a1b38719c788b0d2ab80c4538a1c6a5f42188fd237c53ada8efc9f",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-W-N",
+      "name": "T_PB_BaseClassic_Slate_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "fb3022fbd379abd7b06bc97d6af74aee22b819e7d95b480fb19e7875246f4c5a",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-W-ORM",
+      "name": "T_PB_BaseClassic_Slate_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2bab54b3ea0784ac6432d371c66a87c8e2c699933f074d87c99138df4afc0c09",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Slate/PB_BaseClassic_Slate_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Slate/PB_BaseClassic_Slate_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-C-BC",
+      "name": "T_PB_BaseClassic_SmokedChrome_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c2a37d408349645698be0fab84f725329e79746c955aafc4c91825d93e49f927",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-C-N",
+      "name": "T_PB_BaseClassic_SmokedChrome_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "56549a90ce1aeb41ed9549b61c9285379c1321ee25a7087d9df2004cbf054005",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-C-ORM",
+      "name": "T_PB_BaseClassic_SmokedChrome_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b04b009343a7577848325404ea4bea19aeb700fdf44efc80e00e474431cdb0b2",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-F-BC",
+      "name": "T_PB_BaseClassic_SmokedChrome_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "21c008a4e695ae847e90b2fdf3a3b7d0ef1ce168c2d0a9a24cc83cf28d42606e",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-F-N",
+      "name": "T_PB_BaseClassic_SmokedChrome_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "0c21a0a78d5a0a4564640a49f4ec4d587371b923f404b289a28e8990642601c1",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-F-ORM",
+      "name": "T_PB_BaseClassic_SmokedChrome_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "5b9e5683ccc2032bdc6ab74df04bfe39104b655eea746d9a61359c379ab66f6a",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-W-BC",
+      "name": "T_PB_BaseClassic_SmokedChrome_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "06f964e12f560371cff66540999db71fbf3d851f5688b4587db33090f5cc269c",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-W-N",
+      "name": "T_PB_BaseClassic_SmokedChrome_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "1177875f89615a1275771dad897a7b215469aed7f17d0bdaf01941b7c544a934",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-W-ORM",
+      "name": "T_PB_BaseClassic_SmokedChrome_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "9c88a8314ddceaa044451ead46387b4bd431d1cda6e780ba88e5c10b1e1ad3e9",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/SmokedChrome/PB_BaseClassic_SmokedChrome_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/SmokedChrome/PB_BaseClassic_SmokedChrome_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-C-BC",
+      "name": "T_PB_BaseClassic_Steel_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "8ed37c52774d55a82b462d8f4037f5b7057dc699e6324007d4ffdb770cbae355",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-C-N",
+      "name": "T_PB_BaseClassic_Steel_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "290337ea1a885f5aa25d87bdb7b2c52fefa36c5dbc99be56f671a9bc28e955ba",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-C-ORM",
+      "name": "T_PB_BaseClassic_Steel_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "eb4c77b75d46be8c6ed85934ffc4304130dad6fa38d2c4174c26f063bcb0d5f8",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-F-BC",
+      "name": "T_PB_BaseClassic_Steel_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "02cabc2b4041ae442e6e35e8f70ee3eb818e6f6346fb2d4482b5e5e4cca9a959",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-F-N",
+      "name": "T_PB_BaseClassic_Steel_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "6e2c25fbf8a5d597582da8092ab047edd93263363cec8c569974a568e6b0b44c",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-F-ORM",
+      "name": "T_PB_BaseClassic_Steel_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "8c46af62a46c86e4bb9826535b9d9b2941e76cdb5aea3b7ebaf72ddd82c2cd5e",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-W-BC",
+      "name": "T_PB_BaseClassic_Steel_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b02d605f43d4ce3dc4d2f880d8f2c9d9ec312daf4f7f6163ed8934041b3d4f3c",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-W-N",
+      "name": "T_PB_BaseClassic_Steel_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "584a28f5dfdafca061a17b4b746903ce66724d2eb3296f3618890d61ca05fdbb",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-W-ORM",
+      "name": "T_PB_BaseClassic_Steel_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "4566d5ff21c58b450d8ed0dcbff83e3380cc16bc92d282629a63fc521476f03f",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Steel/PB_BaseClassic_Steel_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Steel/PB_BaseClassic_Steel_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-C-BC",
+      "name": "T_PB_BaseClassic_Terrazzo_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b547f911db5321216d29ff37c5ec9f85997718adc50c94f4c7b8a024c97da2cf",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-C-N",
+      "name": "T_PB_BaseClassic_Terrazzo_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "1b6e53e4e888e5769ae93a5a68b5c723e5cc1104f1659a5301cf13c4f16b7a22",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-C-ORM",
+      "name": "T_PB_BaseClassic_Terrazzo_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "b14712f13f79f5ae83dc976bf47f6927e0d2b2b82b4b46ed1f5bafdcb66efbeb",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-F-BC",
+      "name": "T_PB_BaseClassic_Terrazzo_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "6c15cf1f7e6ec9d8ecde5de9fba34dee9a7bdbcde20bcc90827584d92d1a07bd",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-F-N",
+      "name": "T_PB_BaseClassic_Terrazzo_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "30239bf3e3673db6d68f8d9220b3abbd7fdb242e4716f905c04c3c012dee4e29",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-F-ORM",
+      "name": "T_PB_BaseClassic_Terrazzo_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "a27d2444fa751d55df3c0cf73413c5f06cf186ff5b590381a854cff272abdb94",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-W-BC",
+      "name": "T_PB_BaseClassic_Terrazzo_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "cdff0895ca82ca529ff1bac3a13ed9b3faf46ca29c5d5c057e68e80dd7634f60",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-W-N",
+      "name": "T_PB_BaseClassic_Terrazzo_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "6094dd3ca7adb6a0c7f95201739551c01978f3bf4416a954fd923b3fb8079d41",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-W-ORM",
+      "name": "T_PB_BaseClassic_Terrazzo_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "cf297f88a99d6ad7077aed2f8b4a2bb056532a6a766290fd82fe73ed0951fb6a",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Terrazzo/PB_BaseClassic_Terrazzo_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Terrazzo/PB_BaseClassic_Terrazzo_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-C-BC",
+      "name": "T_PB_BaseClassic_Travertine_C_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "9dd6066938d991ee8f2cba29a0726afb1cc065a5fdf07dff839b22e83ea85263",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_C_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_C_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_C_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-C-N",
+      "name": "T_PB_BaseClassic_Travertine_C_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "31fc2aa9c28ac2945eb5708bd9d7cd63cb8ebcd886c3d4d510b4dc1864d5cca8",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_C_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_C_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-C-ORM",
+      "name": "T_PB_BaseClassic_Travertine_C_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "dffdc80c1f09904196e67799dc58f61374e7b1cbefddadb1524146026b9ad0ec",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_C_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_C_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-F-BC",
+      "name": "T_PB_BaseClassic_Travertine_F_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c36e6e959cb32bed8afa29acafcced8974621c7f42e7946f48f6e8591db4bd11",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_F_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_F_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_F_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-F-N",
+      "name": "T_PB_BaseClassic_Travertine_F_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "edc338bae739c06ce4c70d8cdb7c7a68b574a3592d6ad3defbf3ba2f1c8f9daa",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_F_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_F_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-F-ORM",
+      "name": "T_PB_BaseClassic_Travertine_F_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "d4af75e828731120fec9d6946772addb71f57a0ce9b03328b50d68a01b430c76",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_F_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_F_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-W-BC",
+      "name": "T_PB_BaseClassic_Travertine_W_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2366f8b3173b15a70ab5e3c685e476b16419bd6abea7df4d269b553d6c4b1034",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_W_BC.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_W_BC.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_W_BC.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-W-N",
+      "name": "T_PB_BaseClassic_Travertine_W_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "0a8d0eaac5bd15f18fada50bf5c0ceee69f1d66fedef15486a93257bf962a2f0",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_W_N.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_W_N.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-W-ORM",
+      "name": "T_PB_BaseClassic_Travertine_W_ORM",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "4f6567b54b71a8b440473ce8ee1f46d9c38cb51495ddfdb8e8b8ada9de814888",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/Travertine/PB_BaseClassic_Travertine_W_ORM.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/base_classic_final/Travertine/PB_BaseClassic_Travertine_W_ORM.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-BC-V01",
+      "name": "T_WR_DM_CeilingService_BC_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "608d43c0f386d4d6dc5e8db36c32f93026b94cabb5866e989e529392cd2af8c0",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_CeilingService_BC_V01.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_CeilingService_BC_V01.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_CeilingService_BC_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-EM-V01",
+      "name": "T_WR_DM_CeilingService_EM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c3500da342ec38f6745d73323be6ce3a435f0ab178f9478fced47023c41294d6",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_CeilingService_EM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_CeilingService_EM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-N-V01",
+      "name": "T_WR_DM_CeilingService_N_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "fc3f7e2f11b044fb7cc4cefadad5919636eb7a85cf9182cf275ec771b4b7a0fe",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_CeilingService_N_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_CeilingService_N_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-ORM-V01",
+      "name": "T_WR_DM_CeilingService_ORM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "53cc799bf3753fa394e4f0870903164a217adcad302f2d3f58e81b255f7e15b2",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_CeilingService_ORM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_CeilingService_ORM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-01-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_01_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e737db71d3b5ea2b17d56ceb27560c75550fef9b1e04777ca06570a853bbb425",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_01_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_01_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-02-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_02_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c196b3976f5229d9ab1313f08be21d87b513cea443cbf4306c95b8fe74861524",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_02_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_02_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-03-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_03_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "dad44cebbc7068906cba5bb9cab25f1d4543feb3a8807745acefde80d8628e88",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_03_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_03_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-04-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_04_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c4f598e08c7b09102d319a40a9bad7b45d8dd76972f69aea52980b6603d00656",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_04_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_04_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-05-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_05_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e8e134c77d575c8159c8327d8048b5175bb5cceaee5f3fa0246d378d6daac90c",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_05_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_05_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-06-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_06_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "9c7e49b01b79e5c4a4e29f91e29317f49fa13fd752005b811bf2775f24bad89f",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_06_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_06_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-07-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_07_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "61cabd84f27108761d25bb3ed32acac34b0bdc82505c8d9958e769a8e6063042",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_07_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_07_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-08-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_08_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "bc4ecf307a169f6430acdc447a00bb7b6b7f30c7e2660e4836ec93657ed7e3e0",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_08_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_08_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_RGBA_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "5727c3124e247ad4cb6a8d1eb39470e4f7e475581c3a758794dbfc3a81843874",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_DecalGraffiti_RGBA_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_DecalGraffiti_RGBA_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-BC-V01",
+      "name": "T_WR_DM_FloorArmor_BC_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c55551d8632882674c400b855f1d34fc726c78121666d22de4e91615f0d79f2c",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_FloorArmor_BC_V01.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_FloorArmor_BC_V01.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_FloorArmor_BC_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-EM-V01",
+      "name": "T_WR_DM_FloorArmor_EM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "bc0641008c690dae8302a5e5b77e43a63f3a91534a5a003a8db27fd4ffcff9c0",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_FloorArmor_EM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_FloorArmor_EM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-N-V01",
+      "name": "T_WR_DM_FloorArmor_N_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "1f2b709e64beed77e5e581425fcc4f67f1679eb92a6bb695069db7456b0b5189",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_FloorArmor_N_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_FloorArmor_N_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-ORM-V01",
+      "name": "T_WR_DM_FloorArmor_ORM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "35de2b18855944601dbe2d366c0c75127ad9181ca679964d1264387e84b37322",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_FloorArmor_ORM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_FloorArmor_ORM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-BC-V01",
+      "name": "T_WR_DM_WallGraffitiA_BC_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2bbbbe048de1076055dd75fa6c5c09b3e82ea62eacacf4b338742523bd29d39b",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiA_BC_V01.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiA_BC_V01.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiA_BC_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-EM-V01",
+      "name": "T_WR_DM_WallGraffitiA_EM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "efac07b3bc83f7fc629d89dbde499be82f84bcd0901590e54b71c7a57222b31b",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiA_EM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiA_EM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-N-V01",
+      "name": "T_WR_DM_WallGraffitiA_N_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "4d4d9cd5d32a6d8f9429d19704c87b6dafc44dfa315fb690c55e032d716d692a",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiA_N_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiA_N_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-ORM-V01",
+      "name": "T_WR_DM_WallGraffitiA_ORM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2399b6ebde28858b25cba3b1fad251bbefd1a847906d4188ec8ee58caeb91ade",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiA_ORM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiA_ORM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-BC-V01",
+      "name": "T_WR_DM_WallGraffitiB_BC_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "43305db9d8917b685e5eea7ffe9dc3e51a528c98b1cde0dcf69004e35509700b",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiB_BC_V01.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiB_BC_V01.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiB_BC_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-EM-V01",
+      "name": "T_WR_DM_WallGraffitiB_EM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "959e885d14ac4903b2d874e087cd8ddb21002e1d31661c10b85e1e70caa05770",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiB_EM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiB_EM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-N-V01",
+      "name": "T_WR_DM_WallGraffitiB_N_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "e2884310d85ed4525489fc4bc2d294b5943f0178cd95280c6366092853228fdd",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiB_N_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiB_N_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-ORM-V01",
+      "name": "T_WR_DM_WallGraffitiB_ORM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c4cd68aed4a8d34d0815018ebedfaec1ec8de08b53769a8e2793a80471c2efe1",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallGraffitiB_ORM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallGraffitiB_ORM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-BC-V01",
+      "name": "T_WR_DM_WallMeteorPanels_BC_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "2509f7f14e16ef981a4c17469c7a45efc9c95ccec495854f126f059b25c9ba8d",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallMeteorPanels_BC_V01.png",
+      "previewPath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallMeteorPanels_BC_V01.png",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallMeteorPanels_BC_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-EM-V01",
+      "name": "T_WR_DM_WallMeteorPanels_EM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "9e8c8a2d25d244ddd4a21d9d646326fff579c0348eec1fa52fae63538f9e7598",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallMeteorPanels_EM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallMeteorPanels_EM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-N-V01",
+      "name": "T_WR_DM_WallMeteorPanels_N_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "c12d5efdd562d041bbad1a04cef29d036cc74b645b9fbe4c06306b07c3eeae60",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallMeteorPanels_N_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallMeteorPanels_N_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-ORM-V01",
+      "name": "T_WR_DM_WallMeteorPanels_ORM_V01",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "0.1.0",
+      "status": "TRANSFERRED",
+      "packId": "PrimeBot_Surface_Core",
+      "hash": "8cef3d010dcbdcfc5e46ebe751847bc59a04cf0c1d3a2949878fd4c86b1e6838",
+      "storagePath": "library/storage/packs/PrimeBot_Surface_Core/sources/DarkMeteor/T_WR_DM_WallMeteorPanels_ORM_V01.png",
+      "previewPath": "",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/_AI_WORKSPACE/library/primebot_rush/assets/textures/dark_meteor_v01/DarkMeteor/T_WR_DM_WallMeteorPanels_ORM_V01.png",
+      "licenseEvidence": "docs/features/PRIMEBOT_REUSABLE_LIBRARY_AUDIT_2026-08-04.md",
+      "platforms": [],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "PrimeBot_Surface_Core"
+      ]
+    }
+  ]
+}

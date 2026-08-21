@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "id": "uefn:steal_the_rift_bots",
+      "displayName": "PrimeBot Rush",
+      "platform": "UEFN",
+      "projectMount": "STEAL_THE_RIFT_BOTS",
+      "descriptorPath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\uefn\\STEAL_THE_RIFT_BOTS\\STEAL_THE_RIFT_BOTS.uefnproject",
+      "transport": "STREAMABLE_HTTP",
+      "host": "127.0.0.1",
+      "port": 8000,
+      "path": "/mcp"
+    },
+    {
+      "id": "uefn:wtf_idle_tycoon",
+      "displayName": "Prime Industry",
+      "platform": "UEFN",
+      "projectMount": "WTF_IDLE_TYCOON",
+      "descriptorPath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\PRIME INDUSTRY\\WTF_IDLE_TYCOON\\WTF_IDLE_TYCOON.uefnproject",
+      "transport": "STREAMABLE_HTTP",
+      "host": "127.0.0.1",
+      "port": 8001,
+      "path": "/mcp"
+    },
+    {
+      "id": "uefn:noblesse_bibliotheque",
+      "displayName": "Bibliothèque UEFN",
+      "platform": "UEFN",
+      "projectMount": "NOBLESSE_BIBLIOTHEQUE",
+      "descriptorPath": "D:\\NO_BLESSE Studio\\Fortnite\\Bibliotheque\\NOBLESSE_BIBLIOTHEQUE\\NOBLESSE_BIBLIOTHEQUE.uefnproject",
+      "transport": "STREAMABLE_HTTP",
+      "host": "127.0.0.1",
+      "port": 8002,
+      "path": "/mcp"
+    },
+    {
+      "id": "unreal:noblesse_fab_staging",
+      "displayName": "Fab Unreal",
+      "platform": "Unreal",
+      "projectMount": "Game",
+      "descriptorPath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\_AI_WORKSPACE\\library\\uefn_vault\\fab-staging\\NOBLESSE_FAB_STAGING.uproject",
+      "transport": "STREAMABLE_HTTP",
+      "host": "127.0.0.1",
+      "port": 8003,
+      "path": "/mcp"
+    },
+    {
+      "id": "roblox:official_studio",
+      "displayName": "Roblox Studio",
+      "platform": "Roblox",
+      "projectMount": "",
+      "descriptorPath": "",
+      "transport": "STDIO",
+      "command": "%LOCALAPPDATA%\\Roblox\\mcp.bat",
+      "sessionSelector": "studio_id",
+      "port": null
+    }
+  ],
+  "reservations": [
+    {
+      "port": 8004,
+      "status": "FREE",
+      "reason": "Réservé pour un futur connecteur HTTP vérifié ; Roblox officiel utilise stdio."
+    }
+  ]
+}

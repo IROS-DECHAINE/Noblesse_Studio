@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.vite/
+release/
+release-*/
+
+# Données locales et régénérables
+data/database/*.db*
+data/state/
+data/runtime/
+data/backups/
+data/logs/
+library/storage/
+app/public/data/
+app/public/assets/vault-previews/
+
+# Fichiers temporaires
+*.log
+*.tmp
+*.next

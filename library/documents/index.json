@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-21T16:54:26.837Z",
+  "category": "documents",
+  "count": 17,
+  "items": [
+    {
+      "id": "primebot-gameplay-feel-audit",
+      "name": "Audit du ressenti de jeu",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "primebot-rush",
+      "hash": "2b4f94c087de6b540df0bfaf6b80dbb7f3e892dc111273efa24345c05b41ad88",
+      "storagePath": "../Documents/manifests/primebot-gameplay-feel-audit.json",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/docs/GAMEPLAY_FEEL_AUDIT.md",
+      "sizeBytes": 24450,
+      "tags": [
+        "primebot",
+        "gameplay",
+        "audit"
+      ],
+      "createdAt": "2026-08-21T00:17:41.168Z",
+      "updatedAt": "2026-08-21T00:17:41.168Z"
+    },
+    {
+      "id": "prime-industry-canon",
+      "name": "Canon Prime Industry",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "prime-industry",
+      "hash": "973be777d1f2b0ec2c533d45984ca588741bba10427fe192b7e7f1f1bd9169b3",
+      "storagePath": "../Documents/manifests/prime-industry-canon.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/PrimeIndustry/docs/CANON.md",
+      "sizeBytes": 34029,
+      "tags": [
+        "prime-industry",
+        "canon"
+      ],
+      "createdAt": "2026-08-21T00:17:41.203Z",
+      "updatedAt": "2026-08-21T00:17:41.203Z"
+    },
+    {
+      "id": "how-many-boxes-decisions",
+      "name": "Décisions How Many Boxes Can You Carry?",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "how-many-boxes",
+      "hash": "3cef1b9a24df832b12516736be8a8b4f48ef18a73595708c765c94b59cc15aeb",
+      "storagePath": "../Documents/manifests/how-many-boxes-decisions.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/HowManyBoxesCanYouCarry/docs/DECISIONS.md",
+      "sizeBytes": 5665,
+      "tags": [
+        "how-many-boxes",
+        "décisions"
+      ],
+      "createdAt": "2026-08-21T00:17:41.257Z",
+      "updatedAt": "2026-08-21T00:17:41.257Z"
+    },
+    {
+      "id": "prime-industry-decisions",
+      "name": "Décisions Prime Industry",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "prime-industry",
+      "hash": "269d65871368e3cd617acc2c1c6507c4a701a4b16c068bcc023d2bb35adaa339",
+      "storagePath": "../Documents/manifests/prime-industry-decisions.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/PrimeIndustry/docs/DECISIONS.md",
+      "sizeBytes": 18254,
+      "tags": [
+        "prime-industry",
+        "décisions"
+      ],
+      "createdAt": "2026-08-21T00:17:41.225Z",
+      "updatedAt": "2026-08-21T00:17:41.225Z"
+    },
+    {
+      "id": "how-many-boxes-investor-dossier",
+      "name": "Dossier investisseur How Many Boxes Can You Carry?",
+      "category": "documents",
+      "type": "pdf",
+      "version": "1",
+      "status": "REFERENCE",
+      "projectId": "how-many-boxes",
+      "hash": "5aba975d2ed847aa5489bef5fc6c43a1ef5032592861f5e44460bc7b3facfc90",
+      "storagePath": "../Documents/manifests/how-many-boxes-investor-dossier.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/Director/output/pdf/how-many-boxes-can-you-carry-dossier-investisseur.pdf",
+      "sizeBytes": 6973940,
+      "tags": [
+        "how-many-boxes",
+        "pdf",
+        "investisseur"
+      ],
+      "createdAt": "2026-08-21T00:17:41.385Z",
+      "updatedAt": "2026-08-21T00:17:41.385Z"
+    },
+    {
+      "id": "primebot-bot-economy-canon",
+      "name": "Économie des bots",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "primebot-rush",
+      "hash": "1d3b22547e7715ea8983dacc6d7fbc8e40acf15b9bc09ee967d4aa6b6167fd6a",
+      "storagePath": "../Documents/manifests/primebot-bot-economy-canon.json",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/docs/BOT_ECONOMY_CANON.md",
+      "sizeBytes": 47848,
+      "tags": [
+        "primebot",
+        "économie",
+        "bots"
+      ],
+      "createdAt": "2026-08-21T00:17:41.191Z",
+      "updatedAt": "2026-08-21T00:17:41.191Z"
+    },
+    {
+      "id": "how-many-boxes-economy",
+      "name": "Économie How Many Boxes Can You Carry?",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "how-many-boxes",
+      "hash": "a881ab751ccddb0046179013cd4ccae78a3372510d2c38d79310ee6a34df35be",
+      "storagePath": "../Documents/manifests/how-many-boxes-economy.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/HowManyBoxesCanYouCarry/docs/ECONOMY.md",
+      "sizeBytes": 10501,
+      "tags": [
+        "how-many-boxes",
+        "économie"
+      ],
+      "createdAt": "2026-08-21T00:17:41.267Z",
+      "updatedAt": "2026-08-21T00:17:41.267Z"
+    },
+    {
+      "id": "how-many-boxes-current-state",
+      "name": "État actuel How Many Boxes Can You Carry?",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "how-many-boxes",
+      "hash": "24cbc118b38b2779868dfd9c39c5f6be04d8553c97ba1719a499305b23115e9a",
+      "storagePath": "../Documents/manifests/how-many-boxes-current-state.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/HowManyBoxesCanYouCarry/docs/CURRENT_STATE.md",
+      "sizeBytes": 18336,
+      "tags": [
+        "how-many-boxes",
+        "état"
+      ],
+      "createdAt": "2026-08-21T00:17:41.246Z",
+      "updatedAt": "2026-08-21T00:17:41.246Z"
+    },
+    {
+      "id": "prime-industry-current-state",
+      "name": "État actuel Prime Industry",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "prime-industry",
+      "hash": "07fb892f7e4d21ad6f382dc6c03a988265c0af6a42e086f75f33e888acad3223",
+      "storagePath": "../Documents/manifests/prime-industry-current-state.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/PrimeIndustry/docs/CURRENT_STATE.md",
+      "sizeBytes": 4236,
+      "tags": [
+        "prime-industry",
+        "état"
+      ],
+      "createdAt": "2026-08-21T00:17:41.214Z",
+      "updatedAt": "2026-08-21T00:17:41.214Z"
+    },
+    {
+      "id": "studio-portfolio-governance-2026-08-14",
+      "name": "Gouvernance du portfolio Noblesse Studio",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "studio",
+      "hash": "6bd07c7b5a97a26c8ef4ac2eba3004d5dda095cb93c92818af02e74ba4322b21",
+      "storagePath": "../Documents/manifests/studio-portfolio-governance-2026-08-14.json",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/docs/features/NOBLESSE_STUDIO_PORTFOLIO_GOVERNANCE_CANON_2026-08-14.md",
+      "sizeBytes": 16504,
+      "tags": [
+        "studio",
+        "gouvernance",
+        "canon"
+      ],
+      "createdAt": "2026-08-21T00:17:41.140Z",
+      "updatedAt": "2026-08-21T00:17:41.140Z"
+    },
+    {
+      "id": "primebot-current-canon-index",
+      "name": "Index canon actuel PrimeBot Rush",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "primebot-rush",
+      "hash": "5470da5691347db3b15bc1cd7a1cf47856a6dddc7b881e3585c93d6d8460ad8f",
+      "storagePath": "../Documents/manifests/primebot-current-canon-index.json",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/docs/CURRENT_CANON_INDEX.md",
+      "sizeBytes": 426022,
+      "tags": [
+        "primebot",
+        "index",
+        "canon"
+      ],
+      "createdAt": "2026-08-21T00:17:41.157Z",
+      "updatedAt": "2026-08-21T00:17:41.157Z"
+    },
+    {
+      "id": "how-many-boxes-playtest-log",
+      "name": "Journal de playtest How Many Boxes Can You Carry?",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "REFERENCE",
+      "projectId": "how-many-boxes",
+      "hash": "da044453aea4bf653606740070d0149508f45db32f3121bb8b00bbf0a452cab9",
+      "storagePath": "../Documents/manifests/how-many-boxes-playtest-log.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/HowManyBoxesCanYouCarry/docs/PLAYTEST_LOG.md",
+      "sizeBytes": 11348,
+      "tags": [
+        "how-many-boxes",
+        "playtest"
+      ],
+      "createdAt": "2026-08-21T00:17:41.300Z",
+      "updatedAt": "2026-08-21T00:17:41.300Z"
+    },
+    {
+      "id": "how-many-boxes-compliance-matrix",
+      "name": "Matrice de conformité du canon V4",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "how-many-boxes",
+      "hash": "aaade911aaabe2ea635d8e050d7511daa24a250f4e127506c81ca92adaeb962b",
+      "storagePath": "../Documents/manifests/how-many-boxes-compliance-matrix.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/HowManyBoxesCanYouCarry/docs/CANON_V4_COMPLIANCE_MATRIX.md",
+      "sizeBytes": 30311,
+      "tags": [
+        "how-many-boxes",
+        "canon",
+        "validation"
+      ],
+      "createdAt": "2026-08-21T00:17:41.278Z",
+      "updatedAt": "2026-08-21T00:17:41.278Z"
+    },
+    {
+      "id": "primebot-mvp-spec",
+      "name": "Spécification MVP PrimeBot Rush",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "CANON",
+      "projectId": "primebot-rush",
+      "hash": "a5a7ff45592a3201f839a21a372c003c1077f32ae2efa454e48f4ad0c0838473",
+      "storagePath": "../Documents/manifests/primebot-mvp-spec.json",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/docs/MVP_SPEC.md",
+      "sizeBytes": 16754,
+      "tags": [
+        "primebot",
+        "mvp",
+        "canon"
+      ],
+      "createdAt": "2026-08-21T00:17:41.179Z",
+      "updatedAt": "2026-08-21T00:17:41.179Z"
+    },
+    {
+      "id": "studio-recruitment-publication-tracking-2026-08-14",
+      "name": "Suivi de publication et recrutement Noblesse Studio",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "REFERENCE",
+      "projectId": "studio",
+      "hash": "419be7bc7a27dc7a9aa7e407b1b49912d43d5a5a40d1579cd1b2b7b8a5e4a48f",
+      "storagePath": "../Documents/manifests/studio-recruitment-publication-tracking-2026-08-14.json",
+      "sourceOrigin": "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/docs/features/NOBLESSE_STUDIO_X_RECRUITMENT_PUBLICATION_TRACKING_2026-08-14.md",
+      "sizeBytes": 5419,
+      "tags": [
+        "studio",
+        "recrutement",
+        "publication"
+      ],
+      "createdAt": "2026-08-21T00:17:41.153Z",
+      "updatedAt": "2026-08-21T00:17:41.153Z"
+    },
+    {
+      "id": "how-many-boxes-handoff",
+      "name": "Transmission How Many Boxes Can You Carry?",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "REFERENCE",
+      "projectId": "how-many-boxes",
+      "hash": "0d695df696b22d78c214e3132619a52b6485ab64f6169ab46da62eb51d108be7",
+      "storagePath": "../Documents/manifests/how-many-boxes-handoff.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/HowManyBoxesCanYouCarry/docs/HANDOFF.md",
+      "sizeBytes": 12473,
+      "tags": [
+        "how-many-boxes",
+        "handoff"
+      ],
+      "createdAt": "2026-08-21T00:17:41.289Z",
+      "updatedAt": "2026-08-21T00:17:41.289Z"
+    },
+    {
+      "id": "prime-industry-handoff",
+      "name": "Transmission Prime Industry",
+      "category": "documents",
+      "type": "markdown",
+      "version": "1",
+      "status": "REFERENCE",
+      "projectId": "prime-industry",
+      "hash": "3d9b6c5d768a26f0a17b2b0c7c08621a0bf4e9269c6d4e057a0f1757a2822cd5",
+      "storagePath": "../Documents/manifests/prime-industry-handoff.json",
+      "sourceOrigin": "D:/NO_BLESSE Studio/Roblox/GAMES/PrimeIndustry/docs/HANDOFF.md",
+      "sizeBytes": 2907,
+      "tags": [
+        "prime-industry",
+        "handoff"
+      ],
+      "createdAt": "2026-08-21T00:17:41.234Z",
+      "updatedAt": "2026-08-21T00:17:41.234Z"
+    }
+  ]
+}
