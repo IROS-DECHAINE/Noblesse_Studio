@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
@@ -21,7 +21,7 @@ test('discovers only the fixed ffmpeg executable name from approved locations', 
   const executable = path.join(root, executableName)
   await writeFile(executable, 'test')
 
-  assert.equal(await discoverFfmpegExecutable({ pathValue: root }), executable)
+  assert.equal(await discoverFfmpegExecutable({ pathValue: root }), await realpath(executable))
   assert.equal(await discoverFfmpegExecutable({ override: path.join(root, 'arbitrary.exe'), pathValue: '' }), '')
 })
 
