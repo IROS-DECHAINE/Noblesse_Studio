@@ -193,9 +193,11 @@ export default function ProjectsView({
           onWheel={handleProjectRailWheel}
         >
           {rows.map(({ icon, ...project }, projectIndex) => {
-            const Icon = iconByType[icon] || Blocks
             const selected = project.id === selectedProject.id
             const launchProfile = launchProfileByProject.get(project.id)
+            const isUefnLaunchTarget = launchProfile?.platform === 'UEFN'
+            const Icon = isUefnLaunchTarget ? Gamepad2 : iconByType[icon] || Blocks
+            const platformLabel = isUefnLaunchTarget ? 'Fortnite / UEFN' : project.platform
             const launchAction = getProjectLaunchAction(launchProfile, launchingProfileId === launchProfile?.id)
             const LaunchIcon = launchAction?.tone === 'ready'
               ? CircleCheck
@@ -219,7 +221,7 @@ export default function ProjectsView({
                 <div className="project-card-body">
                   <header><span className={project.live ? 'is-live' : ''}><i /> {project.status}</span><b>{project.phase}</b></header>
                   <h2>{project.name}</h2>
-                  <p><Icon size={15} /> {project.platform}</p>
+                  <p><Icon size={15} /> {platformLabel}</p>
                   {launchAction && (
                     <p className={`project-launch-status is-${launchAction.tone}`} title={launchAction.statusLabel} aria-live="polite">
                       <i /> {launchAction.statusLabel}

@@ -114,6 +114,7 @@ test('rendered captures retain source truth while both sphere and plane remain s
 test('an atomic texture transition never exposes a half-loaded live material', () => {
   const pbr = descriptor('pbr_maps', {
     material,
+    normalScale: [1, -1],
     maps: {
       baseColor: { source: '/assets/bc.png', colorSpace: 'srgb' },
       normal: { source: '/assets/n.png', colorSpace: 'linear' },

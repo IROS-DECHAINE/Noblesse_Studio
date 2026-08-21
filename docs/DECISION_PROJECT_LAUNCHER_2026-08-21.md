@@ -1,9 +1,9 @@
 # Decision
 
-- Statut : `IMPLEMENTED_V1`
+- Statut : `IMPLEMENTED_V2_LIVE_RETEST_REQUIRED`
 - Date : 2026-08-21
 - Propriétaire : Codex / Noblesse Studio
-- Décision : Noblesse Studio lance chaque projet UEFN depuis un profil approuvé et versionné. Le profil fixe le descripteur, l’identité de projet et le port MCP. L’interface ne transmet qu’un ID de profil.
+- Décision : Noblesse Studio lance chaque projet UEFN depuis un profil approuvé et versionné. Le profil fixe le descripteur, l’identité de projet et le port MCP. L’interface ne transmet qu’un ID de profil. Avant chaque lancement, le processus principal prépare de façon atomique les préférences UEFN qui déterminent le dernier projet et le port MCP.
 
 ## Context
 
@@ -24,10 +24,13 @@ La décision doit rester valable pour une application locale appelée à piloter
 ## Evidence
 
 - Epic documente `-ModelContextProtocolStartServer` et `-ModelContextProtocolPort=N` pour démarrer le serveur MCP de l’éditeur : [Unreal MCP in Unreal Editor](https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor).
-- Epic documente le lancement d’un éditeur avec le chemin du projet et des arguments séparés : [Command-Line Arguments](https://dev.epicgames.com/documentation/unreal-engine/command-line-arguments-in-unreal-engine) et [Running Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/running-unreal-engine).
+- Epic documente que le démarrage normal de UEFN ouvre le Project Browser et que l’option `Open last project on start up` ouvre automatiquement le projet courant : [Starting and Organizing a Project](https://dev.epicgames.com/documentation/fortnite/starting-and-organizing-a-project-in-fortnite).
+- Epic documente les surcharges temporaires `-ini:<CATEGORY>:[SECTION]:<KEY>=<VALUE>` : [Configuration Files](https://dev.epicgames.com/documentation/en-us/unreal-engine/configuration-files-in-unreal-engine). Elles sont conservées en renfort, mais ne sont pas l’unique source de vérité du lanceur.
+- Epic documente le lancement d’un éditeur Unreal avec un `.uproject`, mais ne documente pas le chemin `.uefnproject` positionnel comme ouverture automatique de UEFN : [Command-Line Arguments](https://dev.epicgames.com/documentation/unreal-engine/command-line-arguments-in-unreal-engine).
 - UnrealGameSync, utilisé en interne par Epic notamment pour Fortnite, expose « Launch Editor » et une ligne de commande éditeur par workspace : [UGS tutorial](https://dev.epicgames.com/documentation/unreal-engine/horde-unrealgamesync-tutorial-for-unreal-engine) et [UGS menu reference](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-game-sync-menu-reference-for-unreal-engine).
 - Observation locale du 21 août 2026 : trois processus UEFN ouverts, un seul endpoint MCP sur 8002 et une identité réelle `/STEAL_THE_RIFT_BOTS`. Confiance : observée.
 - Le registre local attribue déjà 8000 à PrimeBot, 8001 à Prime Industry et 8002 à Bibliothèque. Confiance : observée dans le code et couverte par test.
+- Test réel du 21 août 2026 à `18:39:33Z` : le reçu de Noblesse Studio prouve un clic PrimeBot attendu sur `8000` et le PID `11712`; UEFN a pourtant sélectionné Prime Industry, n’a ouvert aucun projet et a démarré MCP sur la préférence globale `8002`. Cette preuve invalide la stratégie V1 fondée uniquement sur les arguments de processus.
 
 ## Options
 
@@ -53,9 +56,11 @@ Les scores sont ordinaux de 1 à 5 ; ils aident à comparer, ils ne prétendent 
 
 ## Chosen option
 
-L’option 2 est retenue. `project-connections.v1.json` reste la source approuvée des profils. Le processus principal Electron découvre l’exécutable UEFN depuis le manifeste Epic Games Launcher, refuse tout binaire différent, vérifie le descripteur et le port, puis lance avec `shell: false` et une liste d’arguments.
+L’option 2 est retenue. `project-connections.v1.json` reste la source approuvée des profils. Le processus principal Electron découvre l’exécutable UEFN depuis le manifeste Epic Games Launcher, refuse tout binaire différent, vérifie le descripteur et le port, puis lance avec `shell: false`.
 
-Le lancement produit un reçu local versionné. L’interface sonde ensuite les sessions existantes : une carte passe au vert uniquement quand le mount MCP, le port et la capacité d’installation correspondent tous au profil.
+Le lancement V2 produit d’abord un handoff persistant et borné dans `EditorPerProjectUserSettings.ini` : `bStartupWithLastProject=True`, `LastProjectFileName`, `ServerPortNumber`, `bAutoStartServer=True` et `bEnableToolSearch=True`. Seules ces clés sont remplacées, le fichier est écrit atomiquement et son contenu précédent est sauvegardé par SHA-256. Les lancements concurrents sont sérialisés. Les mêmes valeurs sont aussi envoyées en surcharge `-ini` et via les flags MCP afin de rester compatibles avec les versions d’UEFN qui honorent les arguments.
+
+Le lancement produit ensuite un reçu local versionné avec la stratégie et l’empreinte des préférences. L’interface sonde les sessions existantes : une carte passe au vert uniquement quand le mount MCP, le port et la capacité d’installation correspondent tous au profil.
 
 Les options 1 et 3 sont rejetées : elles ne donnent pas une vérité opérationnelle suffisante et rendent les pannes de port difficiles à diagnostiquer.
 
@@ -70,6 +75,7 @@ Les options 1 et 3 sont rejetées : elles ne donnent pas une vérité opération
 ## Risks
 
 - **Epic change les arguments ou le manifeste.** Mitigation : découverte isolée, tests dédiés, override explicite vers le seul nom d’exécutable autorisé.
+- **Plusieurs instances UEFN partagent le même fichier de préférences.** Mitigation : handoff sérialisé, réécriture exacte juste avant chaque processus, sauvegarde adressée par contenu et validation finale par identité MCP. Un éditeur déjà ouvert peut sauvegarder ses préférences plus tard, mais le prochain clic réapplique toujours son profil avant de lancer.
 - **Un projet est déjà ouvert avec le mauvais port.** Mitigation : état rouge explicite, aucun doublon ; Theo le ferme manuellement puis utilise Lancer.
 - **Le processus démarre mais MCP tarde ou échoue.** Mitigation : états `LAUNCHING`, `CONNECTING`, délai de trois minutes et relance contrôlée.
 - **Le port devient occupé entre la vérification et le bind UEFN.** Mitigation : UEFN reste la source finale ; l’app affiche le conflit et ne déclare jamais la session prête.
@@ -79,15 +85,16 @@ Pré-mortem : l’échec le plus probable serait un changement silencieux d’Ep
 
 ## Validation
 
-- Tests unitaires : arguments exacts, profil inconnu, port occupé, anti-doublon, mauvais port, identité exacte et découverte du manifeste Epic.
+- Tests unitaires : patch INI minimal, ajout des sections absentes, sauvegarde SHA-256, écriture idempotente, valeurs interdites, arguments de renfort exacts, sérialisation des doubles clics, profil inconnu, port occupé, anti-doublon, mauvais port, identité exacte et découverte du manifeste Epic.
 - Vérification locale en lecture seule : l’exécutable UEFN actuellement installé est retrouvé automatiquement.
 - Vérification de l’état réel : les trois éditeurs actuellement mal routés sont décrits sans faux positif.
 - Validation UI : états fermé, lancement, prêt et erreur inspectés dans le rendu ; bouton désactivé pendant une opération.
-- Validation produit : après fermeture manuelle d’un projet mal routé, Theo clique Lancer et confirme que la carte devient verte sur son port exact.
+- Validation produit V1 : **échec observé**; PrimeBot a ouvert le navigateur sur Prime Industry et le port global 8002.
+- Validation produit V2 : **à refaire après redémarrage manuel de Noblesse Studio**; Theo clique Lancer PrimeBot et confirme l’ouverture directe ainsi que la carte verte sur 8000. Le code ne revendique pas encore cette preuve live.
 
 ## Rollback
 
-Retirer ou désactiver `launch.enabled` dans le profil masque l’action sans affecter la détection de sessions ni le transfert d’assets. Les handlers IPC peuvent être retirés indépendamment ; aucun projet ni asset n’est modifié par ce rollback.
+Retirer ou désactiver `launch.enabled` dans le profil masque l’action sans affecter la détection de sessions ni le transfert d’assets. Les sauvegardes des préférences UEFN vivent sous `data/backups/repository-v1/uefn-editor-settings/` et permettent une restauration manuelle. Les handlers IPC peuvent être retirés indépendamment ; aucun projet ni asset n’est modifié par ce rollback.
 
 ## Review trigger
 

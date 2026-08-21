@@ -4,6 +4,7 @@ dist/
 release/
 release-*/
 /app/build/
+/app/build-*/
 
 # Données locales et régénérables
 data/database/*.db*

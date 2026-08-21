@@ -58,9 +58,17 @@ La position d’un fichier ne doit jamais devenir son identité. Les appels mét
 
 ## Lanceur de projets
 
-Les projets UEFN sont ouverts depuis des profils approuvés dans le registre Electron. Le renderer transmet uniquement un ID permanent ; il ne choisit jamais un chemin, un exécutable ou des arguments. Le processus principal vérifie le descripteur, l’installation Epic, l’absence de doublon et la disponibilité du port avant de lancer UEFN.
+Les projets UEFN sont ouverts depuis des profils approuvés dans le registre Electron. Le renderer transmet uniquement un ID permanent ; il ne choisit jamais un chemin, un exécutable ou des arguments. Le processus principal vérifie le descripteur, l’installation Epic, l’absence de doublon et la disponibilité du port. Il prépare ensuite atomiquement les clés UEFN `LastProjectFileName`, `bStartupWithLastProject` et Model Context Protocol, avec sauvegarde adressée par contenu, avant de lancer l’éditeur. Les demandes concurrentes sont sérialisées.
 
 Une session n’est « prête » que lorsque son identité MCP, son port attribué et les outils de transfert requis sont tous vérifiés. Unreal et Roblox auront des adaptateurs distincts. Voir [la décision du lanceur](DECISION_PROJECT_LAUNCHER_2026-08-21.md).
+
+## Contrats IPC publics
+
+Les modèles internes du Vault et des intégrations ne sont jamais renvoyés directement au renderer. Les canaux assets et projets passent par une passerelle commune qui contrôle l’émetteur, valide l’entrée, exécute le service puis sérialise une réponse publique `v1` fermée par liste blanche.
+
+La réponse assets contient uniquement les métadonnées nécessaires à l’interface. Les chemins `source_path`, `source_origin` et `preview_source` restent privilégiés. Une image du Vault est demandée par `assetId`; le processus principal retrouve ensuite sa source interne. La réponse projets omet les chemins, descripteurs, endpoints, PID et journaux. Les projets installables utilisent l’ID permanent de leur profil approuvé; une découverte non enregistrée ne reçoit aucun ID dérivé de son chemin et est comptée dans les diagnostics.
+
+Les schémas publics refusent les propriétés supplémentaires et toute valeur ressemblant à un chemin Windows absolu, UNC, de périphérique ou à une URL `file:`. Les identifiants de contenu moteur comme `/Game/...` restent autorisés. Voir [la décision des contrats IPC publics](DECISION_PUBLIC_IPC_CONTRACTS_2026-08-21.md).
 
 ## Modèle de bibliothèque
 

@@ -15,7 +15,13 @@ import { installUnrealNativeAsset } from './lib/unrealNativeInstaller.mjs'
 import { createUefnSessionService } from './lib/uefnSessionService.mjs'
 import { buildWindowsTaskbarDetails, windowsAppId } from './lib/windowsTaskbarIdentity.mjs'
 import { createOperationJobStore } from './lib/operationJobStore.mjs'
-import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultPreviewSource, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
+import { createStudioIpcGateway } from './lib/studioIpcGateway.mjs'
+import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultPreviewRequest, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
+import {
+  assertProjectFavoriteRequestV1,
+  serializeAssetsResponseV1,
+  serializeProjectsResponseV1,
+} from '../shared/publicIpcContracts.mjs'
 import {
   studioBackupsRoot,
   studioDocumentsRoot,
@@ -75,7 +81,7 @@ protocol.registerSchemesAsPrivileged([
   },
   {
     scheme: 'noblesse-vault',
-    privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true },
+    privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true },
   },
 ])
 
@@ -97,7 +103,11 @@ const getAssets = async () => {
 
 const requireStudioSender = (event) => {
   const owner = BrowserWindow.fromWebContents(event.sender)
-  if (!owner || owner.isDestroyed() || !trustedWebContents.has(event.sender.id) || event.senderFrame !== event.sender.mainFrame) {
+  if (!owner
+    || owner.isDestroyed()
+    || !trustedWebContents.has(event.sender.id)
+    || event.senderFrame !== event.sender.mainFrame
+    || !isAllowedRendererUrl(event.senderFrame?.url)) {
     throw new Error('Client Noblesse Studio non autorisé.')
   }
   return owner
@@ -281,15 +291,14 @@ const handleVaultPreviewProtocol = async (request) => {
   try {
     const url = new URL(request.url)
     if (url.hostname !== 'preview') return new Response('Introuvable', { status: 404 })
-    const relativePath = decodeURIComponent(url.pathname.replace(/^\//, ''))
-    if (!relativePath || !/\.(?:png|jpe?g|webp)$/i.test(relativePath)) {
-      return new Response('Aperçu invalide', { status: 404 })
-    }
-    const { filePath, mimeType } = await resolveVaultPreviewSource(relativePath)
+    const previewToken = decodeURIComponent(url.pathname.replace(/^\//, ''))
+    const { filePath, mimeType } = await resolveVaultPreviewRequest(previewToken)
     const fileResponse = await net.fetch(pathToFileURL(filePath).toString(), { headers: request.headers })
     const headers = new Headers(fileResponse.headers)
     headers.set('Content-Type', mimeType)
     headers.set('X-Content-Type-Options', 'nosniff')
+    headers.set('Access-Control-Allow-Origin', '*')
+    headers.set('Cross-Origin-Resource-Policy', 'cross-origin')
     return new Response(fileResponse.body, { status: fileResponse.status, headers })
   } catch {
     return new Response('Aperçu indisponible', { status: 404 })
@@ -303,9 +312,15 @@ const allowedDevUrl = configuredDevUrl === 'http://127.0.0.1:4178' ? configuredD
 const isAllowedRendererUrl = (value) => {
   try {
     const url = new URL(value)
-    if (allowedDevUrl && url.origin === new URL(allowedDevUrl).origin) return true
+    if (allowedDevUrl) {
+      const expected = new URL(allowedDevUrl)
+      if (url.origin === expected.origin
+        && url.pathname === expected.pathname
+        && !url.search
+        && !url.hash) return true
+    }
     if (url.protocol !== 'file:') return false
-    return path.resolve(fileURLToPath(url)) === productionRendererFile
+    return !url.search && !url.hash && path.resolve(fileURLToPath(url)) === productionRendererFile
   } catch {
     return false
   }
@@ -339,6 +354,7 @@ const createWindow = () => {
       sandbox: true,
       webSecurity: true,
       allowRunningInsecureContent: false,
+      backgroundThrottling: false,
     },
   })
   if (process.platform === 'win32') {
@@ -388,6 +404,8 @@ const startVaultWatcher = () => {
   })
 }
 
+const studioIpc = createStudioIpcGateway({ ipcMain, authorizeSender: requireStudioSender })
+
 ipcMain.handle('noblesse:fortnite-primebot', (event, options) => {
   requireStudioSender(event)
   return getFortnitePrimebot(options)
@@ -396,9 +414,8 @@ ipcMain.handle('noblesse:uefn-health', (event) => {
   requireStudioSender(event)
   return getUefnHealth()
 })
-ipcMain.handle('noblesse:assets', (event) => {
-  requireStudioSender(event)
-  return getAssets()
+studioIpc.handle('noblesse:assets', () => getAssets(), {
+  serializeResponse: serializeAssetsResponseV1,
 })
 ipcMain.handle('noblesse:material-preview', (event, request) => {
   requireStudioSender(event)
@@ -408,17 +425,20 @@ ipcMain.handle('noblesse:vault-health', (event) => {
   requireStudioSender(event)
   return validateVaultIntegrity()
 })
-ipcMain.handle('noblesse:projects', async (event) => {
-  requireStudioSender(event)
+studioIpc.handle('noblesse:projects', async () => {
   const [uefnProjects, unrealProjects] = await Promise.all([
     requireUefnSessionService().listDestinations(),
     listUnrealProjects(),
   ])
   return [...uefnProjects, ...unrealProjects]
+}, {
+  serializeResponse: serializeProjectsResponseV1,
 })
-ipcMain.handle('noblesse:project-favorite', (event, request) => {
-  requireStudioSender(event)
+studioIpc.handle('noblesse:project-favorite', (request) => {
   return requireUefnSessionService().setFavorite(request)
+}, {
+  assertRequest: assertProjectFavoriteRequestV1,
+  serializeResponse: serializeProjectsResponseV1,
 })
 ipcMain.handle('noblesse:project-launch-profiles', (event) => {
   requireStudioSender(event)
@@ -623,6 +643,7 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
     stateFile: path.join(studioStateRoot(), 'project-launches.v1.json'),
     sessionService: uefnSessionService,
     executableOverride: studioUefnEditorExecutable(),
+    settingsBackupDirectory: path.join(studioBackupsRoot(), 'uefn-editor-settings'),
   })
   calendarStore = createCalendarStore({ rootDir: calendarRoot() })
   try {

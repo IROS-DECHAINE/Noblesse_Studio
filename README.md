@@ -29,6 +29,7 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 | Dépendances entre assets | `library/DEPENDENCIES.md` |
 | Architecture | `docs/ARCHITECTURE.md` |
 | Décision du lanceur de projets | `docs/DECISION_PROJECT_LAUNCHER_2026-08-21.md` |
+| Décision des contrats IPC publics | `docs/DECISION_PUBLIC_IPC_CONTRACTS_2026-08-21.md` |
 | Sauvegarde et restauration | `docs/RECOVERY_RUNBOOK.md` |
 | Maintenance et livraisons | `docs/MAINTENANCE.md` |
 | Notes de version | `docs/RELEASE_NOTES.md` |

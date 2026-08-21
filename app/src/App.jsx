@@ -217,7 +217,7 @@ export default function App() {
         assetId: variant?.installAssetId || surface.installAssetId,
         projectId: selectedProjectId,
       })
-      const wording = result.mode === 'ALREADY_INSTALLED' ? 'déjà présent et vérifié' : 'installé et validé'
+      const wording = result.mode === 'ALREADY_INSTALLED' ? 'déjà présent et vérifié' : 'installé et vérifié'
       setToast(`${surface.name} ${wording} dans ${result.project}.`)
     } catch (error) {
       setToast(error instanceof Error ? error.message : 'Installation impossible')

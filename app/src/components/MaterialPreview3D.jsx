@@ -134,7 +134,7 @@ export default function MaterialPreview3D({ descriptorState, shape, surface, pre
         dpr={[1, 2]}
         frameloop={liveAnimation ? 'always' : 'demand'}
         gl={CANVAS_GL}
-        shadows
+        shadows="percentage"
         onCreated={({ gl }) => gl.setClearColor('#07111c', 0)}
       >
         <PreviewErrorBoundary
@@ -155,7 +155,7 @@ export default function MaterialPreview3D({ descriptorState, shape, surface, pre
         </PreviewErrorBoundary>
       </Canvas>
 
-      <span className="preview-help">Clic droit + mouvement pour tourner · double-clic pour recentrer</span>
+      <span className="preview-help">Clic droit : tourner · molette : zoom · double-clic : centrer</span>
       {descriptor?.fidelityLabel && <span className="preview-fidelity">{descriptor.fidelityLabel}</span>}
       {liveAnimation && <span className="preview-live"><i /> Animation temps réel</span>}
     </div>

@@ -19,7 +19,19 @@ export function LocalStudioEnvironment({ contactShadow = true, environmentMap = 
   }
   return (
     <>
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.34} />
+      <hemisphereLight color="#e8f1ff" groundColor="#182433" intensity={0.78} />
+      <directionalLight
+        castShadow={contactShadow}
+        color="#fff1d6"
+        intensity={2.65}
+        position={[4.6, 5.4, 4.8]}
+        shadow-bias={-0.00035}
+        shadow-mapSize-height={1024}
+        shadow-mapSize-width={1024}
+      />
+      <directionalLight color="#8ebcff" intensity={1.05} position={[-4.2, 2.4, 3.2]} />
+      <directionalLight color="#ffd19a" intensity={1.45} position={[1.2, -0.8, -4.5]} />
       {environmentMap ? (
         <Environment map={environmentMap} background={false} />
       ) : (

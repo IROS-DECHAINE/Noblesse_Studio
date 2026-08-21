@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { buildSurfaceCatalog, categoryFor, familyFromNotes, filterAssets, filterSurfaces, textureRole } from './catalog.js'
-import { vaultPreview } from './desktopApi.js'
+import { unwrapPublicItemsV1, vaultPreview } from './desktopApi.js'
 
 const assets = [
   { display_name: 'M_PB_BaseClassic_Master_V01', asset_type: 'Material', notes: '' },
@@ -62,8 +62,18 @@ test('serves vault previews on demand without bundling a duplicate preview tree'
   }
   assert.equal(vaultPreview(asset), '/api/vault-preview?source=packs%2FFab_Test%2Fpreviews%2FWood%2Fexample.png')
   globalThis.window = { noblesseDesktop: {} }
-  assert.equal(vaultPreview(asset), 'noblesse-vault://preview/packs%2FFab_Test%2Fpreviews%2FWood%2Fexample.png')
+  assert.equal(vaultPreview({
+    ...asset,
+    preview_url: 'noblesse-vault://preview/asset-permanent-01',
+  }), 'noblesse-vault://preview/asset-permanent-01')
   delete globalThis.window
+})
+
+test('unwraps only supported public IPC envelopes', () => {
+  const items = [{ id: 'asset-01' }]
+  assert.equal(unwrapPublicItemsV1({ schemaVersion: 1, items }, 'assets v1'), items)
+  assert.throws(() => unwrapPublicItemsV1({ schemaVersion: 2, items }, 'assets v1'), /non pris en charge/)
+  assert.throws(() => unwrapPublicItemsV1(items, 'assets v1'), /non pris en charge/)
 })
 
 test('filters logical surfaces by usage and target platform', () => {

@@ -127,7 +127,7 @@ export function descriptorTextureRequests(
         )
       }
       return {
-        colorSpace: map.colorSpace,
+        colorSpace: map.decode === 'srgb' ? 'srgb' : map.colorSpace,
         role,
         transform: textureTransform(descriptor, map),
         uri: assertLocalPreviewUri(resolved, { baseUrl }),

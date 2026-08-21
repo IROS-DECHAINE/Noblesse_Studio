@@ -17,8 +17,8 @@ export const MATERIAL_RECIPE_REQUIREMENTS = Object.freeze({
     'recompile',
     'get_property_input',
   ],
-  [OBJECT_TOOLSET]: ['list_properties', 'set_properties'],
-  [ASSET_TOOLSET]: ['save_assets', 'is_dirty'],
+  [OBJECT_TOOLSET]: ['list_properties', 'get_properties', 'set_properties'],
+  [ASSET_TOOLSET]: ['exists', 'save_assets', 'is_dirty'],
 })
 
 export const summarizeTransferCapabilities = (toolsets = []) => {

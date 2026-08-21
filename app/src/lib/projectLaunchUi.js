@@ -1,6 +1,8 @@
 const BUSY_STATES = new Set(['LAUNCHING', 'CONNECTING'])
 const ERROR_STATES = new Set([
+  'WRONG_PROJECT',
   'WRONG_PORT',
+  'PORT_IN_USE',
   'PORT_CONFLICT',
   'OPEN_MCP_UNAVAILABLE',
   'CONNECTED_UNSUPPORTED',
@@ -43,6 +45,42 @@ export function getProjectLaunchAction(profile, pending = false) {
       statusLabel: profile.message,
       tone: 'warning',
       disabled: !profile.canLaunch,
+      busy: false,
+    }
+  }
+  if (profile.state === 'LAUNCH_FAILED') {
+    return {
+      label: `Relancer UEFN · MCP ${profile.expectedPort}`,
+      statusLabel: profile.message,
+      tone: 'warning',
+      disabled: !profile.canLaunch,
+      busy: false,
+    }
+  }
+  if (profile.state === 'PROJECT_BROWSER') {
+    return {
+      label: 'Portail UEFN ouvert',
+      statusLabel: profile.message,
+      tone: 'warning',
+      disabled: true,
+      busy: false,
+    }
+  }
+  if (profile.state === 'WRONG_PROJECT') {
+    return {
+      label: 'Mauvais projet ouvert',
+      statusLabel: profile.message,
+      tone: 'error',
+      disabled: true,
+      busy: false,
+    }
+  }
+  if (profile.state === 'PORT_IN_USE') {
+    return {
+      label: `Port MCP ${profile.expectedPort} occupé`,
+      statusLabel: profile.message,
+      tone: 'error',
+      disabled: true,
       busy: false,
     }
   }

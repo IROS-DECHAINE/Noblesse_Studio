@@ -7,6 +7,7 @@ const previewSource = await readFile(new URL('../MaterialPreview3D.jsx', import.
 const inspectorSource = await readFile(new URL('../SurfaceInspector.jsx', import.meta.url), 'utf8')
 const overlaySource = await readFile(new URL('./SourcePreviewOverlay.jsx', import.meta.url), 'utf8')
 const failoverSource = await readFile(new URL('./useAtomicPreviewFailover.js', import.meta.url), 'utf8')
+const previewStyles = await readFile(new URL('../../styles.css', import.meta.url), 'utf8')
 
 const runtimeFiles = (await readdir(previewRoot, { withFileTypes: true }))
   .filter((entry) => entry.isFile() && /\.(?:js|jsx)$/.test(entry.name) && !/\.test\./.test(entry.name))
@@ -67,6 +68,7 @@ test('one persistent unkeyed Canvas owns live and rendered-capture presentations
 
   const canvasTag = openingTag(canvasOwners[0].source, 'Canvas')
   assert.doesNotMatch(canvasTag, /\bkey\s*=/)
+  assert.match(canvasTag, /\bshadows\s*=\s*['"]percentage['"]/)
   assert.match(canvasOwners[0].source, /SourcePreviewOverlay/)
   assert.match(canvasOwners[0].source, /shape=\{shape\}/)
 
@@ -106,4 +108,8 @@ test('fallbacks are silent, source-faithful, non-black and shape-aware', () => {
   const allPreviewSource = [previewSource, inspectorSource, overlaySource, failoverSource]
     .join('\n')
   assert.doesNotMatch(allPreviewSource, /Aper(?:\u00e7u|\u00c3\u00a7u)\s+statique\s+de\s+secours/i)
+})
+
+test('a committed live frame fully hides the source poster behind the transparent Canvas', () => {
+  assert.match(previewStyles, /\.material-preview-source-overlay\.is-background\s*\{[^}]*\bopacity:\s*0\b[^}]*\}/)
 })

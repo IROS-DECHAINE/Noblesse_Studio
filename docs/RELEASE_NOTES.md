@@ -1,5 +1,26 @@
 # Notes de version
 
+## 1.0.7 — Coffre fidèle et workflows projets durcis
+
+- prévisualisation professionnelle des matériaux depuis les sources réelles du Vault, avec chargement atomique des textures, repli contrôlé et cache natif reconstructible ;
+- contrats IPC publics `v1` pour les assets et projets : aucun chemin privé, PID, endpoint ou identifiant dérivé d’un chemin n’est exposé au renderer ;
+- lancement réel de PrimeBot Rush sur le port MCP 8000 et de Prime Industry sur 8001 depuis l’application ;
+- affichage de la plateforme UEFN dérivé du profil de lancement vérifié au lieu d’une ancienne étiquette produit ;
+- surveillance MCP maintenue lorsque UEFN passe au premier plan afin que les cartes se mettent à jour automatiquement ;
+- garde anti-course conservée pendant l’ouverture ou la fermeture d’un autre éditeur UEFN ;
+- installation UEFN des textures avec normalisation non destructive, relecture des propriétés critiques et confirmation uniquement après sauvegarde vérifiée ;
+- contrat UTF-8 automatique étendu aux sources visibles par l’utilisateur ;
+- intégrité du Vault, contrats source, audit production, 227 tests, build et paquet desktop validés.
+
+## 1.0.4 — Ouverture directe UEFN corrigée
+
+- correction de la V1 qui ouvrait le Project Browser sur le dernier projet et le port global au lieu du profil choisi ;
+- handoff atomique du projet, du port MCP et de l’auto-démarrage dans les préférences UEFN avant chaque lancement ;
+- sauvegardes des préférences adressées par SHA-256 et lancements concurrents sérialisés ;
+- surcharges `-ini` et flags MCP conservés comme seconde voie de compatibilité ;
+- aucun statut vert avant validation du mount, du port et des outils de transfert ;
+- nouveau test live requis après redémarrage manuel de Noblesse Studio.
+
 ## 1.0.3 — Identité Windows définitive
 
 - identité Windows propre `com.noblesse.studio.desktop`, indépendante de l’ancien prototype Worker Rift ;

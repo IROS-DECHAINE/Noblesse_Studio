@@ -60,6 +60,15 @@
       "path": "/mcp"
     },
     {
+      "id": "unreal:noblesse_vault_install_qa",
+      "displayName": "Noblesse Vault Install QA",
+      "platform": "Unreal",
+      "projectMount": "Game",
+      "descriptorPath": "D:\\NO_BLESSE Studio\\Unreal\\NOBLESSE_VAULT_INSTALL_QA\\NOBLESSE_VAULT_INSTALL_QA.uproject",
+      "transport": "LOCAL",
+      "port": null
+    },
+    {
       "id": "roblox:official_studio",
       "displayName": "Roblox Studio",
       "platform": "Roblox",

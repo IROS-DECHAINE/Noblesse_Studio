@@ -26,7 +26,7 @@ const cleanText = (value, max, fallback = '') => {
 
 const serializeError = (error) => ({
   code: cleanText(error?.code, 80, 'OPERATION_FAILED'),
-  message: cleanText(error?.message, 600, 'Lâ€™opÃ©ration a Ã©chouÃ©.'),
+  message: cleanText(error?.message, 600, 'L’opération a échoué.'),
 })
 
 const publicItem = (item) => ({
@@ -68,7 +68,7 @@ export const publicOperationJob = (job) => ({
 export class OperationJobStore {
   constructor({ root, now = () => new Date(), idFactory = randomUUID } = {}) {
     if (typeof root !== 'string' || !path.isAbsolute(root) || typeof now !== 'function' || typeof idFactory !== 'function') {
-      throw jobError('INVALID_CONFIGURATION', 'La configuration du journal dâ€™opÃ©rations est invalide.')
+      throw jobError('INVALID_CONFIGURATION', 'La configuration du journal d’opérations est invalide.')
     }
     this.root = path.resolve(root)
     this.now = now
@@ -80,7 +80,7 @@ export class OperationJobStore {
   _nowIso() {
     const value = this.now()
     const date = value instanceof Date ? value : new Date(value)
-    if (Number.isNaN(date.getTime())) throw jobError('INVALID_TIME', 'La date du journal dâ€™opÃ©rations est invalide.')
+    if (Number.isNaN(date.getTime())) throw jobError('INVALID_TIME', 'La date du journal d’opérations est invalide.')
     return date.toISOString()
   }
 
@@ -88,7 +88,7 @@ export class OperationJobStore {
     await mkdir(this.jobsRoot, { recursive: true })
     for (const folder of [this.root, this.jobsRoot]) {
       const details = await lstat(folder)
-      if (details.isSymbolicLink() || !details.isDirectory()) throw jobError('SYMLINK_NOT_ALLOWED', 'Le journal dâ€™opÃ©rations doit utiliser des dossiers rÃ©els.')
+      if (details.isSymbolicLink() || !details.isDirectory()) throw jobError('SYMLINK_NOT_ALLOWED', 'Le journal d’opérations doit utiliser des dossiers réels.')
     }
     return { ready: true, schemaVersion: SCHEMA_VERSION }
   }
@@ -106,7 +106,7 @@ export class OperationJobStore {
   }
 
   _jobFile(id) {
-    if (!JOB_ID_PATTERN.test(String(id || ''))) throw jobError('INVALID_JOB_ID', 'Lâ€™identifiant de lâ€™opÃ©ration est invalide.')
+    if (!JOB_ID_PATTERN.test(String(id || ''))) throw jobError('INVALID_JOB_ID', 'L’identifiant de l’opération est invalide.')
     return path.join(this.jobsRoot, `${id}.json`)
   }
 
@@ -130,18 +130,18 @@ export class OperationJobStore {
 
   _validate(job, expectedId = '') {
     if (!job || job.schemaVersion !== SCHEMA_VERSION || !JOB_ID_PATTERN.test(job.id) || (expectedId && job.id !== expectedId)) {
-      throw jobError('JOB_INVALID', 'Un journal dâ€™opÃ©ration est invalide.')
+      throw jobError('JOB_INVALID', 'Un journal d’opération est invalide.')
     }
     if (!JOB_STATUSES.has(job.status) || !Number.isSafeInteger(job.revision) || job.revision < 1 || !Array.isArray(job.items)) {
-      throw jobError('JOB_INVALID', 'Lâ€™Ã©tat dâ€™une opÃ©ration est invalide.')
+      throw jobError('JOB_INVALID', 'L’état d’une opération est invalide.')
     }
     const ids = new Set()
     for (const item of job.items) {
       if (!item || typeof item.id !== 'string' || !item.id || ids.has(item.id) || !ITEM_STATUSES.has(item.status)) {
-        throw jobError('JOB_INVALID', 'Une Ã©tape du journal dâ€™opÃ©ration est invalide.')
+        throw jobError('JOB_INVALID', 'Une étape du journal d’opération est invalide.')
       }
       if (item.sourcePath !== undefined && (typeof item.sourcePath !== 'string' || !path.isAbsolute(item.sourcePath))) {
-        throw jobError('JOB_INVALID', 'Une source privÃ©e du journal est invalide.')
+        throw jobError('JOB_INVALID', 'Une source privée du journal est invalide.')
       }
       ids.add(item.id)
     }
@@ -154,15 +154,15 @@ export class OperationJobStore {
     try {
       details = await lstat(file)
     } catch (error) {
-      if (error?.code === 'ENOENT') throw jobError('JOB_NOT_FOUND', 'Lâ€™opÃ©ration est introuvable.')
+      if (error?.code === 'ENOENT') throw jobError('JOB_NOT_FOUND', 'L’opération est introuvable.')
       throw error
     }
-    if (details.isSymbolicLink() || !details.isFile()) throw jobError('SYMLINK_NOT_ALLOWED', 'Le journal dâ€™opÃ©ration doit Ãªtre un fichier rÃ©el.')
+    if (details.isSymbolicLink() || !details.isFile()) throw jobError('SYMLINK_NOT_ALLOWED', 'Le journal d’opération doit être un fichier réel.')
     try {
       return this._validate(JSON.parse((await readFile(file, 'utf8')).replace(/^\uFEFF/, '')), id)
     } catch (error) {
       if (error instanceof OperationJobError) throw error
-      throw jobError('JOB_INVALID', 'Le journal dâ€™opÃ©ration est illisible.')
+      throw jobError('JOB_INVALID', 'Le journal d’opération est illisible.')
     }
   }
 
@@ -170,14 +170,14 @@ export class OperationJobStore {
     await this.ensure()
     const cleanType = cleanText(type, 80)
     if (!cleanType || !Array.isArray(items) || !items.length || items.length > 10_000) {
-      throw jobError('INVALID_JOB', 'La nouvelle opÃ©ration est invalide.')
+      throw jobError('INVALID_JOB', 'La nouvelle opération est invalide.')
     }
     return this._withMutation(async () => {
       const timestamp = this._nowIso()
       const id = `job-${this.idFactory()}`
       const normalizedItems = items.map((item, index) => ({
         id: cleanText(item?.id, 128, `item-${String(index + 1).padStart(6, '0')}`),
-        label: cleanText(item?.label, 300, `Ã‰lÃ©ment ${index + 1}`),
+        label: cleanText(item?.label, 300, `Élément ${index + 1}`),
         sourcePath: item?.sourcePath,
         status: 'PENDING',
         attempts: 0,
@@ -231,7 +231,7 @@ export class OperationJobStore {
 
   async update(id, updater) {
     await this.ensure()
-    if (typeof updater !== 'function') throw jobError('INVALID_UPDATE', 'La mise Ã  jour de lâ€™opÃ©ration est invalide.')
+    if (typeof updater !== 'function') throw jobError('INVALID_UPDATE', 'La mise à jour de l’opération est invalide.')
     return this._withMutation(async () => {
       const current = await this._read(id)
       const nextValue = await updater(structuredClone(current))
@@ -256,10 +256,10 @@ export class OperationJobStore {
   async updateItem(id, itemId, updater) {
     return this.update(id, (job) => {
       const item = job.items.find((entry) => entry.id === itemId)
-      if (!item) throw jobError('JOB_ITEM_NOT_FOUND', 'Lâ€™Ã©tape demandÃ©e est introuvable.')
+      if (!item) throw jobError('JOB_ITEM_NOT_FOUND', 'L’étape demandée est introuvable.')
       const changed = updater(item, job) || item
       Object.assign(item, changed)
-      if (!ITEM_STATUSES.has(item.status)) throw jobError('INVALID_ITEM_STATUS', 'Le statut de lâ€™Ã©tape est invalide.')
+      if (!ITEM_STATUSES.has(item.status)) throw jobError('INVALID_ITEM_STATUS', 'Le statut de l’étape est invalide.')
       return job
     })
   }
@@ -273,7 +273,7 @@ export class OperationJobStore {
   }
 
   async finalize(id, { status, summary = '' } = {}) {
-    if (!TERMINAL_STATUSES.has(status)) throw jobError('INVALID_FINAL_STATUS', 'Le statut final de lâ€™opÃ©ration est invalide.')
+    if (!TERMINAL_STATUSES.has(status)) throw jobError('INVALID_FINAL_STATUS', 'Le statut final de l’opération est invalide.')
     return this.update(id, (job) => {
       job.status = status
       job.summary = cleanText(summary, 600)
@@ -302,7 +302,7 @@ export class OperationJobStore {
       if (current.status !== 'RUNNING' || (type && current.type !== type)) continue
       recovered.push(await this.update(id, (job) => {
         job.status = 'INTERRUPTED'
-        job.summary = 'Lâ€™application sâ€™est arrÃªtÃ©e avant la fin. La reprise est disponible.'
+        job.summary = 'L’application s’est arrêtée avant la fin. La reprise est disponible.'
         for (const item of job.items) if (item.status === 'RUNNING') item.status = 'PENDING'
         return job
       }))
@@ -314,7 +314,7 @@ export class OperationJobStore {
     await this.ensure()
     return this._withMutation(async () => {
       const job = await this._read(id)
-      if (!TERMINAL_STATUSES.has(job.status)) throw jobError('JOB_NOT_TERMINAL', 'Une opÃ©ration active ne peut pas Ãªtre supprimÃ©e du journal.')
+      if (!TERMINAL_STATUSES.has(job.status)) throw jobError('JOB_NOT_TERMINAL', 'Une opération active ne peut pas être supprimée du journal.')
       await rm(this._jobFile(id), { force: true })
       return { removed: true, id }
     })

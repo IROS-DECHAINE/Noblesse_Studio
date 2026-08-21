@@ -3,6 +3,7 @@ import test from 'node:test'
 import { NoColorSpace, RepeatWrapping, SRGBColorSpace } from 'three'
 import {
   PreviewTextureSetError,
+  descriptorTextureRequests,
   loadPreviewTextureSet,
 } from './useAtomicTextureSet.js'
 
@@ -48,6 +49,37 @@ test('commits one shared ORM texture atomically with explicit color spaces', asy
   assert.strictEqual(textures.ao, textures.orm)
   assert.strictEqual(textures.roughness, textures.orm)
   assert.strictEqual(textures.metalness, textures.orm)
+})
+
+test('decodes an evidence-backed Unreal ORM transfer without changing its linear semantics', () => {
+  const descriptor = {
+    schemaVersion: 1,
+    assetId: 'native-unreal-preview',
+    animated: false,
+    mode: 'pbr_maps',
+    previewSource: 'packs/Test/capture.png',
+    material: {
+      baseColor: [1, 1, 1, 1],
+      emissiveColor: [0, 0, 0, 1],
+      emissiveIntensity: 0,
+      metalness: 1,
+      roughness: 1,
+      specularIntensity: 0.5,
+    },
+    maps: {
+      baseColor: { source: 'base.webp', url: 'noblesse-vault://preview/base.webp', colorSpace: 'srgb' },
+      normal: { source: 'normal.webp', url: 'noblesse-vault://preview/normal.webp', colorSpace: 'linear' },
+      orm: {
+        source: 'orm.webp',
+        url: 'noblesse-vault://preview/orm.webp',
+        colorSpace: 'linear',
+        channels: 'R=AO · G=Roughness · B=Metallic',
+        decode: 'srgb',
+      },
+    },
+  }
+  const orm = descriptorTextureRequests(descriptor).find((entry) => entry.role === 'orm')
+  assert.equal(orm.colorSpace, 'srgb')
 })
 
 test('disposes every fulfilled texture and commits nothing when one role fails', async () => {

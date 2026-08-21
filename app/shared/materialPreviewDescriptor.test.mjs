@@ -44,6 +44,46 @@ test('keeps native Unreal previews as rendered captures', () => {
   assert.equal(descriptor.mode, 'rendered_capture')
 })
 
+test('promotes a native Unreal material only when verified PBR maps are supplied', () => {
+  const descriptor = createMaterialPreviewDescriptor({
+    asset: asset({
+      asset_type: 'UnrealMaterialInstance',
+      preview_kind: 'rendered_sphere',
+      preview_source: 'packs/Test/capture.png',
+    }),
+    nativePreview: {
+      maxResolution: 1024,
+      normalConvention: 'UNREAL_DIRECTX',
+      ormTransfer: 'SRGB',
+      revision: 'verified-revision',
+      maps: {
+        baseColor: { source: 'packs/Test/base.webp', colorSpace: 'srgb' },
+        normal: { source: 'packs/Test/normal.webp', colorSpace: 'linear' },
+        orm: {
+          source: 'packs/Test/orm.webp',
+          colorSpace: 'linear',
+          channels: 'R=AO · G=Roughness · B=Metallic',
+        },
+      },
+      material: {
+        baseColor: [1, 1, 1, 1],
+        emissiveColor: [0, 0, 0, 1],
+        emissiveIntensity: 0,
+        metalness: 1,
+        roughness: 1,
+        specularIntensity: 0.5,
+      },
+    },
+  })
+  assert.equal(descriptor.mode, 'pbr_maps')
+  assert.equal(descriptor.previewSource, 'packs/Test/capture.png')
+  assert.equal(descriptor.previewProvenance, 'unreal_native_verified_maps')
+  assert.equal(descriptor.revision, 'verified-revision')
+  assert.deepEqual(descriptor.normalScale, [1, -1])
+  assert.equal(descriptor.maps.orm.decode, 'srgb')
+  assert.match(descriptor.fidelityLabel, /Unreal natif/i)
+})
+
 test('exposes a bounded supported animated graph', () => {
   const recipe = {
     textures: [{ assetName: 'Flow', source: 'packs/Test/Flow.png' }],

@@ -199,7 +199,7 @@ button { color: inherit; }
 .material-preview-3d canvas { position: relative; z-index: 1; display: block; width: 100% !important; height: 100% !important; }
 .material-preview-source-overlay { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; pointer-events: none; transition: opacity .16s ease; }
 .material-preview-source-overlay.is-foreground { z-index: 3; background: radial-gradient(circle at 50% 38%, rgba(20,42,62,.98), rgba(6,16,26,.99) 72%); }
-.material-preview-source-overlay.is-background { z-index: 0; }
+.material-preview-source-overlay.is-background { z-index: 0; opacity: 0; }
 .material-preview-source-frame { position: relative; display: block; width: 248px; max-width: 82%; overflow: hidden; background-position: center; background-size: cover; box-shadow: 0 20px 34px rgba(0,0,0,.48); }
 .material-preview-source-overlay.is-sphere .material-preview-source-frame { border-radius: 50% !important; }
 .material-preview-source-overlay.is-plane .material-preview-source-frame { width: 258px; max-width: 84%; border-radius: 8px !important; }

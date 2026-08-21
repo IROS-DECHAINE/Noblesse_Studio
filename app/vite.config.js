@@ -44,19 +44,19 @@ export function localUefnBridge() {
 
   const materialPreview = async (req, res) => {
     res.setHeader('Cache-Control', 'no-store')
-    if (req.method !== 'GET') return json(res, 405, { error: 'MÃ©thode non autorisÃ©e' })
+    if (req.method !== 'GET') return json(res, 405, { error: 'Méthode non autorisée' })
     const assetId = new URL(req.url || '/', 'http://noblesse.local').searchParams.get('assetId')?.trim()
     if (!assetId || assetId.length > 256) return json(res, 400, { error: 'Asset invalide' })
     try {
       return json(res, 200, await loadMaterialPreviewDescriptor(assetId))
     } catch {
-      return json(res, 404, { error: 'AperÃ§u matÃ©riau indisponible' })
+      return json(res, 404, { error: 'Aperçu matériau indisponible' })
     }
   }
 
   const vaultPreviewFile = async (req, res) => {
     if (req.method !== 'GET' && req.method !== 'HEAD') {
-      return json(res, 405, { error: 'MÃ©thode non autorisÃ©e' })
+      return json(res, 405, { error: 'Méthode non autorisée' })
     }
     try {
       const source = new URL(req.url || '/', 'http://noblesse.local').searchParams.get('source') || ''
@@ -69,12 +69,12 @@ export function localUefnBridge() {
       if (req.method === 'HEAD') return res.end()
       const stream = createReadStream(filePath)
       stream.on('error', () => {
-        if (!res.headersSent) json(res, 404, { error: 'AperÃ§u indisponible' })
+        if (!res.headersSent) json(res, 404, { error: 'Aperçu indisponible' })
         else res.destroy()
       })
       return stream.pipe(res)
     } catch {
-      return json(res, 404, { error: 'AperÃ§u indisponible' })
+      return json(res, 404, { error: 'Aperçu indisponible' })
     }
   }
 

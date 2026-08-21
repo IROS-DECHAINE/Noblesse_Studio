@@ -4,7 +4,7 @@ import { findProjectConnection, loadProjectConnectionRegistry } from './projectC
 import { UefnMcpClient } from './uefnMcpClient.mjs'
 import { discoverOpenUefnProjects } from './uefnOpenProjectDiscovery.mjs'
 import { createUefnPortOwnershipVerifier } from './uefnProcessInspector.mjs'
-import { summarizeTransferCapabilities } from './uefnTransferContract.mjs'
+import { MATERIAL_RECIPE_REQUIREMENTS, summarizeTransferCapabilities } from './uefnTransferContract.mjs'
 import { listUefnProjects } from './vaultService.mjs'
 
 const FAVORITES_SCHEMA_VERSION = 1
@@ -91,6 +91,11 @@ const createDefaultProbe = ({ timeoutMs = 700, verifyPortOwner = createUefnPortO
       const mount = normalizeMount(String(contentBrowserPath || '').split('/').filter(Boolean)[0])
       if (!isUefnProjectMount(mount)) throw new Error('Le serveur MCP ne correspond pas à un projet UEFN')
       const toolsets = await client.listToolsets()
+      const capabilities = summarizeTransferCapabilities(toolsets)
+      if (capabilities.materialRecipe) {
+        const missingTools = await client.missingTools(MATERIAL_RECIPE_REQUIREMENTS)
+        capabilities.materialRecipe = missingTools.length === 0
+      }
       return {
         id: projectId(mount),
         mount,
@@ -100,7 +105,7 @@ const createDefaultProbe = ({ timeoutMs = 700, verifyPortOwner = createUefnPortO
         contentBrowserPath,
         latencyMs: Date.now() - startedAt,
         processId: owner.pid,
-        capabilities: summarizeTransferCapabilities(toolsets),
+        capabilities,
       }
     } catch {
       clients.delete(port)
@@ -212,7 +217,7 @@ export const createUefnSessionService = ({
       const canInstall = toolsetReady && !portMismatch
       return {
         ...session,
-        id: projectId(session.mount),
+        id: assignment?.id || projectId(session.mount),
         name: assignment?.displayName || session.name,
         path: session.path || favorite?.path || '',
         platform: 'UEFN',
@@ -221,6 +226,7 @@ export const createUefnSessionService = ({
         canInstall,
         transferReady: canInstall,
         favorite: Boolean(favorite),
+        registered: Boolean(assignment),
         assignedPort,
         preferredPort: assignedPort,
         connectionId: assignment?.id || null,
@@ -249,7 +255,7 @@ export const createUefnSessionService = ({
         : rawIssue
       destinations.push({
         ...rawProject,
-        id: projectId(mount),
+        id: assignment?.id || projectId(mount),
         mount,
         name: assignment?.displayName || known?.name || rawProject.name || mount,
         path: rawProject.path || known?.path || favorite?.path || '',
@@ -260,6 +266,7 @@ export const createUefnSessionService = ({
         canInstall: false,
         transferReady: false,
         favorite: Boolean(favorite),
+        registered: Boolean(assignment),
         port: assignedPort,
         assignedPort,
         connectionId: assignment?.id || null,
@@ -277,7 +284,7 @@ export const createUefnSessionService = ({
       const assignment = findProjectConnection(registry, { mount: favorite.mount, platform: 'UEFN' })
       const assignedPort = assignment?.port || favorite.preferredPort || null
       destinations.push({
-        id: projectId(favorite.mount),
+        id: assignment?.id || projectId(favorite.mount),
         mount: favorite.mount,
         name: assignment?.displayName || known?.name || favorite.name,
         path: known?.path || favorite.path || '',
@@ -288,6 +295,7 @@ export const createUefnSessionService = ({
         canInstall: false,
         transferReady: false,
         favorite: true,
+        registered: Boolean(assignment),
         port: assignedPort,
         assignedPort,
         connectionId: assignment?.id || null,

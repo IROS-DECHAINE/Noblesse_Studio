@@ -78,7 +78,7 @@ const safeRelativePath = (value) => {
   const normalized = value.replaceAll('\\', '/')
   const segments = normalized.split('/')
   if (segments.some((segment) => !segment || segment === '.' || segment === '..')) {
-    throw backupError('INVALID_RELATIVE_PATH', 'Un chemin de sauvegarde sort de sa racine autorisÃ©e.')
+    throw backupError('INVALID_RELATIVE_PATH', 'Un chemin de sauvegarde sort de sa racine autorisée.')
   }
   return normalized
 }
@@ -92,7 +92,7 @@ const ensureContained = (root, candidate, { allowRoot = false } = {}) => {
     throw backupError('PATH_OUTSIDE_ROOT', 'Le chemin de sauvegarde ne peut pas viser directement sa racine.')
   }
   if (relative === '..' || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
-    throw backupError('PATH_OUTSIDE_ROOT', 'Un chemin de sauvegarde sort de sa racine autorisÃ©e.')
+    throw backupError('PATH_OUTSIDE_ROOT', 'Un chemin de sauvegarde sort de sa racine autorisée.')
   }
   return resolved
 }
@@ -121,7 +121,7 @@ const readJson = async (file, code = 'INVALID_JSON') => {
   try {
     return JSON.parse((await readFile(file, 'utf8')).replace(/^\uFEFF/, ''))
   } catch (error) {
-    if (error?.code === 'ENOENT') throw backupError('NOT_FOUND', 'La sauvegarde demandÃ©e est introuvable.')
+    if (error?.code === 'ENOENT') throw backupError('NOT_FOUND', 'La sauvegarde demandée est introuvable.')
     throw backupError(code, 'Un fichier de sauvegarde est illisible.')
   }
 }
@@ -138,7 +138,7 @@ const normalizeRoots = (roots) => {
     }
     return { key, root: path.resolve(value) }
   })
-  if (!normalized.length) throw backupError('INVALID_CONFIGURATION', 'Aucune racine de sauvegarde nâ€™est configurÃ©e.')
+  if (!normalized.length) throw backupError('INVALID_CONFIGURATION', 'Aucune racine de sauvegarde n’est configurée.')
   return normalized.sort((left, right) => left.key.localeCompare(right.key, 'en'))
 }
 
@@ -151,7 +151,7 @@ const enumerateFiles = async (rootKey, root) => {
     throw error
   }
   if (rootDetails.isSymbolicLink() || !rootDetails.isDirectory()) {
-    throw backupError('SYMLINK_NOT_ALLOWED', `La racine ${rootKey} doit Ãªtre un dossier rÃ©el.`)
+    throw backupError('SYMLINK_NOT_ALLOWED', `La racine ${rootKey} doit être un dossier réel.`)
   }
 
   const files = []
@@ -161,12 +161,12 @@ const enumerateFiles = async (rootKey, root) => {
     for (const entry of entries) {
       const absolute = path.join(folder, entry.name)
       const relative = prefix ? `${prefix}/${entry.name}` : entry.name
-      if (entry.isSymbolicLink()) throw backupError('SYMLINK_NOT_ALLOWED', `Lien symbolique refusÃ© : ${rootKey}/${relative}`)
+      if (entry.isSymbolicLink()) throw backupError('SYMLINK_NOT_ALLOWED', `Lien symbolique refusé : ${rootKey}/${relative}`)
       if (entry.isDirectory()) {
         await visit(absolute, relative)
         continue
       }
-      if (!entry.isFile()) throw backupError('UNSUPPORTED_ENTRY', `EntrÃ©e non prise en charge : ${rootKey}/${relative}`)
+      if (!entry.isFile()) throw backupError('UNSUPPORTED_ENTRY', `Entrée non prise en charge : ${rootKey}/${relative}`)
       const details = await stat(absolute)
       files.push({
         rootKey,
@@ -196,7 +196,7 @@ const publicSnapshot = (manifest, verification = null) => ({
 export class BackupService {
   constructor({ backupRoot, roots, now = () => new Date(), idFactory = randomUUID } = {}) {
     if (typeof backupRoot !== 'string' || !path.isAbsolute(backupRoot)) {
-      throw backupError('INVALID_CONFIGURATION', 'La destination des sauvegardes doit Ãªtre un chemin absolu.')
+      throw backupError('INVALID_CONFIGURATION', 'La destination des sauvegardes doit être un chemin absolu.')
     }
     if (typeof now !== 'function' || typeof idFactory !== 'function') {
       throw backupError('INVALID_CONFIGURATION', 'La configuration temporelle des sauvegardes est invalide.')
@@ -216,7 +216,7 @@ export class BackupService {
     await mkdir(this.backupRoot, { recursive: true })
     const backupDetails = await lstat(this.backupRoot)
     if (backupDetails.isSymbolicLink() || !backupDetails.isDirectory()) {
-      throw backupError('SYMLINK_NOT_ALLOWED', 'La destination de sauvegarde doit Ãªtre un dossier rÃ©el.')
+      throw backupError('SYMLINK_NOT_ALLOWED', 'La destination de sauvegarde doit être un dossier réel.')
     }
     for (const folder of [this.objectsRoot, this.snapshotsRoot, this.plansRoot, this.stagingRoot]) {
       await mkdir(folder, { recursive: true })
@@ -240,7 +240,7 @@ export class BackupService {
       lock = await open(this.lockFile, 'wx', 0o600)
       await lock.writeFile(`${process.pid}\n${this.now().toISOString()}\n`, 'utf8')
     } catch (error) {
-      if (error?.code === 'EEXIST') throw backupError('BACKUP_BUSY', 'Une opÃ©ration de sauvegarde ou restauration est dÃ©jÃ  en cours.')
+      if (error?.code === 'EEXIST') throw backupError('BACKUP_BUSY', 'Une opération de sauvegarde ou restauration est déjà en cours.')
       throw error
     }
     try {
@@ -257,12 +257,12 @@ export class BackupService {
   }
 
   _snapshotFile(snapshotId) {
-    if (!SNAPSHOT_ID_PATTERN.test(snapshotId)) throw backupError('INVALID_SNAPSHOT_ID', 'Lâ€™identifiant de sauvegarde est invalide.')
+    if (!SNAPSHOT_ID_PATTERN.test(snapshotId)) throw backupError('INVALID_SNAPSHOT_ID', 'L’identifiant de sauvegarde est invalide.')
     return path.join(this.snapshotsRoot, snapshotId, 'manifest.json')
   }
 
   _planFile(planId) {
-    if (!PLAN_ID_PATTERN.test(planId)) throw backupError('INVALID_PLAN_ID', 'Lâ€™identifiant du plan de restauration est invalide.')
+    if (!PLAN_ID_PATTERN.test(planId)) throw backupError('INVALID_PLAN_ID', 'L’identifiant du plan de restauration est invalide.')
     return path.join(this.plansRoot, `${planId}.json`)
   }
 
@@ -300,9 +300,9 @@ export class BackupService {
       await copyFile(source, temporary)
       const copiedDetails = await lstat(temporary)
       if (copiedDetails.isSymbolicLink() || !copiedDetails.isFile() || copiedDetails.size !== sizeBytes) {
-        throw backupError('BACKUP_COPY_INVALID', 'Une copie de sauvegarde est incomplÃ¨te.')
+        throw backupError('BACKUP_COPY_INVALID', 'Une copie de sauvegarde est incomplète.')
       }
-      if (await sha256File(temporary) !== sha256) throw backupError('BACKUP_COPY_INVALID', 'Le hash de la copie ne correspond pas Ã  lâ€™original.')
+      if (await sha256File(temporary) !== sha256) throw backupError('BACKUP_COPY_INVALID', 'Le hash de la copie ne correspond pas à l’original.')
       await rename(temporary, target)
       return { target, created: true }
     } catch (error) {
@@ -379,17 +379,17 @@ export class BackupService {
     const payload = { ...manifest }
     delete payload.manifestSha256
     if (!SHA256_PATTERN.test(manifest.manifestSha256) || !safeEqual(sha256Text(canonicalJson(payload)), manifest.manifestSha256)) {
-      throw backupError('MANIFEST_TAMPERED', 'Le manifeste de sauvegarde a Ã©tÃ© altÃ©rÃ©.')
+      throw backupError('MANIFEST_TAMPERED', 'Le manifeste de sauvegarde a été altéré.')
     }
     const seen = new Set()
     for (const item of manifest.files) {
-      if (!this.roots.some((root) => root.key === item.rootKey)) throw backupError('MANIFEST_INVALID', 'Une racine inconnue apparaÃ®t dans la sauvegarde.')
+      if (!this.roots.some((root) => root.key === item.rootKey)) throw backupError('MANIFEST_INVALID', 'Une racine inconnue apparaît dans la sauvegarde.')
       safeRelativePath(item.relativePath)
       if (!Number.isSafeInteger(item.sizeBytes) || item.sizeBytes < 0 || !Number.isSafeInteger(item.mtimeMs) || !SHA256_PATTERN.test(item.sha256)) {
-        throw backupError('MANIFEST_INVALID', 'Une entrÃ©e de sauvegarde est invalide.')
+        throw backupError('MANIFEST_INVALID', 'Une entrée de sauvegarde est invalide.')
       }
       const identity = `${item.rootKey}\0${item.relativePath}`
-      if (seen.has(identity)) throw backupError('MANIFEST_INVALID', 'Une entrÃ©e de sauvegarde est dupliquÃ©e.')
+      if (seen.has(identity)) throw backupError('MANIFEST_INVALID', 'Une entrée de sauvegarde est dupliquée.')
       seen.add(identity)
     }
     return manifest
@@ -487,7 +487,7 @@ export class BackupService {
     const payload = { ...plan }
     delete payload.planHash
     if (!SHA256_PATTERN.test(plan.planHash) || !safeEqual(sha256Text(canonicalJson(payload)), plan.planHash)) {
-      throw backupError('PLAN_TAMPERED', 'Le plan de restauration a Ã©tÃ© altÃ©rÃ©.')
+      throw backupError('PLAN_TAMPERED', 'Le plan de restauration a été altéré.')
     }
     return plan
   }
@@ -524,12 +524,12 @@ export class BackupService {
       const plan = await this._readPlan(planId)
       if (!safeEqual(plan.planHash, planHash)) throw backupError('PLAN_MISMATCH', 'La confirmation ne correspond pas au plan de restauration.')
       if (plan.status === 'COMPLETED') return plan.result
-      if (new Date(plan.expiresAt).getTime() < this.now().getTime()) throw backupError('PLAN_EXPIRED', 'Le plan de restauration a expirÃ©.')
+      if (new Date(plan.expiresAt).getTime() < this.now().getTime()) throw backupError('PLAN_EXPIRED', 'Le plan de restauration a expiré.')
       if (!safeEqual(plan.currentStateFingerprint, await this._currentStateFingerprint())) {
-        throw backupError('SOURCE_CHANGED', 'Les donnÃ©es ont changÃ© depuis la prÃ©paration de la restauration.')
+        throw backupError('SOURCE_CHANGED', 'Les données ont changé depuis la préparation de la restauration.')
       }
       const manifest = await this._readManifest(plan.snapshotId)
-      if (!safeEqual(manifest.manifestSha256, plan.snapshotManifestSha256)) throw backupError('SNAPSHOT_CHANGED', 'La sauvegarde a changÃ© depuis la prÃ©paration.')
+      if (!safeEqual(manifest.manifestSha256, plan.snapshotManifestSha256)) throw backupError('SNAPSHOT_CHANGED', 'La sauvegarde a changé depuis la préparation.')
       await this.verifySnapshot(plan.snapshotId)
       const safetySnapshot = await this._createSnapshotUnlocked({ reason: 'pre-restore', label: `Avant restauration de ${plan.snapshotId}` })
 
@@ -539,7 +539,7 @@ export class BackupService {
         const temporary = path.join(path.dirname(target), `.${path.basename(target)}.${this.idFactory()}.restore`)
         try {
           await copyFile(this._objectPath(item.sha256), temporary)
-          if (await sha256File(temporary) !== item.sha256) throw backupError('RESTORE_COPY_INVALID', 'Une copie restaurÃ©e a Ã©chouÃ© au contrÃ´le de hash.')
+          if (await sha256File(temporary) !== item.sha256) throw backupError('RESTORE_COPY_INVALID', 'Une copie restaurée a échoué au contrôle de hash.')
           await rename(temporary, target)
         } catch (error) {
           await rm(temporary, { force: true }).catch(() => {})
@@ -554,7 +554,7 @@ export class BackupService {
         fileCount: manifest.fileCount,
         totalBytes: manifest.totalBytes,
         safetySnapshotId: safetySnapshot.snapshotId,
-        note: 'Les fichiers absents de la sauvegarde ont Ã©tÃ© conservÃ©s afin dâ€™Ã©viter toute suppression implicite.',
+        note: 'Les fichiers absents de la sauvegarde ont été conservés afin d’éviter toute suppression implicite.',
       }
       const completedPayload = { ...plan, status: 'COMPLETED', result }
       delete completedPayload.planHash

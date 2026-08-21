@@ -135,6 +135,26 @@ const sourceForTextureNode = (node, lookup) => lookup.get(node?.properties?.Text
 
 const mapDescriptor = (source, colorSpace, channels = '') => source ? { source, colorSpace, channels } : null
 
+const nativePreviewMaps = (nativePreview) => {
+  if (!nativePreview || typeof nativePreview !== 'object') return null
+  const maps = nativePreview.maps
+  if (!maps?.baseColor?.source || !maps?.normal?.source || !maps?.orm?.source) return null
+  if (maps.baseColor.colorSpace !== 'srgb'
+    || maps.normal.colorSpace !== 'linear'
+    || maps.orm.colorSpace !== 'linear') return null
+  if (!String(maps.orm.channels || '').match(/R\s*=\s*AO/i)
+    || !String(maps.orm.channels || '').match(/G\s*=\s*Roughness/i)
+    || !String(maps.orm.channels || '').match(/B\s*=\s*Metallic/i)) return null
+  return {
+    baseColor: { ...maps.baseColor },
+    normal: { ...maps.normal },
+    orm: {
+      ...maps.orm,
+      ...(nativePreview.ormTransfer === 'SRGB' ? { decode: 'srgb' } : {}),
+    },
+  }
+}
+
 const buildPbrMaps = (recipe = {}) => {
   const lookup = textureSourceLookup(recipe)
   const nodes = new Map((recipe.nodes || []).map((node) => [node.id, node]))
@@ -197,7 +217,7 @@ const shaderGraph = (recipe = {}) => ({
   textures: recipe.textures || [],
 })
 
-export const createMaterialPreviewDescriptor = ({ asset, recipe = null } = {}) => {
+export const createMaterialPreviewDescriptor = ({ asset, nativePreview = null, recipe = null } = {}) => {
   if (!asset?.asset_id) throw new Error('Asset de prévisualisation invalide')
 
   const base = {
@@ -209,6 +229,30 @@ export const createMaterialPreviewDescriptor = ({ asset, recipe = null } = {}) =
     fidelity: asset.graph_fidelity || '',
     previewSource: asset.preview_source || '',
     recommendedShape: 'sphere',
+  }
+
+  const verifiedNativeMaps = asset.asset_type === 'UnrealMaterialInstance'
+    ? nativePreviewMaps(nativePreview)
+    : null
+  if (verifiedNativeMaps) {
+    return {
+      ...base,
+      mode: 'pbr_maps',
+      fidelityLabel: `Unreal natif · cartes vérifiées ${nativePreview.maxResolution || 1024}px`,
+      channels: [
+        { key: 'MP_BaseColor', label: OUTPUT_LABELS.MP_BaseColor, detail: 'sRGB' },
+        { key: 'MP_Normal', label: OUTPUT_LABELS.MP_Normal, detail: 'Linéaire' },
+        { key: 'MP_AmbientOcclusion', label: OUTPUT_LABELS.MP_AmbientOcclusion, detail: 'ORM · canal R' },
+        { key: 'MP_Roughness', label: OUTPUT_LABELS.MP_Roughness, detail: 'ORM · canal G' },
+        { key: 'MP_Metallic', label: OUTPUT_LABELS.MP_Metallic, detail: 'ORM · canal B' },
+      ],
+      maps: verifiedNativeMaps,
+      material: nativePreview.material,
+      normalScale: nativePreview.normalConvention === 'UNREAL_DIRECTX' ? [1, -1] : 1,
+      previewProvenance: 'unreal_native_verified_maps',
+      revision: nativePreview.revision || '',
+      uvScale: 1,
+    }
   }
 
   if (asset.preview_kind === 'rendered_sphere' || asset.asset_type === 'UnrealMaterialInstance') {

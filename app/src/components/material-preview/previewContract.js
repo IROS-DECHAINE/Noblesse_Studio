@@ -35,6 +35,15 @@ const assertFinite = (value, path) => {
   if (!Number.isFinite(value)) fail('INVALID_NUMBER', `${path} doit être un nombre fini.`, { path, value })
 }
 
+const assertFiniteScalarOrPair = (value, path) => {
+  if (Array.isArray(value)) {
+    if (value.length !== 2) fail('INVALID_NUMBER', `${path} doit contenir deux nombres finis.`, { path, value })
+    value.forEach((component, index) => assertFinite(component, `${path}[${index}]`))
+    return
+  }
+  assertFinite(value, path)
+}
+
 const assertColor = (value, path) => {
   if (!Array.isArray(value) || value.length < 3 || value.length > 4) {
     fail('INVALID_COLOR', `${path} doit contenir trois ou quatre composantes.`, { path })
@@ -67,6 +76,9 @@ const assertMap = (map, role, { required = false } = {}) => {
   }
   if (!MAP_COLOR_SPACES.has(map.colorSpace)) {
     fail('INVALID_COLOR_SPACE', `Espace couleur non autorisé pour ${role}.`, { role, colorSpace: map.colorSpace })
+  }
+  if (map.decode !== undefined && (role !== 'orm' || map.decode !== 'srgb')) {
+    fail('INVALID_MAP_DECODE', `Décodage source non autorisé pour ${role}.`, { role, decode: map.decode })
   }
   if (['normal', 'orm'].includes(role) && map.colorSpace !== 'linear') {
     fail('INVALID_COLOR_SPACE', `${role} doit être linéaire.`, { role })
@@ -121,7 +133,7 @@ export function assertMaterialPreviewDescriptor(descriptor, { assetId = '' } = {
     case 'pbr_maps':
       assertMaterial(descriptor.material)
       if (descriptor.uvScale !== undefined) assertFinite(descriptor.uvScale, 'uvScale')
-      if (descriptor.normalScale !== undefined) assertFinite(descriptor.normalScale, 'normalScale')
+      if (descriptor.normalScale !== undefined) assertFiniteScalarOrPair(descriptor.normalScale, 'normalScale')
       if (!isRecord(descriptor.maps)) fail('MISSING_MAPS', 'Le mode pbr_maps exige un jeu de cartes.')
       assertMap(descriptor.maps.baseColor, 'baseColor', { required: true })
       assertMap(descriptor.maps.normal, 'normal', { required: true })

@@ -46,6 +46,35 @@ test('marks a local Unreal project open only when a running editor names its des
   assert.equal(project.status, 'EDITOR_OPEN_LOCAL_PROJECT')
 })
 
+test('uses a registered Unreal ID and never derives an ID from an unregistered path', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-unreal-stable-id-'))
+  t.after(() => rm(root, { recursive: true, force: true }))
+  const registeredFolder = path.join(root, 'Registered')
+  const unregisteredFolder = path.join(root, 'Unregistered')
+  const registeredDescriptor = path.join(registeredFolder, 'Registered.uproject')
+  await Promise.all([mkdir(registeredFolder), mkdir(unregisteredFolder)])
+  await Promise.all([
+    writeFile(registeredDescriptor, JSON.stringify({ FileVersion: 3, EngineAssociation: '5.8' })),
+    writeFile(path.join(unregisteredFolder, 'Unregistered.uproject'), JSON.stringify({ FileVersion: 3, EngineAssociation: '5.8' })),
+  ])
+  const registry = {
+    projects: [{
+      id: 'unreal:registered-permanent-id',
+      displayName: 'Projet enregistré',
+      platform: 'Unreal',
+      descriptorPath: registeredDescriptor,
+    }],
+  }
+
+  const projects = await listUnrealProjects(root, async () => [], registry)
+  const registered = projects.find((project) => project.registered)
+  const unregistered = projects.find((project) => !project.registered)
+  assert.equal(registered.id, 'unreal:registered-permanent-id')
+  assert.equal(registered.name, 'Projet enregistré')
+  assert.equal(unregistered.id, '')
+  assert.doesNotMatch(unregistered.id, /[\\/]/)
+})
+
 test('runs migration then target reload and only returns success with both receipts', async (t) => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-unreal-install-'))
   t.after(() => rm(root, { recursive: true, force: true }))

@@ -35,7 +35,7 @@ export const extractMcpIssue = (content = '') => {
   return port ? { code: 'PORT_CONFLICT', port } : null
 }
 
-const listUefnProcessIds = async () => {
+export const listUefnProcessIds = async () => {
   if (process.platform !== 'win32') return []
   try {
     const { stdout } = await execFileAsync('tasklist.exe', [

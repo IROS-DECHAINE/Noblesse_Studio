@@ -12,7 +12,18 @@ const projectLauncherPreviewEnabled = () => Boolean(
 
 const projectLauncherPreviewProfiles = () => {
   const elapsed = projectLauncherPreviewStartedAt ? Date.now() - projectLauncherPreviewStartedAt : 0
-  const primebotState = !projectLauncherPreviewStartedAt ? 'CLOSED' : elapsed < 1_200 ? 'LAUNCHING' : 'READY'
+  const forcedState = globalThis.location
+    ? new URLSearchParams(globalThis.location.search).get('projectLauncherState')
+    : ''
+  const primebotState = forcedState || (!projectLauncherPreviewStartedAt ? 'CLOSED' : elapsed < 1_200 ? 'LAUNCHING' : 'READY')
+  const primebotMessage = {
+    READY: 'Projet et outils MCP vérifiés sur le port 8000.',
+    LAUNCHING: 'Ouverture UEFN et démarrage du serveur MCP 8000…',
+    PROJECT_BROWSER: 'UEFN est ouvert sur le portail, mais PrimeBot Rush n\u2019a pas été chargé.',
+    WRONG_PROJECT: 'UEFN a ouvert Prime Industry, pas PrimeBot Rush.',
+    LAUNCH_FAILED: 'Le processus UEFN s\u2019est arrêté avant de charger le projet. Tu peux relancer.',
+    PORT_IN_USE: 'Le port MCP 8000 est occupé par Prime Industry.',
+  }[primebotState] || 'Prêt à lancer sur le port MCP 8000.'
   return [
     {
       id: 'uefn:steal_the_rift_bots',
@@ -21,16 +32,12 @@ const projectLauncherPreviewProfiles = () => {
       expectedPort: 8000,
       actualPort: primebotState === 'READY' ? 8000 : null,
       state: primebotState,
-      message: primebotState === 'READY'
-        ? 'Projet et outils MCP vérifiés sur le port 8000.'
-        : primebotState === 'LAUNCHING'
-          ? 'Ouverture UEFN et démarrage du serveur MCP 8000…'
-          : 'Prêt à lancer sur le port MCP 8000.',
-      opened: primebotState === 'READY',
+      message: primebotMessage,
+      opened: ['READY', 'PROJECT_BROWSER', 'WRONG_PROJECT'].includes(primebotState),
       connected: primebotState === 'READY',
       verified: primebotState === 'READY',
       descriptorAvailable: true,
-      canLaunch: primebotState === 'CLOSED',
+      canLaunch: ['CLOSED', 'LAUNCH_FAILED'].includes(primebotState),
     },
     {
       id: 'uefn:wtf_idle_tycoon',
@@ -100,8 +107,9 @@ export const resolveMaterialPreviewSources = (descriptor) => {
 }
 
 export const vaultPreview = (asset) => {
-  if (!asset?.preview_source && !asset?.preview_asset) return ''
+  if (!asset?.preview_url && !asset?.preview_source && !asset?.preview_asset) return ''
   const desktopAvailable = Boolean(globalThis.window?.noblesseDesktop)
+  if (desktopAvailable && asset.preview_url) return asset.preview_url
   if (desktopAvailable && asset.preview_source) {
     return `noblesse-vault://preview/${encodeURIComponent(asset.preview_source)}`
   }
@@ -109,9 +117,20 @@ export const vaultPreview = (asset) => {
   return asset.preview_asset ? publicAsset(asset.preview_asset) : ''
 }
 
+export const unwrapPublicItemsV1 = (payload, label) => {
+  if (!payload
+    || payload.schemaVersion !== 1
+    || !Array.isArray(payload.items)) {
+    throw new Error(`Contrat public ${label} non pris en charge.`)
+  }
+  return payload.items
+}
+
 export const studioApi = {
   assets: async () => {
-    if (window.noblesseDesktop?.getAssets) return window.noblesseDesktop.getAssets()
+    if (window.noblesseDesktop?.getAssets) {
+      return unwrapPublicItemsV1(await window.noblesseDesktop.getAssets(), 'assets v1')
+    }
     return fetchJson('data/vault-assets.json').then((payload) => payload.assets || [])
   },
   materialPreview: async (assetId) => {
@@ -120,8 +139,12 @@ export const studioApi = {
       : await fetchJson(`api/material-preview?assetId=${encodeURIComponent(assetId)}`)
     return resolveMaterialPreviewSources(descriptor)
   },
-  projects: () => window.noblesseDesktop?.listProjects?.() ?? Promise.resolve([]),
-  setProjectFavorite: (request) => window.noblesseDesktop?.setProjectFavorite?.(request) ?? Promise.resolve([]),
+  projects: async () => window.noblesseDesktop?.listProjects
+    ? unwrapPublicItemsV1(await window.noblesseDesktop.listProjects(), 'projets v1')
+    : [],
+  setProjectFavorite: async (request) => window.noblesseDesktop?.setProjectFavorite
+    ? unwrapPublicItemsV1(await window.noblesseDesktop.setProjectFavorite(request), 'projets v1')
+    : [],
   projectLaunchProfiles: () => window.noblesseDesktop?.listProjectLaunchProfiles?.()
     ?? Promise.resolve(projectLauncherPreviewEnabled() ? projectLauncherPreviewProfiles() : []),
   launchProject: (profileId) => {

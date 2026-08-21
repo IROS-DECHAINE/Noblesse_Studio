@@ -79,6 +79,35 @@ test('the same project discovered on multiple ports is exposed once using the lo
   assert.equal(destinations[0].canInstall, true)
 })
 
+test('uses the approved connection ID instead of deriving public identity from the mount', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-uefn-stable-id-'))
+  t.after(() => rm(root, { recursive: true, force: true }))
+  const service = createUefnSessionService({
+    favoritesFile: path.join(root, 'favorites.json'),
+    ports: [8015],
+    probePort: async () => makeSession(8015, 'RENAMED_MOUNT'),
+    openProjectDiscovery: async () => [],
+    projectIndex: async () => [],
+    connectionRegistry: {
+      version: 1,
+      projects: [{
+        id: 'uefn:permanent-portfolio-id',
+        displayName: 'Projet permanent',
+        platform: 'UEFN',
+        projectMount: 'RENAMED_MOUNT',
+        transport: 'STREAMABLE_HTTP',
+        port: 8015,
+      }],
+    },
+  })
+
+  const [destination] = await service.listDestinations()
+  assert.equal(destination.id, 'uefn:permanent-portfolio-id')
+  assert.equal(destination.name, 'Projet permanent')
+  assert.equal(destination.registered, true)
+  assert.equal((await service.resolveActiveSession(destination.id)).mount, 'RENAMED_MOUNT')
+})
+
 test('a verified project on the wrong profile port stays visible but transfer is blocked', async (t) => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-uefn-port-mismatch-'))
   t.after(() => rm(root, { recursive: true, force: true }))

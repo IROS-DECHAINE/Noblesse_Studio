@@ -9,6 +9,11 @@ export const DEFAULT_PROJECT_CONNECTIONS_FILE = fileURLToPath(
 
 const normalizeMount = (value = '') => String(value).trim().replace(/^\/+|\/+$/g, '')
 const mountKey = (value = '') => normalizeMount(value).toLocaleLowerCase('en-US')
+const descriptorKey = (value = '') => {
+  const descriptor = String(value || '').trim()
+  if (!descriptor || !path.win32.isAbsolute(descriptor)) return ''
+  return path.win32.normalize(descriptor).toLocaleLowerCase('en-US')
+}
 const LAUNCH_ADAPTERS = new Set(['UEFN_EDITOR'])
 
 const validateProject = (rawProject, index) => {
@@ -20,7 +25,7 @@ const validateProject = (rawProject, index) => {
   if (!['UEFN', 'Unreal', 'Roblox'].includes(platform)) {
     throw new Error(`Connexion ${id}: plateforme non prise en charge`)
   }
-  if (!['STREAMABLE_HTTP', 'STDIO'].includes(transport)) {
+  if (!['STREAMABLE_HTTP', 'STDIO', 'LOCAL'].includes(transport)) {
     throw new Error(`Connexion ${id}: transport non pris en charge`)
   }
   if (transport === 'STREAMABLE_HTTP') {
@@ -30,7 +35,10 @@ const validateProject = (rawProject, index) => {
     }
     if (project.path !== '/mcp') throw new Error(`Connexion ${id}: chemin MCP invalide`)
   } else if (project.port !== null) {
-    throw new Error(`Connexion ${id}: un transport stdio ne doit pas avoir de port`)
+    throw new Error(`Connexion ${id}: un transport sans serveur ne doit pas avoir de port`)
+  }
+  if (transport === 'LOCAL' && platform !== 'Unreal') {
+    throw new Error(`Connexion ${id}: le transport local est réservé aux projets Unreal`)
   }
   const launch = project.launch && typeof project.launch === 'object'
     ? {
@@ -46,6 +54,10 @@ const validateProject = (rawProject, index) => {
     if (!path.win32.isAbsolute(String(project.descriptorPath || '')) || !/\.uefnproject$/i.test(project.descriptorPath)) {
       throw new Error(`Connexion ${id}: descripteur UEFN absolu requis pour le lancement`)
     }
+  }
+  if (platform === 'Unreal'
+    && (!descriptorKey(project.descriptorPath) || !/\.uproject$/i.test(String(project.descriptorPath || '')))) {
+    throw new Error(`Connexion ${id}: descripteur Unreal absolu requis`)
   }
   return {
     ...project,
@@ -100,4 +112,11 @@ export const findProjectConnection = (registry, { mount, platform }) => {
   )) || null
 }
 
-export const projectConnectionInternals = { mountKey, normalizeMount }
+export const findProjectConnectionByDescriptor = (registry, { descriptorPath, platform }) => {
+  const key = descriptorKey(descriptorPath)
+  return registry.projects.find((project) => (
+    project.platform === platform && key && descriptorKey(project.descriptorPath) === key
+  )) || null
+}
+
+export const projectConnectionInternals = { descriptorKey, mountKey, normalizeMount }

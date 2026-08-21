@@ -4,8 +4,13 @@ import path from 'node:path'
 import { createMaterialPreviewDescriptor } from '../../shared/materialPreviewDescriptor.mjs'
 import { studioUefnProjectRoots, studioUnrealRoot, studioVaultRoot } from './studioPaths.mjs'
 import { discoverOpenUnrealProjects, normalizeProjectDescriptorPath } from './unrealOpenProjectDiscovery.mjs'
+import { findProjectConnectionByDescriptor, loadProjectConnectionRegistry } from './projectConnectionRegistry.mjs'
 
 const UNREAL_SCAN_EXCLUSIONS = new Set(['Binaries', 'Build', 'Content', 'DerivedDataCache', 'Intermediate', 'Saved'])
+const NATIVE_PREVIEW_MANIFEST = 'material-preview-maps.v1.json'
+const NATIVE_PREVIEW_MANIFEST_KIND = 'NOBLESSE_UNREAL_NATIVE_MATERIAL_PREVIEW_MAPS'
+const SAFE_PACK_ID = /^[A-Za-z0-9._-]+$/u
+const REQUIRED_NATIVE_PREVIEW_MAPS = Object.freeze(['baseColor', 'normal', 'orm'])
 const PREVIEW_MIME_TYPES = new Map([
   ['.jpeg', 'image/jpeg'],
   ['.jpg', 'image/jpeg'],
@@ -56,11 +61,74 @@ export const loadRecipe = async (assetId) => {
   return { asset, recipe }
 }
 
+const loadNativeMaterialPreview = async (asset) => {
+  const packId = String(asset?.pack_id || '')
+  if (asset?.asset_type !== 'UnrealMaterialInstance' || !SAFE_PACK_ID.test(packId)) return null
+
+  try {
+    const manifestSource = `packs/${packId}/${NATIVE_PREVIEW_MANIFEST}`
+    const nativeCatalogSource = `packs/${packId}/native-catalog.json`
+    const [manifest, nativeCatalogHash] = await Promise.all([
+      readJson(resolveVaultSource(manifestSource)),
+      sha256(resolveVaultSource(nativeCatalogSource)),
+    ])
+    if (manifest.schemaVersion !== 1
+      || manifest.status !== 'PASS'
+      || manifest.kind !== NATIVE_PREVIEW_MANIFEST_KIND
+      || manifest.packId !== packId
+      || manifest.packVersion !== asset.pack_version
+      || manifest.nativeCatalogSha256 !== nativeCatalogHash) return null
+
+    const entry = manifest.assets?.[asset.asset_id]
+    if (!entry
+      || entry.assetId !== asset.asset_id
+      || entry.sourceSha256 !== asset.source_sha256
+      || entry.sourceUnrealPath !== asset.source_unreal_path) return null
+
+    const expectedPrefix = `packs/${packId}/previews/material-pbr-v1/`
+    const verifiedMaps = {}
+    for (const role of REQUIRED_NATIVE_PREVIEW_MAPS) {
+      const map = entry.maps?.[role]
+      if (!map
+        || typeof map.source !== 'string'
+        || !map.source.startsWith(expectedPrefix)
+        || typeof map.sha256 !== 'string'
+        || !/^[a-f0-9]{64}$/u.test(map.sha256)) return null
+      const { filePath } = await resolveVaultPreviewSource(map.source)
+      if (await sha256(filePath) !== map.sha256) return null
+      verifiedMaps[role] = { ...map }
+    }
+
+    const revision = createHash('sha256')
+      .update(REQUIRED_NATIVE_PREVIEW_MAPS.map((role) => verifiedMaps[role].sha256).join(':'))
+      .digest('hex')
+      .slice(0, 20)
+    return {
+      ...entry,
+      maps: verifiedMaps,
+      maxResolution: manifest.maxResolution,
+      normalConvention: manifest.normalConvention,
+      ormTransfer: manifest.ormTransfer,
+      revision,
+    }
+  } catch {
+    return null
+  }
+}
+
 export const loadMaterialPreviewDescriptor = async (assetId) => {
   const asset = await loadVaultAsset(assetId)
   const recipe = asset.asset_type === 'MaterialRecipe'
     ? (await loadRecipe(assetId)).recipe
     : null
+  const nativePreview = await loadNativeMaterialPreview(asset)
+  if (nativePreview) {
+    try {
+      return createMaterialPreviewDescriptor({ asset, nativePreview, recipe })
+    } catch {
+      // A derived preview must fail closed to the immutable rendered proof.
+    }
+  }
   return createMaterialPreviewDescriptor({ asset, recipe })
 }
 
@@ -128,14 +196,14 @@ export const listUefnProjects = async () => {
   return projects.sort((left, right) => left.name.localeCompare(right.name, 'fr'))
 }
 
-const scanUnrealProjects = async (root, results, openProjectsByPath, depth = 0) => {
+const scanUnrealProjects = async (root, results, openProjectsByPath, registry, depth = 0) => {
   if (depth > 4 || !(await exists(root))) return
   const entries = await readdir(root, { withFileTypes: true })
   for (const entry of entries) {
     const fullPath = path.join(root, entry.name)
     if (entry.isDirectory()) {
       if (!UNREAL_SCAN_EXCLUSIONS.has(entry.name)) {
-        await scanUnrealProjects(fullPath, results, openProjectsByPath, depth + 1)
+        await scanUnrealProjects(fullPath, results, openProjectsByPath, registry, depth + 1)
       }
       continue
     }
@@ -145,12 +213,16 @@ const scanUnrealProjects = async (root, results, openProjectsByPath, depth = 0) 
     const engineVersion = String(descriptor.EngineAssociation || '').trim()
     const name = path.basename(entry.name, '.uproject')
     const openProject = openProjectsByPath.get(normalizeProjectDescriptorPath(fullPath)) || null
+    const assignment = findProjectConnectionByDescriptor(registry, {
+      descriptorPath: fullPath,
+      platform: 'Unreal',
+    })
     const opened = Boolean(openProject)
     const localReady = engineVersion === '5.8'
     const transferReady = localReady && opened
     results.push({
-      id: `unreal:${fullPath.toLowerCase()}`,
-      name,
+      id: assignment?.id || '',
+      name: assignment?.displayName || name,
       path: fullPath,
       folder: path.dirname(fullPath),
       platform: 'Unreal',
@@ -163,6 +235,8 @@ const scanUnrealProjects = async (root, results, openProjectsByPath, depth = 0) 
       canInstall: transferReady,
       transferReady,
       favorite: false,
+      registered: Boolean(assignment),
+      connectionId: assignment?.id || null,
       status: localReady
         ? opened ? 'EDITOR_OPEN_LOCAL_PROJECT' : 'PROJECT_CLOSED'
         : 'ENGINE_VERSION_UNSUPPORTED',
@@ -173,14 +247,21 @@ const scanUnrealProjects = async (root, results, openProjectsByPath, depth = 0) 
   }
 }
 
-export const listUnrealProjects = async (root = studioUnrealRoot(), openProjectDiscovery = discoverOpenUnrealProjects) => {
+export const listUnrealProjects = async (
+  root = studioUnrealRoot(),
+  openProjectDiscovery = discoverOpenUnrealProjects,
+  connectionRegistry = loadProjectConnectionRegistry,
+) => {
   const projects = []
-  const openProjects = await openProjectDiscovery()
+  const [openProjects, registry] = await Promise.all([
+    openProjectDiscovery(),
+    typeof connectionRegistry === 'function' ? connectionRegistry() : connectionRegistry,
+  ])
   const openProjectsByPath = new Map(openProjects.map((project) => [
     normalizeProjectDescriptorPath(project.path),
     project,
   ]).filter(([descriptor]) => descriptor))
-  await scanUnrealProjects(root, projects, openProjectsByPath)
+  await scanUnrealProjects(root, projects, openProjectsByPath, registry)
   return projects.sort((left, right) => left.name.localeCompare(right.name, 'fr'))
 }
 
@@ -211,6 +292,21 @@ export const resolveVaultPreviewSource = async (relativePath) => {
   const details = await stat(filePath)
   if (!details.isFile()) throw new Error('La source d\u2019aper\u00e7u n\u2019est pas un fichier')
   return { filePath, mimeType, size: details.size }
+}
+
+export const resolveVaultPreviewRequest = async (token) => {
+  const value = String(token || '').trim()
+  if (!value || value.includes('\0')) throw new Error('Jeton d’aperçu invalide')
+
+  const isManifestedSource = value.includes('/')
+    || value.includes('\\')
+    || /\.(?:png|jpe?g|webp)$/iu.test(value)
+  if (isManifestedSource) return resolveVaultPreviewSource(value)
+
+  const asset = await loadVaultAsset(value)
+  const relativePath = String(asset.preview_source || '')
+  if (!relativePath) throw new Error('Aperçu absent du manifeste')
+  return resolveVaultPreviewSource(relativePath)
 }
 
 export const writeInstallReceipt = async (payload) => {

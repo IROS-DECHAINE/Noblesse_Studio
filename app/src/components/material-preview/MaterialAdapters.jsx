@@ -12,6 +12,9 @@ import { SHADER_RUNTIME_PROFILE, ShaderRecipeRuntimeError } from './useShaderRec
 
 const color = (rgba) => new Color().setRGB(rgba[0], rgba[1], rgba[2])
 const materialSide = (shape) => shape === 'plane' ? DoubleSide : FrontSide
+const normalScale = (value = 1) => Array.isArray(value)
+  ? new Vector2(value[0], value[1])
+  : new Vector2(value, value)
 const basePhysicalProps = (descriptor, shape) => ({
   color: color(descriptor.material.baseColor),
   emissive: color(descriptor.material.emissiveColor),
@@ -39,7 +42,7 @@ export function PbrMapsMaterial({ descriptor, shape = 'sphere', textures }) {
       map={textures.baseColor}
       metalnessMap={textures.orm}
       normalMap={textures.normal}
-      normalScale={new Vector2(descriptor.normalScale ?? 1, descriptor.normalScale ?? 1)}
+      normalScale={normalScale(descriptor.normalScale)}
       roughnessMap={textures.orm}
       emissiveMap={textures.emissive || null}
     />

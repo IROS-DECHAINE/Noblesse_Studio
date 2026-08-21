@@ -1,7 +1,7 @@
 {
   "name": "noblesse-studio",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "Application locale Noblesse Studio pour piloter les projets, les documents, les finances, le planning et la bibliothèque d’assets.",
   "author": "Noblesse Studio",
   "packageManager": "pnpm@10.32.1",
@@ -29,6 +29,7 @@
   "dependencies": {
     "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
+    "ajv": "8.20.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
