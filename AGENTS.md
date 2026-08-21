@@ -3,9 +3,10 @@
 ## Lecture obligatoire
 
 1. Lire `README.md`.
-2. Lire `library/INDEX.md`.
-3. Lire `docs/ARCHITECTURE.md`.
-4. Pour une migration, lire `docs/MIGRATION_2026-08-21.md`.
+2. Lire `MASTER_AI_PROMPT.md` pour initialiser l’IA maîtresse.
+3. Lire `library/INDEX.md`.
+4. Lire `docs/ARCHITECTURE.md`.
+5. Pour une migration, lire `docs/MIGRATION_2026-08-21.md`.
 
 ## Règles de structure
 
@@ -38,4 +39,4 @@ pnpm.cmd test
 pnpm.cmd build
 ```
 
-Ne jamais supprimer l’ancien emplacement d’une migration avant un PASS de ces quatre contrôles et une validation humaine.
+Ne jamais supprimer l’ancien emplacement d’une migration avant un PASS de ces contrôles et une validation humaine.

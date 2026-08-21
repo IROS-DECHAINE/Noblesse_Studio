@@ -10,6 +10,7 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 
 | Besoin | Emplacement |
 |---|---|
+| Initialiser l’IA maîtresse | `MASTER_AI_PROMPT.md` |
 | Code complet de l’application | `app/` |
 | Interface visible | `app/src/` |
 | Electron, fichiers et IPC | `app/electron/` |

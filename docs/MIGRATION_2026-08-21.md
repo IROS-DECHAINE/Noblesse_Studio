@@ -56,9 +56,9 @@ vers :
 - Documents : 17
 - Intégrité : 962 fichiers contrôlés, 0 manquant, 0 hash invalide
 - SQLite : 354 éléments de bibliothèque, 17 documents, 5 relations, 17 révisions de référence, migrations de schéma v1 et v2
-- Tests : 172/172 en PASS après durcissement de production
+- Tests : 189/189 en PASS après durcissement de production
 - Build Vite de production : PASS
-- Racine lisible : code et fichiers techniques regroupés sous `app/`; seuls `README.md`, `AGENTS.md` et `.gitignore` restent comme fichiers de premier niveau
+- Racine lisible : code et fichiers techniques regroupés sous `app/`; `README.md`, `AGENTS.md`, `MASTER_AI_PROMPT.md` et `.gitignore` sont les seules entrées documentaires de premier niveau
 
 ## État
 
