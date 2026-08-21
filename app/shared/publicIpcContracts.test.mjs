@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict'
+import { access } from 'node:fs/promises'
+import path from 'node:path'
 import test from 'node:test'
+import { fileURLToPath } from 'node:url'
 import { readVaultCatalog } from '../electron/lib/vaultService.mjs'
 import {
   assertAssetsResponseV1,
@@ -7,6 +10,10 @@ import {
   serializeAssetsResponseV1,
   serializeProjectsResponseV1,
 } from './publicIpcContracts.mjs'
+
+const currentDir = path.dirname(fileURLToPath(import.meta.url))
+const localVaultCatalog = path.resolve(currentDir, '..', '..', 'library', 'storage', 'catalog.json')
+const localVaultAvailable = await access(localVaultCatalog).then(() => true, () => false)
 
 const privateKeys = new Set([
   'source_path', 'source_origin', 'preview_source', 'preview_path', 'path', 'folder',
@@ -25,7 +32,9 @@ const assertNoPrivateKeys = (value) => {
   }
 }
 
-test('projects the real Vault catalog without absolute or internal paths', async () => {
+test('projects the real Vault catalog without absolute or internal paths', {
+  skip: localVaultAvailable ? false : 'Le Vault local géré est volontairement absent du dépôt Git.',
+}, async () => {
   const rawAssets = await readVaultCatalog()
   assert.ok(rawAssets.some((asset) => /^[a-z]:[\\/]/i.test(asset.source_path || '')))
 
