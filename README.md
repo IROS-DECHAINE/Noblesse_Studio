@@ -27,6 +27,7 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 | Sauvegardes | `data/backups/` |
 | Dépendances entre assets | `library/DEPENDENCIES.md` |
 | Architecture | `docs/ARCHITECTURE.md` |
+| Décision du lanceur de projets | `docs/DECISION_PROJECT_LAUNCHER_2026-08-21.md` |
 | Sauvegarde et restauration | `docs/RECOVERY_RUNBOOK.md` |
 | Maintenance et livraisons | `docs/MAINTENANCE.md` |
 | Notes de version | `docs/RELEASE_NOTES.md` |

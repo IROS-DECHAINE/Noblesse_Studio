@@ -6,7 +6,12 @@
       "displayName": "PrimeBot Rush",
       "platform": "UEFN",
       "projectMount": "STEAL_THE_RIFT_BOTS",
+      "portfolioProjectId": "primebot-rush",
       "descriptorPath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\WORKER_RIFT\\uefn\\STEAL_THE_RIFT_BOTS\\STEAL_THE_RIFT_BOTS.uefnproject",
+      "launch": {
+        "enabled": true,
+        "adapter": "UEFN_EDITOR"
+      },
       "transport": "STREAMABLE_HTTP",
       "host": "127.0.0.1",
       "port": 8000,
@@ -17,7 +22,12 @@
       "displayName": "Prime Industry",
       "platform": "UEFN",
       "projectMount": "WTF_IDLE_TYCOON",
+      "portfolioProjectId": "prime-industry",
       "descriptorPath": "D:\\DON'T_TOUCH_ONLY_HUMAIN\\THEO\\PRIME INDUSTRY\\WTF_IDLE_TYCOON\\WTF_IDLE_TYCOON.uefnproject",
+      "launch": {
+        "enabled": true,
+        "adapter": "UEFN_EDITOR"
+      },
       "transport": "STREAMABLE_HTTP",
       "host": "127.0.0.1",
       "port": 8001,
@@ -29,6 +39,10 @@
       "platform": "UEFN",
       "projectMount": "NOBLESSE_BIBLIOTHEQUE",
       "descriptorPath": "D:\\NO_BLESSE Studio\\Fortnite\\Bibliotheque\\NOBLESSE_BIBLIOTHEQUE\\NOBLESSE_BIBLIOTHEQUE.uefnproject",
+      "launch": {
+        "enabled": true,
+        "adapter": "UEFN_EDITOR"
+      },
       "transport": "STREAMABLE_HTTP",
       "host": "127.0.0.1",
       "port": 8002,

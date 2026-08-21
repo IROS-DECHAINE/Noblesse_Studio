@@ -2,6 +2,52 @@ import { calendarWebRepository } from './calendarWebRepository.js'
 import { documentPreviewFallback } from '../data/documentProjects.js'
 
 const baseUrl = import.meta.env?.BASE_URL || '/'
+let projectLauncherPreviewStartedAt = 0
+
+const projectLauncherPreviewEnabled = () => Boolean(
+  import.meta.env?.DEV
+  && globalThis.location
+  && new URLSearchParams(globalThis.location.search).get('projectLauncherPreview') === '1',
+)
+
+const projectLauncherPreviewProfiles = () => {
+  const elapsed = projectLauncherPreviewStartedAt ? Date.now() - projectLauncherPreviewStartedAt : 0
+  const primebotState = !projectLauncherPreviewStartedAt ? 'CLOSED' : elapsed < 1_200 ? 'LAUNCHING' : 'READY'
+  return [
+    {
+      id: 'uefn:steal_the_rift_bots',
+      portfolioProjectId: 'primebot-rush',
+      displayName: 'PrimeBot Rush',
+      expectedPort: 8000,
+      actualPort: primebotState === 'READY' ? 8000 : null,
+      state: primebotState,
+      message: primebotState === 'READY'
+        ? 'Projet et outils MCP vérifiés sur le port 8000.'
+        : primebotState === 'LAUNCHING'
+          ? 'Ouverture UEFN et démarrage du serveur MCP 8000…'
+          : 'Prêt à lancer sur le port MCP 8000.',
+      opened: primebotState === 'READY',
+      connected: primebotState === 'READY',
+      verified: primebotState === 'READY',
+      descriptorAvailable: true,
+      canLaunch: primebotState === 'CLOSED',
+    },
+    {
+      id: 'uefn:wtf_idle_tycoon',
+      portfolioProjectId: 'prime-industry',
+      displayName: 'Prime Industry',
+      expectedPort: 8001,
+      actualPort: 8002,
+      state: 'WRONG_PORT',
+      message: 'Ouvert sur le port 8002; le profil exige 8001. Ferme-le manuellement avant de relancer.',
+      opened: true,
+      connected: true,
+      verified: false,
+      descriptorAvailable: true,
+      canLaunch: false,
+    },
+  ]
+}
 
 const fetchJson = async (path, init) => {
   const response = await fetch(`${baseUrl}${path.replace(/^\/+/, '')}`, init)
@@ -76,6 +122,19 @@ export const studioApi = {
   },
   projects: () => window.noblesseDesktop?.listProjects?.() ?? Promise.resolve([]),
   setProjectFavorite: (request) => window.noblesseDesktop?.setProjectFavorite?.(request) ?? Promise.resolve([]),
+  projectLaunchProfiles: () => window.noblesseDesktop?.listProjectLaunchProfiles?.()
+    ?? Promise.resolve(projectLauncherPreviewEnabled() ? projectLauncherPreviewProfiles() : []),
+  launchProject: (profileId) => {
+    if (window.noblesseDesktop?.launchProject) return window.noblesseDesktop.launchProject(profileId)
+    if (projectLauncherPreviewEnabled() && profileId === 'uefn:steal_the_rift_bots') {
+      projectLauncherPreviewStartedAt = Date.now()
+      return Promise.resolve({
+        status: 'LAUNCHED',
+        profile: projectLauncherPreviewProfiles()[0],
+      })
+    }
+    return Promise.reject(new Error('Le lancement est disponible uniquement dans l\u2019application Noblesse Studio.'))
+  },
   vaultHealth: () => window.noblesseDesktop?.getVaultHealth?.() ?? Promise.resolve(null),
   fortnitePrimebot: (options = {}) => window.noblesseDesktop?.getFortnitePrimebot?.(options)
     ?? fetchJson(`api/fortnite-primebot${options.force ? '?force=1' : ''}`),

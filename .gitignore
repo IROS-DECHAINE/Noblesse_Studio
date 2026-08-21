@@ -3,6 +3,7 @@ dist/
 .vite/
 release/
 release-*/
+/app/build/
 
 # Données locales et régénérables
 data/database/*.db*

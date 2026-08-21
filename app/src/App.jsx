@@ -25,6 +25,8 @@ export default function App() {
   const [section, setSection] = useState('home')
   const [assets, setAssets] = useState([])
   const [projects, setProjects] = useState([])
+  const [projectLaunchProfiles, setProjectLaunchProfiles] = useState([])
+  const [launchingProfileId, setLaunchingProfileId] = useState('')
   const [selectedProjectId, setSelectedProjectId] = useState('')
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('Tout')
@@ -81,6 +83,17 @@ export default function App() {
     .then(applyProjects)
     .catch(() => applyProjects([])), [applyProjects])
 
+  const refreshProjectLaunchProfiles = useCallback(() => studioApi.projectLaunchProfiles()
+    .then((profiles) => {
+      const nextProfiles = Array.isArray(profiles) ? profiles : []
+      setProjectLaunchProfiles(nextProfiles)
+      return nextProfiles
+    })
+    .catch(() => {
+      setProjectLaunchProfiles([])
+      return []
+    }), [])
+
   useEffect(() => {
     const refreshAssets = () => Promise.all([studioApi.assets(), studioApi.vaultHealth()])
       .then(([items, integrity]) => {
@@ -97,14 +110,15 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    refreshProjects()
-    const timer = window.setInterval(refreshProjects, 4000)
-    window.addEventListener('focus', refreshProjects)
+    const refreshProjectWorkspace = () => Promise.all([refreshProjects(), refreshProjectLaunchProfiles()])
+    refreshProjectWorkspace()
+    const timer = window.setInterval(refreshProjectWorkspace, 4000)
+    window.addEventListener('focus', refreshProjectWorkspace)
     return () => {
       window.clearInterval(timer)
-      window.removeEventListener('focus', refreshProjects)
+      window.removeEventListener('focus', refreshProjectWorkspace)
     }
-  }, [refreshProjects])
+  }, [refreshProjectLaunchProfiles, refreshProjects])
 
   useEffect(() => {
     if (!surfaces.length || selected) return
@@ -221,6 +235,25 @@ export default function App() {
     }
   }
 
+  const launchProject = async (profileId) => {
+    if (!profileId || launchingProfileId) return
+    setLaunchingProfileId(profileId)
+    setToast('Lancement UEFN sécurisé en cours…')
+    try {
+      const result = await studioApi.launchProject(profileId)
+      const label = result?.profile?.displayName || 'Le projet'
+      if (result?.status === 'ALREADY_READY') setToast(`${label} est déjà ouvert et son MCP est vérifié.`)
+      else if (result?.status === 'ALREADY_LAUNCHING') setToast(`${label} est déjà en cours de lancement.`)
+      else setToast(`${label} démarre avec son port MCP dédié. La carte passera au vert après validation réelle.`)
+      await Promise.all([refreshProjects(), refreshProjectLaunchProfiles()])
+    } catch (error) {
+      setToast(error instanceof Error ? error.message : 'Lancement UEFN impossible')
+      await refreshProjectLaunchProfiles()
+    } finally {
+      setLaunchingProfileId('')
+    }
+  }
+
   return (
     <div className="studio-shell">
       <StudioSidebar section={section} connected={connected} onNavigate={navigate} />
@@ -235,7 +268,15 @@ export default function App() {
             onRefresh={() => refreshFortnite({ force: true })}
           />
         )}
-        {section === 'projects' && <ProjectsView fortniteStats={fortniteStats} onNavigate={navigate} />}
+        {section === 'projects' && (
+          <ProjectsView
+            fortniteStats={fortniteStats}
+            launchProfiles={projectLaunchProfiles}
+            launchingProfileId={launchingProfileId}
+            onLaunchProject={launchProject}
+            onNavigate={navigate}
+          />
+        )}
         {section === 'vault' && (
           <CoffreView
             surfaces={surfaces}

@@ -76,3 +76,9 @@ Le navigateur intégré n’était pas exposé dans cette session et le CLI Play
 - Mobile v2 : `design/noblesse-studio-projects-roadmap-mobile-v02.png`
 
 Aucun écart matériel réparable ne reste sur le module Projets.
+
+## Extension — lanceur UEFN par profil
+
+Le 21 août 2026, les cartes reliées à un profil UEFN ont reçu une action de lancement sous la miniature. Le parcours rendu a été validé sur 1280 × 720 : fermé bleu, lancement bloquant les doubles clics, prêt vert après validation exacte, et mauvais port orange non cliquable. Le titre, les trois miniatures, le rail et la roadmap restent présents sans largeur excédentaire.
+
+La console du navigateur ne contient aucune erreur. Le backend couvre le profil inconnu, le binaire non autorisé, le port occupé, le mauvais port, l’anti-doublon, le reçu sans état fantôme et les arguments MCP exacts. La suite complète compte 188 tests réussis. Voir [la décision du lanceur](../DECISION_PROJECT_LAUNCHER_2026-08-21.md).

@@ -7,6 +7,8 @@ contextBridge.exposeInMainWorld('noblesseDesktop', Object.freeze({
   getVaultHealth: () => ipcRenderer.invoke('noblesse:vault-health'),
   listProjects: () => ipcRenderer.invoke('noblesse:projects'),
   setProjectFavorite: (request) => ipcRenderer.invoke('noblesse:project-favorite', request),
+  listProjectLaunchProfiles: () => ipcRenderer.invoke('noblesse:project-launch-profiles'),
+  launchProject: (profileId) => ipcRenderer.invoke('noblesse:project-launch', { profileId }),
   getFortnitePrimebot: (options) => ipcRenderer.invoke('noblesse:fortnite-primebot', options),
   getUefnHealth: () => ipcRenderer.invoke('noblesse:uefn-health'),
   installAsset: (request) => ipcRenderer.invoke('noblesse:install-asset', request),

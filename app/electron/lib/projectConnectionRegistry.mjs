@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export const PROJECT_CONNECTION_SCHEMA_VERSION = 1
@@ -8,6 +9,7 @@ export const DEFAULT_PROJECT_CONNECTIONS_FILE = fileURLToPath(
 
 const normalizeMount = (value = '') => String(value).trim().replace(/^\/+|\/+$/g, '')
 const mountKey = (value = '') => normalizeMount(value).toLocaleLowerCase('en-US')
+const LAUNCH_ADAPTERS = new Set(['UEFN_EDITOR'])
 
 const validateProject = (rawProject, index) => {
   const project = rawProject && typeof rawProject === 'object' ? rawProject : {}
@@ -30,12 +32,29 @@ const validateProject = (rawProject, index) => {
   } else if (project.port !== null) {
     throw new Error(`Connexion ${id}: un transport stdio ne doit pas avoir de port`)
   }
+  const launch = project.launch && typeof project.launch === 'object'
+    ? {
+        enabled: project.launch.enabled === true,
+        adapter: String(project.launch.adapter || '').trim(),
+      }
+    : null
+  if (launch?.enabled) {
+    if (!LAUNCH_ADAPTERS.has(launch.adapter)) throw new Error(`Connexion ${id}: adaptateur de lancement invalide`)
+    if (platform !== 'UEFN' || launch.adapter !== 'UEFN_EDITOR') {
+      throw new Error(`Connexion ${id}: le lanceur UEFN exige une connexion UEFN`)
+    }
+    if (!path.win32.isAbsolute(String(project.descriptorPath || '')) || !/\.uefnproject$/i.test(project.descriptorPath)) {
+      throw new Error(`Connexion ${id}: descripteur UEFN absolu requis pour le lancement`)
+    }
+  }
   return {
     ...project,
     id,
     platform,
     transport,
+    portfolioProjectId: String(project.portfolioProjectId || '').trim(),
     projectMount: normalizeMount(project.projectMount),
+    launch,
   }
 }
 
@@ -46,9 +65,16 @@ export const validateProjectConnectionRegistry = (payload) => {
   const projects = (Array.isArray(payload.projects) ? payload.projects : []).map(validateProject)
   const ids = new Set()
   const ports = new Map()
+  const portfolioIds = new Set()
   for (const project of projects) {
     if (ids.has(project.id)) throw new Error(`Identifiant de connexion dupliqué: ${project.id}`)
     ids.add(project.id)
+    if (project.portfolioProjectId) {
+      if (portfolioIds.has(project.portfolioProjectId)) {
+        throw new Error(`Projet portefeuille dupliqué: ${project.portfolioProjectId}`)
+      }
+      portfolioIds.add(project.portfolioProjectId)
+    }
     if (project.transport !== 'STREAMABLE_HTTP') continue
     if (ports.has(project.port)) {
       throw new Error(`Port MCP ${project.port} affecté à ${ports.get(project.port)} et ${project.id}`)

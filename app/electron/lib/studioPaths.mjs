@@ -41,6 +41,7 @@ export const studioLibraryRoot = () => configuredPath('NOBLESSE_LIBRARY_ROOT') |
 export const studioVaultRoot = () => configuredPath('NOBLESSE_VAULT_ROOT') || path.join(studioLibraryRoot(), 'storage')
 export const studioDocumentsRoot = () => configuredPath('NOBLESSE_DOCUMENT_ROOT') || path.join(studioRoot(), 'Documents')
 export const studioUnrealRoot = () => configuredPath('NOBLESSE_UNREAL_PROJECT_ROOT') || path.join(studioRoot(), 'Unreal')
+export const studioUefnEditorExecutable = () => configuredPath('NOBLESSE_UEFN_EDITOR_EXECUTABLE')
 
 export const studioUefnProjectRoots = () => {
   const configured = String(process.env.NOBLESSE_UEFN_PROJECT_ROOTS || '').trim()
@@ -61,5 +62,6 @@ export const describeStudioPaths = () => ({
   vaultRoot: studioVaultRoot(),
   documentsRoot: studioDocumentsRoot(),
   unrealRoot: studioUnrealRoot(),
+  uefnEditorExecutableOverride: studioUefnEditorExecutable(),
   uefnProjectRoots: studioUefnProjectRoots(),
 })

@@ -1,7 +1,7 @@
 {
   "name": "noblesse-studio",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Application locale Noblesse Studio pour piloter les projets, les documents, les finances, le planning et la bibliothèque d’assets.",
   "author": "Noblesse Studio",
   "packageManager": "pnpm@10.32.1",
@@ -44,9 +44,11 @@
     "vite": "^6.0.5"
   },
   "build": {
-    "appId": "studio.noblesse.desktop",
+    "appId": "com.noblesse.studio.desktop",
     "productName": "Noblesse Studio",
     "asar": true,
+    "electronDist": "node_modules/electron/dist",
+    "afterPack": "scripts/after-pack.mjs",
     "directories": {
       "output": "release"
     },
@@ -58,6 +60,7 @@
       "shared/**/*",
       "!shared/**/*.test.js",
       "!shared/**/*.test.mjs",
+      "assets/noblesse-vault.ico",
       "package.json"
     ],
     "win": {

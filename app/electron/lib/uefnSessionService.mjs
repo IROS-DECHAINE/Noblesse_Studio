@@ -203,14 +203,13 @@ export const createUefnSessionService = ({
       const assignment = findProjectConnection(registry, { mount: session.mount, platform: 'UEFN' })
       const assignedPort = assignment?.port || null
       const portMatchesAssignment = !assignedPort || assignedPort === session.port
-      // The project identity comes from the MCP-reported mount. The configured
-      // port is only a preferred routing slot because UEFN stores its auto-start
-      // port as a global editor preference. A manually opened project can therefore
-      // answer on another local port without becoming unsafe or changing identity.
-      const canInstall = session.capabilities?.materialRecipe === true
-      const portPreferenceWarning = !portMatchesAssignment
-        ? { code: 'PORT_PREFERENCE_MISMATCH', preferredPort: assignedPort, actualPort: session.port }
+      // The MCP mount proves project identity, while the versioned profile port
+      // proves routing identity. Both must match before an asset can be transferred.
+      const toolsetReady = session.capabilities?.materialRecipe === true
+      const portMismatch = !portMatchesAssignment
+        ? { code: 'PORT_MISMATCH', expectedPort: assignedPort, actualPort: session.port }
         : null
+      const canInstall = toolsetReady && !portMismatch
       return {
         ...session,
         id: projectId(session.mount),
@@ -226,12 +225,12 @@ export const createUefnSessionService = ({
         preferredPort: assignedPort,
         connectionId: assignment?.id || null,
         portMatchesAssignment,
-        status: canInstall
-          ? portPreferenceWarning ? 'READY_ALTERNATE_PORT' : 'READY'
-          : 'MCP_CONNECTED_UNSUPPORTED',
-        protection: canInstall ? 'INSTALL_ALLOWED' : 'MISSING_TRANSFER_CAPABILITY',
-        mcpIssue: null,
-        mcpWarning: portPreferenceWarning,
+        status: portMismatch ? 'PORT_MISMATCH' : canInstall ? 'READY' : 'MCP_CONNECTED_UNSUPPORTED',
+        protection: portMismatch
+          ? 'PROJECT_PORT_MISMATCH'
+          : canInstall ? 'INSTALL_ALLOWED' : 'MISSING_TRANSFER_CAPABILITY',
+        mcpIssue: portMismatch,
+        mcpWarning: null,
       }
     })
     const openKeys = new Set(activeKeys)

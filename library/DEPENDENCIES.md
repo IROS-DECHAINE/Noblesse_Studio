@@ -1,6 +1,6 @@
 # Dépendances de la bibliothèque
 
-Index généré automatiquement le 2026-08-21T18:10:04.815Z. Les références non résolues restent visibles : elles ne sont jamais supprimées silencieusement.
+Index généré automatiquement le 2026-08-21T18:50:11.765Z. Les références non résolues restent visibles : elles ne sont jamais supprimées silencieusement.
 
 | Relations | Résolues | À résoudre |
 |---:|---:|---:|

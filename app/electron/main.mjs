@@ -1,5 +1,5 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, net, Notification, powerMonitor, protocol, shell, Tray } from 'electron'
-import { mkdirSync, watch } from 'node:fs'
+import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, net, Notification, powerMonitor, protocol, shell, Tray } from 'electron'
+import { existsSync, mkdirSync, watch } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createDocumentLibrary } from './lib/documentLibrary.mjs'
@@ -9,9 +9,11 @@ import { createBackupService } from './lib/backupService.mjs'
 import { createDocumentImportService } from './lib/documentImportService.mjs'
 import { createFinanceService, financeIpcChannels } from './lib/financeService.mjs'
 import { createFortnitePrimebotFetcher } from './lib/fortniteData.mjs'
+import { createProjectLaunchService } from './lib/projectLaunchService.mjs'
 import { installVaultAsset } from './lib/uefnInstaller.mjs'
 import { installUnrealNativeAsset } from './lib/unrealNativeInstaller.mjs'
 import { createUefnSessionService } from './lib/uefnSessionService.mjs'
+import { buildWindowsTaskbarDetails, windowsAppId } from './lib/windowsTaskbarIdentity.mjs'
 import { createOperationJobStore } from './lib/operationJobStore.mjs'
 import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultPreviewSource, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
 import {
@@ -20,11 +22,28 @@ import {
   studioOperationsRoot,
   studioRuntimeRoot,
   studioStateRoot,
+  studioUefnEditorExecutable,
 } from './lib/studioPaths.mjs'
 
 app.setName('Noblesse Studio')
 
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
+const applicationIconPath = path.join(currentDir, '..', 'assets', 'noblesse-vault.ico')
+let cachedApplicationIcon
+const loadApplicationIcon = () => {
+  if (cachedApplicationIcon !== undefined) return cachedApplicationIcon
+  if (!existsSync(applicationIconPath)) {
+    cachedApplicationIcon = null
+    return cachedApplicationIcon
+  }
+  try {
+    const image = nativeImage.createFromPath(applicationIconPath)
+    cachedApplicationIcon = image.isEmpty() ? null : image
+  } catch {
+    cachedApplicationIcon = null
+  }
+  return cachedApplicationIcon
+}
 mkdirSync(studioRuntimeRoot(), { recursive: true })
 app.setPath('userData', studioRuntimeRoot())
 const documentBootstrapFile = path.join(currentDir, 'data', 'document-bootstrap.v1.json')
@@ -42,11 +61,12 @@ let calendarTray = null
 let calendarRunsInBackground = false
 let isQuitting = false
 let uefnSessionService = null
+let projectLaunchService = null
 const activeCalendarNotifications = new Set()
 const trustedWebContents = new Set()
 const getFortnitePrimebot = createFortnitePrimebotFetcher()
 
-if (process.platform === 'win32') app.setAppUserModelId('studio.noblesse.desktop')
+if (process.platform === 'win32') app.setAppUserModelId(windowsAppId)
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -62,6 +82,11 @@ protocol.registerSchemesAsPrivileged([
 const requireUefnSessionService = () => {
   if (!uefnSessionService) throw new Error('La détection des sessions UEFN est indisponible.')
   return uefnSessionService
+}
+
+const requireProjectLaunchService = () => {
+  if (!projectLaunchService) throw new Error('Le lanceur de projets UEFN est indisponible.')
+  return projectLaunchService
 }
 
 const getUefnHealth = () => requireUefnSessionService().getHealth()
@@ -124,22 +149,34 @@ const showCalendarSurface = ({ itemId = null } = {}) => {
 
 const ensureCalendarTray = () => {
   if (calendarTray || !app.isReady()) return calendarTray
-  calendarTray = new Tray(path.join(currentDir, '..', 'assets', 'noblesse-vault.ico'))
-  calendarTray.setToolTip('Noblesse Studio — rappels actifs')
-  calendarTray.setContextMenu(Menu.buildFromTemplate([
-    { label: 'Ouvrir le calendrier', click: () => showCalendarSurface() },
-    { type: 'separator' },
-    { label: 'Quitter Noblesse Studio', click: () => { isQuitting = true; app.quit() } },
-  ]))
-  calendarTray.on('double-click', () => showCalendarSurface())
-  return calendarTray
+  const trayIcon = loadApplicationIcon()
+  if (!trayIcon) {
+    console.error(`[Noblesse Studio] Icône système introuvable ou invalide : ${applicationIconPath}`)
+    return null
+  }
+  try {
+    const tray = new Tray(trayIcon)
+    tray.setToolTip('Noblesse Studio — rappels actifs')
+    tray.setContextMenu(Menu.buildFromTemplate([
+      { label: 'Ouvrir le calendrier', click: () => showCalendarSurface() },
+      { type: 'separator' },
+      { label: 'Quitter Noblesse Studio', click: () => { isQuitting = true; app.quit() } },
+    ]))
+    tray.on('double-click', () => showCalendarSurface())
+    calendarTray = tray
+    return calendarTray
+  } catch (error) {
+    console.error('[Noblesse Studio] Création de l’icône système impossible.', error)
+    calendarTray = null
+    return null
+  }
 }
 
 const updateCalendarRuntime = (settings = {}) => {
   calendarRunsInBackground = Boolean(settings.desktopNotificationsEnabled && settings.runInBackground)
   if (settings.desktopNotificationsEnabled) calendarScheduler?.start()
   else calendarScheduler?.stop()
-  if (calendarRunsInBackground) ensureCalendarTray()
+  if (calendarRunsInBackground && !ensureCalendarTray()) calendarRunsInBackground = false
   else if (calendarTray) {
     calendarTray.destroy()
     calendarTray = null
@@ -150,10 +187,11 @@ const showCalendarNotification = async (reminder) => {
   const snapshot = await requireCalendarStore().getSnapshot()
   if (!snapshot.settings.desktopNotificationsEnabled) throw new Error('Les notifications calendrier sont désactivées.')
   if (!Notification.isSupported()) throw new Error('Les notifications système ne sont pas prises en charge.')
+  const notificationIcon = loadApplicationIcon()
   const notification = new Notification({
     title: reminder.title || 'Rappel Noblesse Studio',
     body: [reminder.projectLabel, reminder.location].filter(Boolean).join(' • ') || 'Un élément du calendrier commence bientôt.',
-    icon: path.join(currentDir, '..', 'assets', 'noblesse-vault.ico'),
+    ...(notificationIcon ? { icon: notificationIcon } : {}),
     silent: false,
   })
   activeCalendarNotifications.add(notification)
@@ -291,7 +329,7 @@ const createWindow = () => {
     minHeight: 760,
     backgroundColor: '#050d16',
     title: 'Noblesse Studio',
-    icon: path.join(currentDir, '..', 'assets', 'noblesse-vault.ico'),
+    icon: loadApplicationIcon() || undefined,
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
@@ -303,6 +341,14 @@ const createWindow = () => {
       allowRunningInsecureContent: false,
     },
   })
+  if (process.platform === 'win32') {
+    window.setAppDetails(buildWindowsTaskbarDetails({
+      isPackaged: app.isPackaged,
+      executablePath: process.execPath,
+      applicationPath: path.resolve(currentDir, '..'),
+      developmentIconPath: applicationIconPath,
+    }))
+  }
   trustedWebContents.add(window.webContents.id)
   window.webContents.once('destroyed', () => trustedWebContents.delete(window.webContents.id))
   window.webContents.session.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false))
@@ -310,9 +356,13 @@ const createWindow = () => {
   window.once('ready-to-show', () => window.show())
   window.on('close', (event) => {
     if (!isQuitting && calendarRunsInBackground) {
-      event.preventDefault()
-      window.hide()
-      ensureCalendarTray()
+      const tray = ensureCalendarTray()
+      if (tray) {
+        event.preventDefault()
+        window.hide()
+      } else {
+        calendarRunsInBackground = false
+      }
     }
   })
   window.webContents.setWindowOpenHandler(({ url }) => {
@@ -369,6 +419,14 @@ ipcMain.handle('noblesse:projects', async (event) => {
 ipcMain.handle('noblesse:project-favorite', (event, request) => {
   requireStudioSender(event)
   return requireUefnSessionService().setFavorite(request)
+})
+ipcMain.handle('noblesse:project-launch-profiles', (event) => {
+  requireStudioSender(event)
+  return requireProjectLaunchService().getProfiles()
+})
+ipcMain.handle('noblesse:project-launch', (event, request) => {
+  requireStudioSender(event)
+  return requireProjectLaunchService().launch({ profileId: request?.profileId })
 })
 ipcMain.handle('noblesse:install-asset', async (event, request) => {
   requireStudioSender(event)
@@ -560,6 +618,11 @@ if (!hasSingleInstanceLock) app.quit()
 if (hasSingleInstanceLock) app.whenReady().then(async () => {
   uefnSessionService = createUefnSessionService({
     favoritesFile: path.join(studioStateRoot(), 'uefn-project-favorites.v1.json'),
+  })
+  projectLaunchService = createProjectLaunchService({
+    stateFile: path.join(studioStateRoot(), 'project-launches.v1.json'),
+    sessionService: uefnSessionService,
+    executableOverride: studioUefnEditorExecutable(),
   })
   calendarStore = createCalendarStore({ rootDir: calendarRoot() })
   try {

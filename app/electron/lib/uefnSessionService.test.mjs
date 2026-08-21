@@ -79,7 +79,7 @@ test('the same project discovered on multiple ports is exposed once using the lo
   assert.equal(destinations[0].canInstall, true)
 })
 
-test('a verified project on a non-preferred port stays installable and keeps its MCP identity', async (t) => {
+test('a verified project on the wrong profile port stays visible but transfer is blocked', async (t) => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-uefn-port-mismatch-'))
   t.after(() => rm(root, { recursive: true, force: true }))
   const service = createUefnSessionService({
@@ -95,19 +95,19 @@ test('a verified project on a non-preferred port stays installable and keeps its
   const [destination] = destinations
   assert.equal(destination.mount, 'WTF_IDLE_TYCOON')
   assert.equal(destination.connected, true)
-  assert.equal(destination.canInstall, true)
-  assert.equal(destination.transferReady, true)
+  assert.equal(destination.canInstall, false)
+  assert.equal(destination.transferReady, false)
   assert.equal(destination.assignedPort, 8001)
   assert.equal(destination.port, 8002)
-  assert.equal(destination.status, 'READY_ALTERNATE_PORT')
-  assert.equal(destination.protection, 'INSTALL_ALLOWED')
-  assert.equal(destination.mcpIssue, null)
-  assert.deepEqual(destination.mcpWarning, {
-    code: 'PORT_PREFERENCE_MISMATCH',
-    preferredPort: 8001,
+  assert.equal(destination.status, 'PORT_MISMATCH')
+  assert.equal(destination.protection, 'PROJECT_PORT_MISMATCH')
+  assert.deepEqual(destination.mcpIssue, {
+    code: 'PORT_MISMATCH',
+    expectedPort: 8001,
     actualPort: 8002,
   })
-  assert.equal((await service.resolveActiveSession(destination.id)).mount, 'WTF_IDLE_TYCOON')
+  assert.equal(destination.mcpWarning, null)
+  await assert.rejects(() => service.resolveActiveSession(destination.id), /fermé|MCP/i)
 })
 
 test('a favorite assigned to a live port stays offline when a different project owns that endpoint', async (t) => {
@@ -136,7 +136,8 @@ test('a favorite assigned to a live port stays offline when a different project 
   const library = destinations.find((item) => item.mount === 'NOBLESSE_BIBLIOTHEQUE')
   assert.equal(industry.connected, true)
   assert.equal(industry.port, 8002)
-  assert.equal(industry.canInstall, true)
+  assert.equal(industry.canInstall, false)
+  assert.equal(industry.status, 'PORT_MISMATCH')
   assert.equal(library.connected, false)
   assert.equal(library.opened, false)
   assert.equal(library.canInstall, false)

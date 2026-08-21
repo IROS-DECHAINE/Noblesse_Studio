@@ -56,6 +56,12 @@ Processus principal Electron
 
 La position d’un fichier ne doit jamais devenir son identité. Les appels métier utilisent des IDs permanents.
 
+## Lanceur de projets
+
+Les projets UEFN sont ouverts depuis des profils approuvés dans le registre Electron. Le renderer transmet uniquement un ID permanent ; il ne choisit jamais un chemin, un exécutable ou des arguments. Le processus principal vérifie le descripteur, l’installation Epic, l’absence de doublon et la disponibilité du port avant de lancer UEFN.
+
+Une session n’est « prête » que lorsque son identité MCP, son port attribué et les outils de transfert requis sont tous vérifiés. Unreal et Roblox auront des adaptateurs distincts. Voir [la décision du lanceur](DECISION_PROJECT_LAUNCHER_2026-08-21.md).
+
 ## Modèle de bibliothèque
 
 | Catégorie | Dossier lisible | Source physique |

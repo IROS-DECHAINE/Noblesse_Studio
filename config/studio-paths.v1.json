@@ -31,6 +31,7 @@
     "NOBLESSE_VAULT_ROOT": "Stockage géré du Vault",
     "NOBLESSE_DOCUMENT_ROOT": "Bibliothèque documentaire",
     "NOBLESSE_UEFN_PROJECT_ROOTS": "Racines UEFN séparées par le séparateur système",
-    "NOBLESSE_UNREAL_PROJECT_ROOT": "Racine des projets Unreal"
+    "NOBLESSE_UNREAL_PROJECT_ROOT": "Racine des projets Unreal",
+    "NOBLESSE_UEFN_EDITOR_EXECUTABLE": "Chemin de secours vers l'exécutable officiel UnrealEditorFortnite-Win64-Shipping.exe"
   }
 }

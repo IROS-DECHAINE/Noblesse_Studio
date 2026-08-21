@@ -6,11 +6,15 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  CircleCheck,
   Gamepad2,
+  LoaderCircle,
   MousePointerClick,
+  Play,
   Radio,
   Route,
   Save,
+  TriangleAlert,
 } from 'lucide-react'
 import {
   getRoadmapSnapshot,
@@ -20,6 +24,7 @@ import {
   toggleRoadmapStep,
 } from '../data/projectRoadmaps.js'
 import { publicAsset } from '../lib/desktopApi.js'
+import { getProjectLaunchAction } from '../lib/projectLaunchUi.js'
 
 const formatNumber = (value) => new Intl.NumberFormat('fr-FR').format(Number(value) || 0)
 
@@ -36,7 +41,13 @@ function readRoadmapWorkspace() {
   }
 }
 
-export default function ProjectsView({ fortniteStats, onNavigate }) {
+export default function ProjectsView({
+  fortniteStats,
+  launchProfiles = [],
+  launchingProfileId = '',
+  onLaunchProject,
+  onNavigate,
+}) {
   const projectRailRef = useRef(null)
   const roadmapPanelRef = useRef(null)
   const roadmapTitleRef = useRef(null)
@@ -46,6 +57,9 @@ export default function ProjectsView({ fortniteStats, onNavigate }) {
   const [roadmapAnnouncement, setRoadmapAnnouncement] = useState('')
 
   const { progress: roadmapProgress, selectedProjectId } = roadmapWorkspace
+  const launchProfileByProject = useMemo(() => new Map(
+    launchProfiles.filter((profile) => profile.portfolioProjectId).map((profile) => [profile.portfolioProjectId, profile]),
+  ), [launchProfiles])
 
   const rows = useMemo(() => portfolioProjects.map((project) => {
     if (project.id !== 'primebot-rush') {
@@ -181,6 +195,13 @@ export default function ProjectsView({ fortniteStats, onNavigate }) {
           {rows.map(({ icon, ...project }, projectIndex) => {
             const Icon = iconByType[icon] || Blocks
             const selected = project.id === selectedProject.id
+            const launchProfile = launchProfileByProject.get(project.id)
+            const launchAction = getProjectLaunchAction(launchProfile, launchingProfileId === launchProfile?.id)
+            const LaunchIcon = launchAction?.tone === 'ready'
+              ? CircleCheck
+              : launchAction?.tone === 'error' || launchAction?.tone === 'warning'
+                ? TriangleAlert
+                : launchAction?.busy ? LoaderCircle : Play
             return (
               <article className={`project-card premium-panel ${selected ? 'is-selected' : ''}`} data-project-id={project.id} role="listitem" key={project.id}>
                 <button
@@ -199,8 +220,30 @@ export default function ProjectsView({ fortniteStats, onNavigate }) {
                   <header><span className={project.live ? 'is-live' : ''}><i /> {project.status}</span><b>{project.phase}</b></header>
                   <h2>{project.name}</h2>
                   <p><Icon size={15} /> {project.platform}</p>
+                  {launchAction && (
+                    <p className={`project-launch-status is-${launchAction.tone}`} title={launchAction.statusLabel} aria-live="polite">
+                      <i /> {launchAction.statusLabel}
+                    </p>
+                  )}
                   <div className="project-card-metrics"><div><span>Joueurs actuels</span><strong>{formatNumber(project.players)}</strong></div><div><span>Référence</span><strong className="is-small">{project.detail}</strong></div></div>
-                  <button type="button" onClick={() => onNavigate('calendar')}>Planifier une action <ArrowRight size={16} /></button>
+                  <div className="project-card-actions">
+                    {launchAction && (
+                      <button
+                        className={`project-launch-action is-${launchAction.tone}`}
+                        type="button"
+                        disabled={launchAction.disabled}
+                        title={launchAction.statusLabel}
+                        onClick={(event) => {
+                          event.stopPropagation()
+                          onLaunchProject?.(launchProfile.id)
+                        }}
+                      >
+                        <LaunchIcon className={launchAction.busy ? 'is-spinning' : ''} size={15} />
+                        <span>{launchAction.label}</span>
+                      </button>
+                    )}
+                    <button className="project-plan-action" type="button" onClick={() => onNavigate('calendar')}>Planifier une action <ArrowRight size={16} /></button>
+                  </div>
                 </div>
               </article>
             )
