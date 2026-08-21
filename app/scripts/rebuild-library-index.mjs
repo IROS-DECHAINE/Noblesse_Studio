@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto'
 import { DatabaseSync } from 'node:sqlite'
 import { access, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import {
   studioAppRoot,
   studioDatabaseFile,
@@ -10,6 +11,7 @@ import {
   studioVaultRoot,
 } from '../electron/lib/studioPaths.mjs'
 
+export const rebuildLibraryIndexes = async () => {
 const SCHEMA_VERSION = 2
 const DEPENDENCY_SCHEMA_VERSION = 1
 const UNRESOLVED_DEPENDENCY_MARKERS = new Set(['UNRESOLVED_LIVE_SOURCE_GRAPH_INSPECTION'])
@@ -49,6 +51,7 @@ const atomicWrite = async (file, content) => {
 const categoryFor = (assetType) => {
   if (assetType === 'Texture2D') return 'textures'
   if (['Material', 'MaterialRecipe', 'MaterialReference', 'UnrealMaterialInstance'].includes(assetType)) return 'materials'
+  if (['SoundWave', 'Audio', 'AudioClip'].includes(assetType)) return 'sounds'
   return 'assets'
 }
 
@@ -175,6 +178,7 @@ const categories = {
   assets: items.filter((item) => item.category === 'assets'),
   textures: items.filter((item) => item.category === 'textures'),
   materials: items.filter((item) => item.category === 'materials'),
+  sounds: items.filter((item) => item.category === 'sounds'),
   documents,
 }
 
@@ -218,6 +222,7 @@ const categoryLabels = {
   assets: 'Assets',
   textures: 'Textures',
   materials: 'Matériaux',
+  sounds: 'Sons',
   documents: 'Documents',
 }
 
@@ -269,6 +274,7 @@ Point d’entrée humain et IA de la bibliothèque locale. Généré le ${genera
 | Assets | ${categories.assets.length} | [assets/INDEX.md](assets/INDEX.md) | [assets/index.json](assets/index.json) |
 | Textures | ${categories.textures.length} | [textures/INDEX.md](textures/INDEX.md) | [textures/index.json](textures/index.json) |
 | Matériaux | ${categories.materials.length} | [materials/INDEX.md](materials/INDEX.md) | [materials/index.json](materials/index.json) |
+| Sons | ${categories.sounds.length} | [sounds/INDEX.md](sounds/INDEX.md) | [sounds/index.json](sounds/index.json) |
 | Documents | ${categories.documents.length} | [documents/INDEX.md](documents/INDEX.md) | [documents/index.json](documents/index.json) |
 
 Les relations entre éléments sont consultables dans [DEPENDENCIES.md](DEPENDENCIES.md) et [dependencies.json](dependencies.json).
@@ -420,4 +426,9 @@ try {
   throw error
 }
 
-console.log(JSON.stringify({ appRoot, libraryRoot, vaultRoot, databaseFile, counts: master.counts, integrity: master.integrity }, null, 2))
+return { appRoot, libraryRoot, vaultRoot, databaseFile, counts: master.counts, integrity: master.integrity }
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  console.log(JSON.stringify(await rebuildLibraryIndexes(), null, 2))
+}

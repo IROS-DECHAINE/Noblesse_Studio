@@ -9,7 +9,7 @@ const layoutFor = (width) => {
   if (viewportWidth <= 430) return { columns: 1, gap: 9, rowHeight: 254 }
   if (viewportWidth <= 680) return { columns: 2, gap: 9, rowHeight: 254 }
   if (width >= 760) return { columns: 3, gap: 13, rowHeight: 315 }
-  if (width >= 500) return { columns: 2, gap: 13, rowHeight: 315 }
+  if (width >= 400) return { columns: 2, gap: 13, rowHeight: 315 }
   return { columns: 1, gap: 13, rowHeight: 315 }
 }
 

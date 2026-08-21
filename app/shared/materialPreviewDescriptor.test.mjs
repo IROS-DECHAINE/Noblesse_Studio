@@ -99,6 +99,29 @@ test('exposes a bounded supported animated graph', () => {
   assert.equal(descriptor.graph.nodes.length, 2)
 })
 
+test('keeps a rendered catalogue thumbnail without disabling a valid animated recipe', () => {
+  const recipe = {
+    textures: [{ assetName: 'Flow', source: 'packs/Test/Flow.png' }],
+    nodes: [
+      { id: 'pan', kind: 'Panner', properties: { SpeedX: 0.1, SpeedY: 0 } },
+      { id: 'flow', kind: 'Texture', properties: { Texture: 'Flow' } },
+    ],
+    connections: [{ fromNode: 'pan', fromPin: 'Output', toNode: 'flow', toPin: 'UVs' }],
+    outputs: [{ node: 'flow', pin: 'RGB', property: 'MP_EmissiveColor' }],
+  }
+  const descriptor = createMaterialPreviewDescriptor({
+    asset: asset({
+      animated: true,
+      preview_kind: 'rendered_sphere',
+      preview_source: 'packs/Test/capture.png',
+    }),
+    recipe,
+  })
+  assert.equal(descriptor.mode, 'shader_recipe')
+  assert.equal(descriptor.animated, true)
+  assert.equal(descriptor.fidelityLabel, 'Recette animée · temps réel')
+})
+
 test('fails closed when a temporal recipe contains an unknown node', () => {
   const recipe = {
     textures: [],

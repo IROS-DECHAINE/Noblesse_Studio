@@ -17,6 +17,9 @@ const PREVIEW_MIME_TYPES = new Map([
   ['.png', 'image/png'],
   ['.webp', 'image/webp'],
 ])
+const AUDIO_MIME_TYPES = new Map([
+  ['.wav', 'audio/wav'],
+])
 
 const exists = async (target) => {
   try {
@@ -151,6 +154,13 @@ export const validateVaultIntegrity = async (assetId = '') => {
     if (!(await exists(source))) throw new Error(`Fichier source manquant pour ${asset.display_name}`)
     if (asset.source_sha256 && await sha256(source) !== asset.source_sha256) {
       throw new Error(`Le fichier source de ${asset.display_name} a été modifié`)
+    }
+  }
+  if (asset.original_source) {
+    const original = resolveVaultSource(asset.original_source)
+    if (!(await exists(original))) throw new Error(`Fichier source original manquant pour ${asset.display_name}`)
+    if (asset.original_source_sha256 && await sha256(original) !== asset.original_source_sha256) {
+      throw new Error(`Le fichier source original de ${asset.display_name} a été modifié`)
     }
   }
   if (asset.asset_type === 'MaterialRecipe') {
@@ -307,6 +317,27 @@ export const resolveVaultPreviewRequest = async (token) => {
   const relativePath = String(asset.preview_source || '')
   if (!relativePath) throw new Error('Aperçu absent du manifeste')
   return resolveVaultPreviewSource(relativePath)
+}
+
+export const resolveVaultAudioRequest = async (assetId) => {
+  const value = String(assetId || '').trim()
+  if (!value || value.includes('\0') || value.includes('/') || value.includes('\\')) {
+    throw new Error('Identifiant audio invalide')
+  }
+  const asset = await loadVaultAsset(value)
+  if (asset.asset_type !== 'SoundWave') throw new Error('Cet élément n’est pas un son du Vault')
+  const relativePath = String(asset.source || '')
+  const mimeType = AUDIO_MIME_TYPES.get(path.extname(relativePath).toLocaleLowerCase('en'))
+  if (!mimeType) throw new Error('Format audio du Vault non autorisé')
+  const lexicalPath = resolveVaultSource(relativePath)
+  const [rootPath, filePath] = await Promise.all([realpath(vaultRoot()), realpath(lexicalPath)])
+  const relation = path.relative(rootPath, filePath)
+  if (!relation || relation === '..' || relation.startsWith(`..${path.sep}`) || path.isAbsolute(relation)) {
+    throw new Error('Chemin audio hors du Coffre')
+  }
+  const details = await stat(filePath)
+  if (!details.isFile()) throw new Error('La source audio n’est pas un fichier')
+  return { filePath, mimeType, size: details.size }
 }
 
 export const writeInstallReceipt = async (payload) => {

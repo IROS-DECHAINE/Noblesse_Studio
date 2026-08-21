@@ -96,6 +96,14 @@ test('the active variant owns animation truth and technical channels', () => {
   assert.doesNotMatch(previewSource, /surface\.animated|texture\.offset|texture\.rotation/)
 })
 
+test('variant controls stay before the viewport-bounded preview', () => {
+  const variantsPosition = inspectorSource.indexOf('className="material-variants"')
+  const previewPosition = inspectorSource.indexOf('className="inspector-sphere"')
+  assert.ok(variantsPosition >= 0 && variantsPosition < previewPosition)
+  assert.match(previewStyles, /\.material-preview-3d\s*\{[^}]*--coffre-preview-max-height/)
+  assert.match(previewStyles, /\.inspector-sphere\s*\{[^}]*\bflex:\s*0\s+0\s+auto/)
+})
+
 test('fallbacks are silent, source-faithful, non-black and shape-aware', () => {
   const safeColorMatch = overlaySource.match(/SAFE_SOURCE_POSTER_COLOR\s*=\s*['"](#[0-9a-f]{6})['"]/i)
   assert.ok(safeColorMatch, 'the source overlay must declare a deterministic fallback color')

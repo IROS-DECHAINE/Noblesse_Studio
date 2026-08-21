@@ -1,7 +1,7 @@
 {
   "name": "noblesse-studio",
   "private": true,
-  "version": "1.0.7",
+  "version": "1.0.12",
   "description": "Application locale Noblesse Studio pour piloter les projets, les documents, les finances, le planning et la bibliothèque d’assets.",
   "author": "Noblesse Studio",
   "packageManager": "pnpm@10.32.1",
@@ -24,7 +24,8 @@
     "desktop:dev": "cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:4178 electron .",
     "desktop:pack": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win nsis --x64",
     "desktop:portable": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win portable --x64",
-    "desktop:dir": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win dir --x64"
+    "desktop:dir": "node scripts/repair-pnpm-links.mjs && corepack pnpm@10.32.1 build && electron-builder --win dir --x64",
+    "desktop:deploy-local": "corepack pnpm@10.32.1 verify-foundation && corepack pnpm@10.32.1 verify-source && corepack pnpm@10.32.1 test && corepack pnpm@10.32.1 audit --prod --audit-level high && corepack pnpm@10.32.1 desktop:dir && powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/windows/deploy-local-build.ps1"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
@@ -60,6 +61,7 @@
       "shared/**/*",
       "!shared/**/*.test.js",
       "!shared/**/*.test.mjs",
+      "scripts/rebuild-library-index.mjs",
       "assets/noblesse-vault.ico",
       "package.json"
     ],

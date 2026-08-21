@@ -39,6 +39,7 @@ export const publicAssetSchemaV1 = {
     notes: publicString(2_000),
     preview_asset: publicString(500),
     preview_url: { type: 'string', maxLength: 500, pattern: '^noblesse-vault://preview/' },
+    audio_url: { type: 'string', maxLength: 500, pattern: '^noblesse-vault://audio/' },
     status: requiredPublicString(80),
     pack_version: publicString(80),
     source_project: publicString(240),
@@ -55,10 +56,84 @@ export const publicAssetSchemaV1 = {
     label: publicString(240),
     category: publicString(160),
     dependencies: publicString(4_000),
+    original_format: publicString(20),
+    conversion_profile: publicString(80),
     platforms: { type: 'array', maxItems: 16, items: publicString(80) },
     order: { type: 'number', minimum: -1_000_000, maximum: 1_000_000 },
     technical_maps: { type: 'number', minimum: 0, maximum: 100_000 },
+    duration_seconds: { type: 'number', minimum: 0, maximum: 21_600 },
+    size_bytes: { type: 'number', minimum: 0, maximum: 536_870_912 },
+    sample_rate: { type: 'number', minimum: 8_000, maximum: 384_000 },
+    channels: { type: 'number', minimum: 1, maximum: 8 },
+    bit_depth: { type: 'number', minimum: 8, maximum: 64 },
     animated: { type: 'boolean' },
+    converted: { type: 'boolean' },
+  },
+}
+
+export const soundSelectionResponseSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/sound-selection-response.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'canceled', 'files'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    canceled: { type: 'boolean' },
+    files: {
+      type: 'array',
+      maxItems: 200,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['selectionToken', 'originalName', 'suggestedTitle', 'sizeBytes', 'format', 'conversionRequired'],
+        properties: {
+          selectionToken: requiredPublicString(160),
+          originalName: requiredPublicString(260),
+          suggestedTitle: requiredPublicString(120),
+          sizeBytes: { type: 'number', minimum: 1, maximum: 134_217_728 },
+          format: { enum: ['WAV', 'MP3'] },
+          conversionRequired: { type: 'boolean' },
+        },
+      },
+    },
+  },
+}
+
+export const soundImportRequestSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/sound-import-request.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['items', 'category', 'rightsConfirmed'],
+  properties: {
+    items: {
+      type: 'array',
+      minItems: 1,
+      maxItems: 200,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['selectionToken', 'title'],
+        properties: {
+          selectionToken: requiredPublicString(160),
+          title: requiredPublicString(120),
+        },
+      },
+    },
+    category: { enum: ['Effets', 'Ambiances', 'Musiques', 'Voix'] },
+    rightsConfirmed: { const: true },
+  },
+}
+
+export const soundImportResponseSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/sound-import-response.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'jobId', 'status', 'total'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    jobId: { type: 'string', pattern: '^job-[a-f0-9-]{36}$' },
+    status: { enum: ['QUEUED', 'RUNNING'] },
+    total: { type: 'integer', minimum: 1, maximum: 200 },
   },
 }
 
@@ -68,7 +143,7 @@ export const publicProjectSchemaV1 = {
   additionalProperties: false,
   required: [
     'id', 'name', 'platform', 'opened', 'connected', 'canInstall',
-    'transferReady', 'favorite', 'registered', 'status',
+    'transferReady', 'favorite', 'registered', 'status', 'installCapabilities',
   ],
   properties: {
     id: requiredPublicString(160),
@@ -77,6 +152,17 @@ export const publicProjectSchemaV1 = {
     opened: { type: 'boolean' },
     connected: { type: 'boolean' },
     canInstall: { type: 'boolean' },
+    installCapabilities: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['material', 'sound', 'staticMesh', 'vfx'],
+      properties: {
+        material: { type: 'boolean' },
+        sound: { type: 'boolean' },
+        staticMesh: { type: 'boolean' },
+        vfx: { type: 'boolean' },
+      },
+    },
     transferReady: { type: 'boolean' },
     favorite: { type: 'boolean' },
     registered: { type: 'boolean' },
@@ -132,10 +218,120 @@ export const projectFavoriteRequestSchemaV1 = {
   },
 }
 
+const vaultTrashTargetSchemaV1 = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['id', 'name', 'type'],
+  properties: {
+    id: requiredPublicString(180),
+    name: requiredPublicString(260),
+    type: requiredPublicString(100),
+  },
+}
+
+export const vaultTrashPlanRequestSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-plan-request.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['assetIds'],
+  properties: {
+    assetIds: { type: 'array', minItems: 1, maxItems: 200, uniqueItems: true, items: requiredPublicString(180) },
+  },
+}
+
+export const vaultTrashPlanResponseSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-plan-response.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'operationId', 'planHash', 'title', 'targetCount', 'targets', 'blockers', 'blocked', 'recoverable', 'originalsPreserved'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    operationId: requiredPublicString(100),
+    planHash: { type: 'string', pattern: '^[a-f0-9]{64}$' },
+    title: requiredPublicString(260),
+    targetCount: { type: 'integer', minimum: 1, maximum: 200 },
+    targets: { type: 'array', minItems: 1, maxItems: 200, items: vaultTrashTargetSchemaV1 },
+    blockers: { type: 'array', maxItems: 200, items: vaultTrashTargetSchemaV1 },
+    blocked: { type: 'boolean' },
+    recoverable: { const: true },
+    originalsPreserved: { const: true },
+  },
+}
+
+export const vaultTrashApplyRequestSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-apply-request.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['operationId', 'planHash', 'confirmationPhrase'],
+  properties: {
+    operationId: requiredPublicString(100),
+    planHash: { type: 'string', pattern: '^[a-f0-9]{64}$' },
+    confirmationPhrase: { const: 'CORBEILLE' },
+  },
+}
+
+export const vaultTrashItemSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-item.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'trashId', 'title', 'deletedAt', 'targetCount', 'targets', 'originalsPreserved'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    trashId: requiredPublicString(100),
+    title: requiredPublicString(260),
+    deletedAt: requiredPublicString(40),
+    targetCount: { type: 'integer', minimum: 1, maximum: 200 },
+    targets: { type: 'array', minItems: 1, maxItems: 200, items: vaultTrashTargetSchemaV1 },
+    originalsPreserved: { const: true },
+  },
+}
+
+export const vaultTrashListResponseSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-list-response.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'items'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    items: { type: 'array', maxItems: 10_000, items: vaultTrashItemSchemaV1 },
+  },
+}
+
+export const vaultTrashRestoreRequestSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-restore-request.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['trashId'],
+  properties: { trashId: requiredPublicString(100) },
+}
+
+export const vaultTrashRestoreResponseSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/vault-trash-restore-response.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'restored', 'trashId', 'targetCount'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    restored: { const: true },
+    trashId: requiredPublicString(100),
+    targetCount: { type: 'integer', minimum: 1, maximum: 200 },
+  },
+}
+
 const ajv = new Ajv2020({ allErrors: true, strict: true })
 const validateAssetsResponse = ajv.compile(assetsResponseSchemaV1)
 const validateProjectsResponse = ajv.compile(projectsResponseSchemaV1)
 const validateProjectFavoriteRequest = ajv.compile(projectFavoriteRequestSchemaV1)
+const validateSoundSelectionResponse = ajv.compile(soundSelectionResponseSchemaV1)
+const validateSoundImportRequest = ajv.compile(soundImportRequestSchemaV1)
+const validateSoundImportResponse = ajv.compile(soundImportResponseSchemaV1)
+const validateVaultTrashPlanRequest = ajv.compile(vaultTrashPlanRequestSchemaV1)
+const validateVaultTrashPlanResponse = ajv.compile(vaultTrashPlanResponseSchemaV1)
+const validateVaultTrashApplyRequest = ajv.compile(vaultTrashApplyRequestSchemaV1)
+const validateVaultTrashItem = ajv.compile(vaultTrashItemSchemaV1)
+const validateVaultTrashListResponse = ajv.compile(vaultTrashListResponseSchemaV1)
+const validateVaultTrashRestoreRequest = ajv.compile(vaultTrashRestoreRequestSchemaV1)
+const validateVaultTrashRestoreResponse = ajv.compile(vaultTrashRestoreResponseSchemaV1)
 
 const PRIVATE_PATH_PATTERNS = [
   { kind: 'Windows drive path', pattern: /(?:^|[^a-z0-9+.-])[a-z]:[\\/]/i },
@@ -205,15 +401,19 @@ export const publicAssetFromInternal = (asset) => {
     'pack_id', 'provenance', 'notes', 'preview_asset', 'pack_version', 'source_project',
     'uefn_version', 'target_path', 'surface_group', 'source_family', 'variant_id',
     'variant_label', 'preview_kind', 'preview_color', 'install_mode', 'group_label',
-    'label', 'category', 'dependencies',
+    'label', 'category', 'dependencies', 'original_format', 'conversion_profile',
   ]) copyString(dto, asset, key)
-  for (const key of ['order', 'technical_maps']) copyNumber(dto, asset, key)
+  for (const key of ['order', 'technical_maps', 'duration_seconds', 'size_bytes', 'sample_rate', 'channels', 'bit_depth']) copyNumber(dto, asset, key)
   if (typeof asset?.animated === 'boolean') dto.animated = asset.animated
+  if (typeof asset?.converted === 'boolean') dto.converted = asset.converted
   if (Array.isArray(asset?.platforms)) {
     dto.platforms = asset.platforms.filter((value) => typeof value === 'string')
   }
   if (typeof asset?.preview_source === 'string' && asset.preview_source && dto.asset_id) {
     dto.preview_url = `noblesse-vault://preview/${encodeURIComponent(dto.asset_id)}`
+  }
+  if (asset?.asset_type === 'SoundWave' && typeof asset?.source === 'string' && asset.source && dto.asset_id) {
+    dto.audio_url = `noblesse-vault://audio/${encodeURIComponent(dto.asset_id)}`
   }
   return dto
 }
@@ -226,6 +426,13 @@ export const publicProjectFromInternal = (project) => {
     opened: project?.opened === true,
     connected: project?.connected === true,
     canInstall: project?.canInstall === true,
+    installCapabilities: {
+      material: project?.capabilities?.materialRecipe === true
+        || (project?.platform === 'Unreal' && project?.canInstall === true),
+      sound: project?.capabilities?.soundHandoff === true,
+      staticMesh: project?.capabilities?.staticMesh === true,
+      vfx: project?.capabilities?.vfx === true,
+    },
     transferReady: project?.transferReady === true,
     favorite: project?.favorite === true,
     registered: project?.registered === true,
@@ -261,6 +468,32 @@ export const assertProjectFavoriteRequestV1 = (payload) => {
   return payload
 }
 
+export const assertSoundSelectionResponseV1 = (payload) => assertValid(
+  validateSoundSelectionResponse,
+  payload,
+  'Réponse publique sélection son v1',
+)
+
+export const assertSoundImportRequestV1 = (payload) => assertValid(
+  validateSoundImportRequest,
+  payload,
+  'Requête publique import son v1',
+)
+
+export const assertSoundImportResponseV1 = (payload) => assertValid(
+  validateSoundImportResponse,
+  payload,
+  'Réponse publique import son v1',
+)
+
+export const assertVaultTrashPlanRequestV1 = (payload) => assertValid(validateVaultTrashPlanRequest, payload, 'Requête plan corbeille v1')
+export const assertVaultTrashPlanResponseV1 = (payload) => assertValid(validateVaultTrashPlanResponse, payload, 'Réponse plan corbeille v1')
+export const assertVaultTrashApplyRequestV1 = (payload) => assertValid(validateVaultTrashApplyRequest, payload, 'Requête confirmation corbeille v1')
+export const assertVaultTrashItemV1 = (payload) => assertValid(validateVaultTrashItem, payload, 'Élément de corbeille v1')
+export const assertVaultTrashListResponseV1 = (payload) => assertValid(validateVaultTrashListResponse, payload, 'Liste de corbeille v1')
+export const assertVaultTrashRestoreRequestV1 = (payload) => assertValid(validateVaultTrashRestoreRequest, payload, 'Requête restauration corbeille v1')
+export const assertVaultTrashRestoreResponseV1 = (payload) => assertValid(validateVaultTrashRestoreResponse, payload, 'Réponse restauration corbeille v1')
+
 export const serializeAssetsResponseV1 = (assets) => {
   if (!Array.isArray(assets)) throw new Error('Le service assets doit retourner une liste.')
   return assertAssetsResponseV1({
@@ -279,5 +512,14 @@ export const serializeProjectsResponseV1 = (projects) => {
     diagnostics: { unregisteredCount: source.length - registered.length },
   })
 }
+
+export const serializeSoundSelectionResponseV1 = (response) => assertSoundSelectionResponseV1(response)
+
+export const serializeSoundImportResponseV1 = (response) => assertSoundImportResponseV1({
+  schemaVersion: PUBLIC_IPC_SCHEMA_VERSION,
+  jobId: response?.id,
+  status: response?.status,
+  total: response?.progress?.total,
+})
 
 export const publicIpcContractInternals = { findPrivatePath }

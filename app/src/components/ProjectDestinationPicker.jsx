@@ -1,7 +1,15 @@
 import { ChevronDown, FolderOpen, Star } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-export default function ProjectDestinationPicker({ projects, selectedProjectId, acceptedPlatforms = [], onProject, onFavorite }) {
+export default function ProjectDestinationPicker({
+  projects,
+  selectedProjectId,
+  acceptedPlatforms = [],
+  requiredCapability = 'material',
+  itemLabel = 'cet élément',
+  onProject,
+  onFavorite,
+}) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef(null)
   const selected = useMemo(
@@ -9,10 +17,12 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
     [projects, selectedProjectId],
   )
   const isCompatible = (project) => !acceptedPlatforms.length || acceptedPlatforms.includes(project.platform)
+  const hasCapability = (project) => project.installCapabilities?.[requiredCapability] === true
   const isReady = (project) => Boolean(
     project.canInstall
     && (project.transferReady ?? project.connected)
-    && isCompatible(project),
+    && isCompatible(project)
+    && hasCapability(project),
   )
   const isLive = (project) => Boolean(
     isReady(project)
@@ -23,15 +33,15 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
       project.opened
       || project.connected
     )),
-    [projects, acceptedPlatforms],
+    [projects],
   )
   const readyProjects = useMemo(
     () => availableProjects.filter(isReady),
-    [availableProjects, acceptedPlatforms],
+    [availableProjects, acceptedPlatforms, requiredCapability],
   )
   const unavailableProjects = useMemo(
     () => availableProjects.filter((project) => !isReady(project)),
-    [availableProjects, acceptedPlatforms],
+    [availableProjects, acceptedPlatforms, requiredCapability],
   )
   const offlineFavorites = useMemo(
     () => projects.filter((project) => project.favorite && !project.opened && !project.connected),
@@ -39,7 +49,8 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
   )
 
   const projectStatus = (project) => {
-    if (!isCompatible(project)) return `Incompatible avec cette matière · ${project.platform}`
+    if (!isCompatible(project)) return `Incompatible avec ${itemLabel} · ${project.platform}`
+    if (!hasCapability(project)) return `Adaptateur ${requiredCapability === 'sound' ? 'audio' : 'de ce type'} indisponible`
     if (project.platform === 'Unreal') {
       if (project.opened && isReady(project)) return `Unreal ouvert · import natif local ${project.engineVersion}`
       if (!project.opened) return `Projet Unreal fermé · version ${project.engineVersion || 'inconnue'}`
@@ -127,7 +138,7 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
       </button>
 
       {open && (
-        <div className="project-destination-menu" role="listbox" aria-label="Projets compatibles avec la matière">
+        <div className="project-destination-menu" role="listbox" aria-label={`Projets compatibles avec ${itemLabel}`}>
           <div className="destination-menu-heading">
             <strong>Projets destination</strong>
             <span>{readyProjects.length} disponible{readyProjects.length > 1 ? 's' : ''}</span>

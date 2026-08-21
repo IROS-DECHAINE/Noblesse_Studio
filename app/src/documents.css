@@ -1390,6 +1390,30 @@ button.document-list-column:hover {
   background: rgba(8, 19, 31, .7);
 }
 
+.documents-delete-step {
+  margin: 0;
+  color: #c3898d;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.documents-delete-final {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 21px;
+  border: 1px solid rgba(188, 78, 86, .36);
+  border-radius: 8px;
+  color: #e17a80;
+  background: rgba(105, 28, 35, .16);
+  text-align: center;
+}
+
+.documents-delete-final strong { color: #f0d5d7; font-size: 13px; }
+.documents-delete-final p { max-width: 390px; margin: 0; color: #c09da0; font-size: 10px; line-height: 1.55; }
+
 .documents-delete-summary > div {
   min-width: 0;
 }

@@ -117,6 +117,11 @@ export const vaultPreview = (asset) => {
   return asset.preview_asset ? publicAsset(asset.preview_asset) : ''
 }
 
+export const vaultAudio = (asset) => {
+  if (!asset?.audio_url) return ''
+  return globalThis.window?.noblesseDesktop ? asset.audio_url : ''
+}
+
 export const unwrapPublicItemsV1 = (payload, label) => {
   if (!payload
     || payload.schemaVersion !== 1
@@ -159,6 +164,21 @@ export const studioApi = {
     return Promise.reject(new Error('Le lancement est disponible uniquement dans l\u2019application Noblesse Studio.'))
   },
   vaultHealth: () => window.noblesseDesktop?.getVaultHealth?.() ?? Promise.resolve(null),
+  chooseSoundFiles: () => {
+    if (!window.noblesseDesktop?.chooseSoundFiles) throw new Error('La sélection audio est disponible uniquement dans l’application desktop.')
+    return window.noblesseDesktop.chooseSoundFiles()
+  },
+  importSounds: (request) => {
+    if (!window.noblesseDesktop?.importSounds) throw new Error('L’import audio est disponible uniquement dans l’application desktop.')
+    return window.noblesseDesktop.importSounds(request)
+  },
+  planVaultTrash: (assetIds) => window.noblesseDesktop?.planVaultTrash?.(assetIds)
+    ?? Promise.reject(new Error('La corbeille est disponible uniquement dans l’application desktop.')),
+  applyVaultTrash: (request) => window.noblesseDesktop?.applyVaultTrash?.(request)
+    ?? Promise.reject(new Error('La corbeille est disponible uniquement dans l’application desktop.')),
+  vaultTrash: () => window.noblesseDesktop?.listVaultTrash?.() ?? Promise.resolve({ schemaVersion: 1, items: [] }),
+  restoreVaultTrash: (trashId) => window.noblesseDesktop?.restoreVaultTrash?.(trashId)
+    ?? Promise.reject(new Error('La restauration est disponible uniquement dans l’application desktop.')),
   fortnitePrimebot: (options = {}) => window.noblesseDesktop?.getFortnitePrimebot?.(options)
     ?? fetchJson(`api/fortnite-primebot${options.force ? '?force=1' : ''}`),
   uefnHealth: () => window.noblesseDesktop?.getUefnHealth?.() ?? fetchJson('api/uefn-health'),
@@ -169,6 +189,10 @@ export const studioApi = {
     return window.noblesseDesktop.installAsset(request)
   },
   documents: () => window.noblesseDesktop?.listDocuments?.() ?? Promise.resolve(documentPreviewFallback),
+  documentTrash: async () => {
+    const documents = await (window.noblesseDesktop?.listDeletedDocuments?.() ?? Promise.resolve([]))
+    return (Array.isArray(documents) ? documents : []).filter((document) => Boolean(document?.deletedAt))
+  },
   documentText: (id) => window.noblesseDesktop?.readDocumentText?.(id)
     ?? Promise.resolve({ id, text: documentPreviewFallback.find((item) => item.id === id)?.previewText || '' }),
   chooseDocumentFiles: () => {

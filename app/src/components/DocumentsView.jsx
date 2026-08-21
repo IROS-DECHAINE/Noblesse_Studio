@@ -48,12 +48,15 @@ function errorMessage(error, fallback) {
 }
 
 function DeleteConfirmationDialog({ plan, busy, onCancel, onConfirm }) {
+  const [step, setStep] = useState(1)
   const dialogRef = useRef(null)
   const cancelRef = useRef(null)
   const onCancelRef = useRef(onCancel)
   const busyRef = useRef(busy)
   onCancelRef.current = onCancel
   busyRef.current = busy
+
+  useEffect(() => setStep(1), [plan?.operationId])
 
   useEffect(() => {
     if (!plan) return undefined
@@ -91,10 +94,12 @@ function DeleteConfirmationDialog({ plan, busy, onCancel, onConfirm }) {
     <div className="documents-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && !busy && onCancel()}>
       <section className="documents-modal documents-delete-dialog" ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="documents-delete-title">
         <header className="documents-modal-header">
-          <div><AlertTriangle size={24} aria-hidden="true" /><h2 id="documents-delete-title">Supprimer « {plan.title} » ?</h2></div>
+          <div><AlertTriangle size={24} aria-hidden="true" /><h2 id="documents-delete-title">Mettre « {plan.title} » dans la corbeille ?</h2></div>
           <button type="button" aria-label="Fermer" disabled={busy} onClick={onCancel}><X size={20} /></button>
         </header>
-        <div className="documents-modal-body">
+        <div className="documents-modal-body" data-confirmation-step={step}>
+          <p className="documents-delete-step">Validation {step} sur 2</p>
+          {step === 1 ? <>
           <div className="documents-delete-summary">
             <Trash2 size={23} aria-hidden="true" />
             <div>
@@ -107,13 +112,14 @@ function DeleteConfirmationDialog({ plan, busy, onCancel, onConfirm }) {
             <p>{plan.originalSourceWillBeDeleted ? 'Le fichier source d’origine sera également supprimé.' : 'Le fichier source d’origine ne sera pas supprimé.'}</p>
           </div>
           {plan.originalSourceWillBeDeleted && <p className="documents-delete-warning" role="alert">Vérifie la cible avant de confirmer : le fichier source est inclus dans ce plan.</p>}
+          </> : <div className="documents-delete-final"><Trash2 size={25} /><strong>Seconde confirmation</strong><p>Le document sera retiré de la bibliothèque et restera récupérable dans la corbeille locale.</p></div>}
         </div>
         <footer className="documents-modal-actions">
           <button ref={cancelRef} type="button" disabled={busy} onClick={onCancel}>Annuler</button>
-          <button className="is-danger" type="button" disabled={busy} onClick={onConfirm}>
+          {step === 1 ? <button type="button" disabled={busy} onClick={() => setStep(2)}>J’ai vérifié le plan · Continuer</button> : <button className="is-danger" type="button" disabled={busy} onClick={onConfirm}>
             {busy ? <LoaderCircle size={16} aria-hidden="true" /> : <Trash2 size={16} aria-hidden="true" />}
-            Confirmer la suppression
-          </button>
+            Confirmer la mise en corbeille
+          </button>}
         </footer>
       </section>
     </div>

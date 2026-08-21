@@ -1,5 +1,48 @@
 # Notes de version
 
+## 1.0.12 — Barre audio précise et durée toujours visible
+
+- lecteur audio dédié dans le prévisualisateur du Coffre, indépendant de l’affichage variable des contrôles Windows ;
+- temps actuel et durée totale affichés en permanence pour chaque son ;
+- curseur large cliquable et glissable pour rejoindre directement le moment choisi, comme sur un lecteur vidéo classique ;
+- lecture, pause, navigation précédent/suivant et boucle conservées dans une interface cohérente ;
+- durée du catalogue utilisée immédiatement, puis confirmée par les métadonnées réelles du WAV au chargement.
+- zone d’installation commune à toutes les catégories du Coffre, filtrée par capacité réelle du type d’asset et non par un simple état vert générique ;
+- pour les sons UEFN : dossier `NoblesseStudio/<Pack>/Audio` préparé dans le projet, WAV vérifié au nom unique sélectionné dans l’Explorateur, puis glisser-déposer final demandé sans faux état « installé ».
+
+## 1.0.11 — Import audio groupé et corbeilles récupérables
+
+- sélection de 1 à 200 WAV/MP3, titres proposés depuis les noms de fichiers et modifiables avant import ;
+- lot persistant fichier par fichier, limite totale de 2 Go, annulation entre deux fichiers, reprise ciblée et succès partiels explicites ;
+- un seul rebuild des index par passe, doublons SHA-256 conservés idempotents et mutations du catalogue sérialisées ;
+- navigation son précédent/suivant et mode boucle dans le prévisualisateur ;
+- mise en corbeille manuelle des sons, assets, textures et matières avec plan hashé, blocage des dépendances et deux validations ;
+- originaux préservés, rollback si les projections échouent et restauration depuis **Sécurité et récupération** ;
+- double validation également appliquée aux documents, désormais visibles dans les corbeilles locales de récupération.
+
+## 1.0.10 — Import MP3 et aperçu fenêtré corrigés
+
+- format de sortie WAV imposé explicitement à FFmpeg, y compris lorsque le fichier de travail sécurisé se termine par `.wav.part` ;
+- variantes remontées au-dessus de l’aperçu pour rester directement accessibles ;
+- hauteur de l’aperçu adaptée à la hauteur réelle de la fenêtre, tout en conservant sa taille maximale en plein écran.
+
+## 1.0.9 — Bibliothèque audio gérée et aperçu étendu
+
+- bouton **Ajouter un son** dans Coffre > Sons, avec titre, catégorie et confirmation de droits ;
+- sélection WAV/MP3 par jeton opaque : aucun chemin privé ne quitte le processus principal ;
+- validation des vrais WAV RIFF et conversion automatique des MP3 en WAV PCM 24 bits / 48 kHz avec FFmpeg découvert localement ;
+- traitement audio hors de la boucle principale, limite de 128 Mo et 30 minutes, hash SHA-256 et refus des doublons ;
+- original WAV géré dans le Vault, ID permanent, index Sons, projection SQLite et lecteur intégré ;
+- prévisualisateur extensible jusqu’à 1 020 px, avec limite dynamique préservant au moins deux cartes lorsque la navigation est masquée.
+
+## 1.0.8 — Coffre organisé et livraison locale automatique
+
+- grandes catégories Assets, Matières, VFX et Sons directement sous le titre du Coffre ;
+- 99 matières conservées dans Matières, dont 19 matières animées, sans faux VFX ;
+- navigation et prévisualisateur redimensionnables, navigation rétractable et dimensions persistantes ;
+- canal `desktop:deploy-local` validé, avec fermeture propre, remplacement contrôlé de `app/build`, rollback local, vérification de version et relance ;
+- séparation explicite entre le canal de travail local et la future auto-mise à jour publique signée.
+
 ## 1.0.7 — Coffre fidèle et workflows projets durcis
 
 - prévisualisation professionnelle des matériaux depuis les sources réelles du Vault, avec chargement atomique des textures, repli contrôlé et cache natif reconstructible ;

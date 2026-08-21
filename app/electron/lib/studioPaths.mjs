@@ -36,12 +36,14 @@ export const studioRuntimeRoot = () => path.join(studioDataRoot(), 'runtime', 'e
 export const studioDatabaseFile = () => path.join(studioDataRoot(), 'database', 'noblesse-studio.db')
 export const studioBackupsRoot = () => configuredPath('NOBLESSE_BACKUP_ROOT') || path.join(studioDataRoot(), 'backups', 'repository-v1')
 export const studioOperationsRoot = () => path.join(studioStateRoot(), 'operations')
+export const studioInstallHandoffsRoot = () => path.join(studioStateRoot(), 'install-handoffs')
 
 export const studioLibraryRoot = () => configuredPath('NOBLESSE_LIBRARY_ROOT') || path.join(studioAppRoot(), 'library')
 export const studioVaultRoot = () => configuredPath('NOBLESSE_VAULT_ROOT') || path.join(studioLibraryRoot(), 'storage')
 export const studioDocumentsRoot = () => configuredPath('NOBLESSE_DOCUMENT_ROOT') || path.join(studioRoot(), 'Documents')
 export const studioUnrealRoot = () => configuredPath('NOBLESSE_UNREAL_PROJECT_ROOT') || path.join(studioRoot(), 'Unreal')
 export const studioUefnEditorExecutable = () => configuredPath('NOBLESSE_UEFN_EDITOR_EXECUTABLE')
+export const studioFfmpegExecutable = () => configuredPath('NOBLESSE_FFMPEG_EXECUTABLE')
 
 export const studioUefnProjectRoots = () => {
   const configured = String(process.env.NOBLESSE_UEFN_PROJECT_ROOTS || '').trim()
@@ -58,10 +60,12 @@ export const describeStudioPaths = () => ({
   databaseFile: studioDatabaseFile(),
   backupsRoot: studioBackupsRoot(),
   operationsRoot: studioOperationsRoot(),
+  installHandoffsRoot: studioInstallHandoffsRoot(),
   libraryRoot: studioLibraryRoot(),
   vaultRoot: studioVaultRoot(),
   documentsRoot: studioDocumentsRoot(),
   unrealRoot: studioUnrealRoot(),
   uefnEditorExecutableOverride: studioUefnEditorExecutable(),
+  ffmpegExecutableOverride: studioFfmpegExecutable(),
   uefnProjectRoots: studioUefnProjectRoots(),
 })

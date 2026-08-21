@@ -9,22 +9,39 @@ import { createBackupService } from './lib/backupService.mjs'
 import { createDocumentImportService } from './lib/documentImportService.mjs'
 import { createFinanceService, financeIpcChannels } from './lib/financeService.mjs'
 import { createFortnitePrimebotFetcher } from './lib/fortniteData.mjs'
+import { shouldQuitForLocalUpdate } from './lib/localUpdateLifecycle.mjs'
 import { createProjectLaunchService } from './lib/projectLaunchService.mjs'
+import { createSoundBatchImportService } from './lib/soundBatchImportService.mjs'
+import { createSoundLibraryService } from './lib/soundLibraryService.mjs'
 import { installVaultAsset } from './lib/uefnInstaller.mjs'
+import { prepareUefnSoundHandoff } from './lib/uefnSoundHandoff.mjs'
 import { installUnrealNativeAsset } from './lib/unrealNativeInstaller.mjs'
 import { createUefnSessionService } from './lib/uefnSessionService.mjs'
+import { createVaultTrashService } from './lib/vaultTrashService.mjs'
 import { buildWindowsTaskbarDetails, windowsAppId } from './lib/windowsTaskbarIdentity.mjs'
 import { createOperationJobStore } from './lib/operationJobStore.mjs'
 import { createStudioIpcGateway } from './lib/studioIpcGateway.mjs'
-import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultPreviewRequest, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
+import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultAudioRequest, resolveVaultPreviewRequest, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
 import {
   assertProjectFavoriteRequestV1,
+  assertSoundImportRequestV1,
+  assertVaultTrashApplyRequestV1,
+  assertVaultTrashItemV1,
+  assertVaultTrashListResponseV1,
+  assertVaultTrashPlanRequestV1,
+  assertVaultTrashPlanResponseV1,
+  assertVaultTrashRestoreRequestV1,
+  assertVaultTrashRestoreResponseV1,
   serializeAssetsResponseV1,
   serializeProjectsResponseV1,
+  serializeSoundImportResponseV1,
+  serializeSoundSelectionResponseV1,
 } from '../shared/publicIpcContracts.mjs'
+import { rebuildLibraryIndexes } from '../scripts/rebuild-library-index.mjs'
 import {
   studioBackupsRoot,
   studioDocumentsRoot,
+  studioFfmpegExecutable,
   studioOperationsRoot,
   studioRuntimeRoot,
   studioStateRoot,
@@ -68,9 +85,20 @@ let calendarRunsInBackground = false
 let isQuitting = false
 let uefnSessionService = null
 let projectLaunchService = null
+let operationJobStore = null
+let soundLibraryService = null
+let soundBatchImportService = null
+let vaultTrashService = null
+let vaultMutationQueue = Promise.resolve()
 const activeCalendarNotifications = new Set()
 const trustedWebContents = new Set()
 const getFortnitePrimebot = createFortnitePrimebotFetcher()
+
+const withVaultMutation = (task) => {
+  const operation = vaultMutationQueue.then(task, task)
+  vaultMutationQueue = operation.catch(() => undefined)
+  return operation
+}
 
 if (process.platform === 'win32') app.setAppUserModelId(windowsAppId)
 
@@ -131,6 +159,26 @@ const requireDocumentImportService = () => {
 const requireBackupService = () => {
   if (!backupService) throw new Error('Le service de sauvegarde est indisponible.')
   return backupService
+}
+
+const requireSoundLibraryService = () => {
+  if (!soundLibraryService) throw new Error('La bibliothèque audio locale est indisponible.')
+  return soundLibraryService
+}
+
+const requireOperationJobStore = () => {
+  if (!operationJobStore) throw new Error('Le journal des opérations locales est indisponible.')
+  return operationJobStore
+}
+
+const requireSoundBatchImportService = () => {
+  if (!soundBatchImportService) throw new Error('Le gestionnaire d’importations audio est indisponible.')
+  return soundBatchImportService
+}
+
+const requireVaultTrashService = () => {
+  if (!vaultTrashService) throw new Error('La corbeille du Coffre est indisponible.')
+  return vaultTrashService
 }
 
 const requireCalendarStore = () => {
@@ -261,6 +309,22 @@ const chooseDocumentFiles = async (event) => {
   return requireDocumentLibrary().describeSelection(selection.filePaths)
 }
 
+const chooseSoundFiles = async (event) => {
+  const owner = BrowserWindow.fromWebContents(event.sender)
+  const selection = await dialog.showOpenDialog(owner, {
+    title: 'Ajouter des sons au Coffre',
+    buttonLabel: 'Choisir ces sons',
+    properties: ['openFile', 'multiSelections'],
+    filters: [
+      { name: 'Audio WAV ou MP3', extensions: ['wav', 'mp3'] },
+    ],
+  })
+  if (selection.canceled || !selection.filePaths.length) {
+    return { schemaVersion: 1, canceled: true, files: [] }
+  }
+  return requireSoundLibraryService().describeSelections(selection.filePaths)
+}
+
 const openDocument = async (id) => {
   const { filePath } = await requireDocumentLibrary().resolveFile(id)
   const error = await shell.openPath(filePath)
@@ -287,12 +351,17 @@ const handleDocumentProtocol = async (request) => {
   }
 }
 
-const handleVaultPreviewProtocol = async (request) => {
+const handleVaultProtocol = async (request) => {
   try {
     const url = new URL(request.url)
-    if (url.hostname !== 'preview') return new Response('Introuvable', { status: 404 })
-    const previewToken = decodeURIComponent(url.pathname.replace(/^\//, ''))
-    const { filePath, mimeType } = await resolveVaultPreviewRequest(previewToken)
+    const token = decodeURIComponent(url.pathname.replace(/^\//, ''))
+    const resolved = url.hostname === 'preview'
+      ? await resolveVaultPreviewRequest(token)
+      : url.hostname === 'audio'
+        ? await resolveVaultAudioRequest(token)
+        : null
+    if (!resolved) return new Response('Introuvable', { status: 404 })
+    const { filePath, mimeType } = resolved
     const fileResponse = await net.fetch(pathToFileURL(filePath).toString(), { headers: request.headers })
     const headers = new Headers(fileResponse.headers)
     headers.set('Content-Type', mimeType)
@@ -417,6 +486,36 @@ ipcMain.handle('noblesse:uefn-health', (event) => {
 studioIpc.handle('noblesse:assets', () => getAssets(), {
   serializeResponse: serializeAssetsResponseV1,
 })
+studioIpc.handle('noblesse:sounds:choose-files', (_request, event) => chooseSoundFiles(event), {
+  serializeResponse: serializeSoundSelectionResponseV1,
+})
+studioIpc.handle('noblesse:sounds:import-batch', (request) => requireSoundBatchImportService().start(request), {
+  assertRequest: assertSoundImportRequestV1,
+  serializeResponse: serializeSoundImportResponseV1,
+})
+studioIpc.handle('noblesse:vault-trash:plan', (request) => requireVaultTrashService().plan(request), {
+  assertRequest: assertVaultTrashPlanRequestV1,
+  serializeResponse: assertVaultTrashPlanResponseV1,
+})
+studioIpc.handle('noblesse:vault-trash:apply', async (request) => {
+  const result = await requireVaultTrashService().apply(request)
+  broadcast('noblesse:vault-updated', { reason: 'vault-trash' })
+  return result
+}, {
+  assertRequest: assertVaultTrashApplyRequestV1,
+  serializeResponse: assertVaultTrashItemV1,
+})
+studioIpc.handle('noblesse:vault-trash:list', () => requireVaultTrashService().list(), {
+  serializeResponse: assertVaultTrashListResponseV1,
+})
+studioIpc.handle('noblesse:vault-trash:restore', async (request) => {
+  const result = await requireVaultTrashService().restore(request)
+  broadcast('noblesse:vault-updated', { reason: 'vault-trash-restore' })
+  return result
+}, {
+  assertRequest: assertVaultTrashRestoreRequestV1,
+  serializeResponse: assertVaultTrashRestoreResponseV1,
+})
 ipcMain.handle('noblesse:material-preview', (event, request) => {
   requireStudioSender(event)
   return loadMaterialPreviewDescriptor(request?.assetId)
@@ -451,6 +550,13 @@ ipcMain.handle('noblesse:project-launch', (event, request) => {
 ipcMain.handle('noblesse:install-asset', async (event, request) => {
   requireStudioSender(event)
   const asset = await loadVaultAsset(request?.assetId)
+  if (asset.asset_type === 'SoundWave') {
+    const { handoffFile, ...result } = await prepareUefnSoundHandoff(request, {
+      sessionService: requireUefnSessionService(),
+    })
+    shell.showItemInFolder(handoffFile)
+    return result
+  }
   if (asset.install_mode === 'UNREAL_NATIVE_BUNDLE') return installUnrealNativeAsset(request)
   return installVaultAsset(request, { sessionService: requireUefnSessionService() })
 })
@@ -506,15 +612,21 @@ ipcMain.handle('noblesse:documents:revert-version', async (event, request) => {
 })
 ipcMain.handle('noblesse:operations:list', (event) => {
   requireStudioSender(event)
-  return requireDocumentImportService().list()
+  return requireOperationJobStore().list({ limit: 100 })
 })
-ipcMain.handle('noblesse:operations:resume', (event, request) => {
+ipcMain.handle('noblesse:operations:resume', async (event, request) => {
   requireStudioSender(event)
-  return requireDocumentImportService().resume(request?.jobId)
+  const job = await requireOperationJobStore().get(request?.jobId)
+  if (job.type === 'DOCUMENT_IMPORT') return requireDocumentImportService().resume(job.id)
+  if (job.type === 'SOUND_IMPORT') return requireSoundBatchImportService().resume(job.id)
+  throw new Error('Cette opération ne peut pas être reprise depuis l’interface.')
 })
-ipcMain.handle('noblesse:operations:cancel', (event, request) => {
+ipcMain.handle('noblesse:operations:cancel', async (event, request) => {
   requireStudioSender(event)
-  return requireDocumentImportService().cancel(request?.jobId)
+  const job = await requireOperationJobStore().get(request?.jobId)
+  if (job.type === 'DOCUMENT_IMPORT') return requireDocumentImportService().cancel(job.id)
+  if (job.type === 'SOUND_IMPORT') return requireSoundBatchImportService().cancel(job.id)
+  throw new Error('Cette opération ne peut pas être annulée depuis l’interface.')
 })
 ipcMain.handle('noblesse:recovery:status', (event) => {
   requireStudioSender(event)
@@ -681,7 +793,7 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
       state: studioStateRoot(),
     },
   })
-  const operationJobStore = createOperationJobStore({ root: studioOperationsRoot() })
+  operationJobStore = createOperationJobStore({ root: studioOperationsRoot() })
   documentImportService = createDocumentImportService({
     documentLibrary,
     jobStore: operationJobStore,
@@ -690,8 +802,28 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
       if (job?.progress?.completed) notifyDocumentsUpdated()
     },
   })
+  soundLibraryService = createSoundLibraryService({
+    vaultRoot: vaultRoot(),
+    rebuildIndexes: rebuildLibraryIndexes,
+    ffmpegOverride: studioFfmpegExecutable(),
+    withMutation: withVaultMutation,
+  })
+  soundBatchImportService = createSoundBatchImportService({
+    soundLibrary: soundLibraryService,
+    jobStore: operationJobStore,
+    rebuildIndexes: () => withVaultMutation(() => rebuildLibraryIndexes()),
+    onChanged: notifyOperationUpdated,
+    onAssetImported: (result) => {
+      broadcast('noblesse:vault-updated', { reason: 'sound-import', assetId: result.assetId })
+    },
+  })
+  vaultTrashService = createVaultTrashService({
+    vaultRoot: vaultRoot(),
+    rebuildIndexes: rebuildLibraryIndexes,
+    withMutation: withVaultMutation,
+  })
   try {
-    await protocol.handle('noblesse-vault', handleVaultPreviewProtocol)
+    await protocol.handle('noblesse-vault', handleVaultProtocol)
   } catch (error) {
     console.error('[Noblesse Vault] Aperçus indisponibles', error)
   }
@@ -699,6 +831,8 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
     await documentLibrary.ensure()
     await documentLibrary.bootstrap()
     await documentImportService.initialize()
+    await soundBatchImportService.initialize()
+    await vaultTrashService.initialize()
     await protocol.handle('noblesse-doc', handleDocumentProtocol)
   } catch (error) {
     console.error('[Noblesse Documents] Initialisation impossible', error)
@@ -718,7 +852,12 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
   })
 })
 
-app.on('second-instance', () => {
+app.on('second-instance', (_event, commandLine) => {
+  if (shouldQuitForLocalUpdate({ commandLine, isPackaged: app.isPackaged })) {
+    isQuitting = true
+    app.quit()
+    return
+  }
   if (app.isReady()) showCalendarSurface()
 })
 

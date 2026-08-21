@@ -10,6 +10,7 @@ import {
   Play,
   RefreshCw,
   ShieldCheck,
+  Trash2,
   XCircle,
 } from 'lucide-react'
 
@@ -47,14 +48,18 @@ const statusLabel = {
 export default function RecoveryView() {
   const [recovery, setRecovery] = useState(null)
   const [operations, setOperations] = useState([])
+  const [trashItems, setTrashItems] = useState([])
+  const [deletedDocuments, setDeletedDocuments] = useState([])
   const [progress, setProgress] = useState(null)
   const [busy, setBusy] = useState('')
   const [message, setMessage] = useState('')
 
   const refresh = useCallback(async () => {
-    const [nextRecovery, nextOperations] = await Promise.all([studioApi.recoveryStatus(), studioApi.operations()])
+    const [nextRecovery, nextOperations, nextTrash, nextDeletedDocuments] = await Promise.all([studioApi.recoveryStatus(), studioApi.operations(), studioApi.vaultTrash(), studioApi.documentTrash()])
     setRecovery(nextRecovery)
     setOperations(Array.isArray(nextOperations) ? nextOperations : [])
+    setTrashItems(Array.isArray(nextTrash?.items) ? nextTrash.items : [])
+    setDeletedDocuments(Array.isArray(nextDeletedDocuments) ? nextDeletedDocuments : [])
   }, [])
 
   useEffect(() => {
@@ -117,6 +122,34 @@ export default function RecoveryView() {
     }
   }
 
+  const restoreTrashItem = async (trashId) => {
+    setBusy(`trash:${trashId}`)
+    setMessage('')
+    try {
+      const result = await studioApi.restoreVaultTrash(trashId)
+      setMessage(`${result.targetCount} élément${result.targetCount > 1 ? 's' : ''} restauré${result.targetCount > 1 ? 's' : ''} dans le Coffre.`)
+      await refresh()
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'La restauration du Coffre a échoué.')
+    } finally {
+      setBusy('')
+    }
+  }
+
+  const restoreDeletedDocument = async (document) => {
+    setBusy(`document:${document.id}`)
+    setMessage('')
+    try {
+      await studioApi.restoreDocument(document.id)
+      setMessage(`« ${document.title} » a été restauré dans Documents.`)
+      await refresh()
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'La restauration du document a échoué.')
+    } finally {
+      setBusy('')
+    }
+  }
+
   const progressPercent = progress?.totalBytes
     ? Math.min(100, Math.round((Number(progress.completedBytes ?? progress.checkedBytes ?? 0) / progress.totalBytes) * 100))
     : 0
@@ -163,11 +196,30 @@ export default function RecoveryView() {
               <div className="operation-row" key={job.id}>
                 <div><strong>{job.title}</strong><span>{statusLabel[job.status] || job.status} · {job.progress.completed}/{job.progress.total}</span></div>
                 <div>
-                  {['INTERRUPTED', 'PARTIAL', 'FAILED'].includes(job.status) && <button type="button" title="Reprendre" onClick={() => runOperationAction(studioApi.resumeOperation, job.id)}><Play size={15} /></button>}
+                  {['INTERRUPTED', 'PARTIAL', 'FAILED', 'CANCELLED'].includes(job.status) && <button type="button" title="Reprendre" onClick={() => runOperationAction(studioApi.resumeOperation, job.id)}><Play size={15} /></button>}
                   {!terminalStatuses.has(job.status) && <button type="button" title="Annuler" onClick={() => runOperationAction(studioApi.cancelOperation, job.id)}><XCircle size={15} /></button>}
                 </div>
               </div>
             )) : <div className="recovery-empty">Aucune opération interrompue.</div>}
+          </div>
+        </article>
+
+        <article className="recovery-panel recovery-trash-panel">
+          <header><div><Trash2 size={20} /><span><strong>Corbeilles locales</strong><small>{trashItems.length + deletedDocuments.length} groupe{trashItems.length + deletedDocuments.length === 1 ? '' : 's'} récupérable{trashItems.length + deletedDocuments.length === 1 ? '' : 's'} · originaux préservés</small></span></div></header>
+          <div className="vault-trash-list">
+            {trashItems.length ? trashItems.map((item) => (
+              <div key={item.trashId}>
+                <span><strong>{item.title}</strong><small>{item.targetCount} entrée{item.targetCount > 1 ? 's' : ''} · {formatDate(item.deletedAt)}</small></span>
+                <button type="button" disabled={Boolean(busy)} onClick={() => restoreTrashItem(item.trashId)}>{busy === `trash:${item.trashId}` ? <LoaderCircle size={15} /> : <ArchiveRestore size={15} />} Restaurer</button>
+              </div>
+            )) : null}
+            {deletedDocuments.map((document) => (
+              <div key={`document:${document.id}`}>
+                <span><strong>{document.title}</strong><small>Document · {formatDate(document.deletedAt)}</small></span>
+                <button type="button" disabled={Boolean(busy)} onClick={() => restoreDeletedDocument(document)}>{busy === `document:${document.id}` ? <LoaderCircle size={15} /> : <ArchiveRestore size={15} />} Restaurer</button>
+              </div>
+            ))}
+            {!trashItems.length && !deletedDocuments.length && <div className="recovery-empty">Les corbeilles locales sont vides.</div>}
           </div>
         </article>
       </div>

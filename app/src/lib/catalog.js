@@ -1,4 +1,4 @@
-import { publicAsset, vaultPreview } from './desktopApi.js'
+import { publicAsset, vaultAudio, vaultPreview } from './desktopApi.js'
 
 export const categoryFor = (asset) => {
   if (asset.asset_type === 'Material') return 'Matériaux'
@@ -99,8 +99,86 @@ const architecturalVariantLabels = {
 
 const displayVariantLabel = (variantId = '', fallback = '') => architecturalVariantLabels[variantId] || fallback || variantId
 
-export const surfaceCategories = ['Tout', 'Matières', 'VFX', 'Assets', 'Sons', 'Matières animées']
+export const coffreFamilies = Object.freeze([
+  { id: 'Assets', label: 'Assets', description: 'Objets et modules' },
+  { id: 'Matières', label: 'Matières', description: 'Surfaces et matériaux' },
+  { id: 'VFX', label: 'VFX', description: 'Effets visuels' },
+  { id: 'Sons', label: 'Sons', description: 'Audio et ambiances' },
+])
+
+const coffreSubcategories = Object.freeze({
+  Assets: Object.freeze(['Tout', 'Objets', 'Décors', 'Architecture', 'Végétation']),
+  Matières: Object.freeze(['Tout', 'Matières animées', 'Sols', 'Murs', 'Routes', 'Bois', 'Métaux', 'Pierres', 'Tissus']),
+  VFX: Object.freeze(['Tout', 'Animés', 'Énergie', 'Hologrammes', 'Nature']),
+  Sons: Object.freeze(['Tout', 'Effets', 'Ambiances', 'Musiques', 'Voix']),
+})
+
+export const subcategoriesForFamily = (family) => coffreSubcategories[family] || coffreSubcategories.Matières
 export const platformFilters = ['Toutes', 'UEFN', 'Unreal', 'Roblox']
+
+const assetCategories = new Set(['Asset', 'Assets', 'Mesh', 'Meshes', 'Objet', 'Objets'])
+const soundCategories = new Set(['Audio', 'Son', 'Sons', 'Sound', 'Sounds'])
+const soundAssetTypes = new Set(['SoundWave', 'Audio', 'AudioClip'])
+const materialAssetTypes = new Set(['Material', 'MaterialRecipe', 'Texture2D', 'UnrealMaterialInstance'])
+
+export const familyForSurface = (surface = {}) => {
+  const assetTypes = (surface.assets || []).map((asset) => asset.asset_type)
+  if (assetTypes.some((assetType) => materialAssetTypes.has(assetType))) return 'Matières'
+  if (assetTypes.some((assetType) => soundAssetTypes.has(assetType))) return 'Sons'
+  if (soundCategories.has(surface.category)) return 'Sons'
+  if (assetCategories.has(surface.category)) return 'Assets'
+  if (surface.category === 'VFX') return 'VFX'
+  return 'Matières'
+}
+
+const surfaceSearchText = (surface = {}) => [
+  surface.name,
+  surface.family,
+  surface.category,
+  surface.sourcePack,
+  ...(surface.variants || []),
+].join(' ').toLocaleLowerCase('fr')
+
+const matchesSubcategory = (surface, family, subcategory) => {
+  if (subcategory === 'Tout') return true
+
+  const text = surfaceSearchText(surface)
+  const category = surface.category || ''
+
+  if (family === 'Matières') {
+    if (subcategory === 'Matières animées') return Boolean(surface.animated)
+    if (subcategory === 'Sols') return category === 'Sol' || /\b(sol|floor|ground)\b/i.test(text)
+    if (subcategory === 'Murs') return /\b(mur|wall|brick|brique|tile|carrelage|plaster|enduit)\b/i.test(text)
+    if (subcategory === 'Routes') return category === 'Route' || /\b(route|street|road)\b/i.test(text)
+    if (subcategory === 'Bois') return category === 'Bois' || /\b(bois|wood|oak)\b/i.test(text)
+    if (subcategory === 'Métaux') return category === 'Métal' || /\b(métal|metal|steel|chrome|acier)\b/i.test(text)
+    if (subcategory === 'Pierres') return category === 'Pierre' || /\b(pierre|stone|slate|marble|travertine|obsidienne)\b/i.test(text)
+    if (subcategory === 'Tissus') return category === 'Tissu' || /\b(tissu|fabric|cloth)\b/i.test(text)
+  }
+
+  if (family === 'VFX') {
+    if (subcategory === 'Animés') return Boolean(surface.animated)
+    if (subcategory === 'Énergie') return /energy|solar|storm|shield|magma|frozen|chrono|royalgold/i.test(text)
+    if (subcategory === 'Hologrammes') return /holo|digital|glitch|prism|liquidchrome/i.test(text)
+    if (subcategory === 'Nature') return /slime|emerald|vein|candy|sand|frozen|magma/i.test(text)
+  }
+
+  if (family === 'Assets') {
+    if (subcategory === 'Objets') return /\b(objet|object|prop)\b/i.test(text)
+    if (subcategory === 'Décors') return /\b(décor|decor|environment|set)\b/i.test(text)
+    if (subcategory === 'Architecture') return /\b(architecture|building|modular|structure)\b/i.test(text)
+    if (subcategory === 'Végétation') return /\b(végétation|vegetation|foliage|plant|tree)\b/i.test(text)
+  }
+
+  if (family === 'Sons') {
+    if (subcategory === 'Effets') return category === 'Effets' || /\b(effets?|effects?|sfx|foley)\b/i.test(text)
+    if (subcategory === 'Ambiances') return category === 'Ambiances' || /\b(ambiances?|ambient|atmosphere)\b/i.test(text)
+    if (subcategory === 'Musiques') return category === 'Musiques' || /\b(musiques?|music|score|theme)\b/i.test(text)
+    if (subcategory === 'Voix') return category === 'Voix' || /\b(voix|voice|dialogue|vocal)\b/i.test(text)
+  }
+
+  return false
+}
 
 export const buildSurfaceCatalog = (assets = []) => {
   const uniqueAssets = [...new Map(assets.map((asset) => [asset.asset_id, asset])).values()]
@@ -108,6 +186,7 @@ export const buildSurfaceCatalog = (assets = []) => {
   const masters = uniqueAssets.filter((asset) => asset.asset_type === 'Material')
   const recipes = uniqueAssets.filter((asset) => asset.asset_type === 'MaterialRecipe')
   const nativeUnrealMaterials = uniqueAssets.filter((asset) => asset.asset_type === 'UnrealMaterialInstance')
+  const soundAssets = uniqueAssets.filter((asset) => soundAssetTypes.has(asset.asset_type))
   // MaterialReference entries are audit/provenance records. They deliberately
   // stay in the vault index, but are not user-facing assets: they have no
   // portable recipe and no trustworthy preview. Showing them in the Coffre
@@ -216,6 +295,7 @@ export const buildSurfaceCatalog = (assets = []) => {
       targetPath: '',
       installAssetId: ['MaterialRecipe', 'UnrealMaterialInstance'].includes(asset.asset_type) ? asset.asset_id : '',
       installMode: asset.install_mode || (asset.asset_type === 'MaterialRecipe' ? 'UEFN_RECIPE' : ''),
+      installCapability: 'material',
       packVersion: asset.pack_version,
       installable: ordered.every((item) => (
         item.status === 'READY_IN_APP'
@@ -226,24 +306,61 @@ export const buildSurfaceCatalog = (assets = []) => {
     }
   })
 
-  return [...legacySurfaces.filter((surface) => !coveredFamilies.has(surface.family)), ...recipeSurfaces]
+  const soundSurfaces = soundAssets.map((asset) => ({
+    id: `sound-${asset.asset_id.toLocaleLowerCase('fr').replace(/[^a-z0-9]+/g, '-')}`,
+    family: asset.asset_id,
+    kind: 'sound',
+    name: asset.label || asset.display_name,
+    category: asset.category || 'Effets',
+    order: 0,
+    animated: false,
+    variants: ['WAV'],
+    variantOptions: [{ id: 'WAV', label: 'WAV', assetId: asset.asset_id }],
+    textureRoles: [],
+    technicalMaps: 0,
+    preview: '',
+    previewKind: 'audio',
+    previewColor: '#172d43',
+    sourcePack: asset.pack_id,
+    sourceProject: asset.source_project,
+    provenance: asset.provenance,
+    status: asset.status,
+    platforms: Array.isArray(asset.platforms) && asset.platforms.length ? asset.platforms : ['UEFN'],
+    installAssetId: asset.asset_id,
+    installMode: 'UEFN_AUDIO_HANDOFF',
+    installCapability: 'sound',
+    packVersion: asset.pack_version,
+    installable: ['VALIDATED', 'READY', 'READY_IN_APP'].includes(asset.status),
+    audioUrl: vaultAudio(asset),
+    durationSeconds: Number(asset.duration_seconds) || 0,
+    sizeBytes: Number(asset.size_bytes) || 0,
+    sampleRate: Number(asset.sample_rate) || 0,
+    channels: Number(asset.channels) || 0,
+    bitDepth: Number(asset.bit_depth) || 0,
+    converted: asset.converted === true,
+    originalFormat: asset.original_format || 'WAV',
+    conversionProfile: asset.conversion_profile || 'WAV_PASSTHROUGH',
+    assets: [asset],
+  }))
+
+  return [...soundSurfaces, ...legacySurfaces.filter((surface) => !coveredFamilies.has(surface.family)), ...recipeSurfaces]
     .sort((left, right) => left.order - right.order || left.name.localeCompare(right.name, 'fr'))
 }
 
-export const filterSurfaces = (surfaces, { query = '', category = 'Tout', platform = 'Toutes' } = {}) => {
+export const filterSurfaces = (surfaces, { query = '', family = '', category = 'Tout', platform = 'Toutes' } = {}) => {
   const needle = query.trim().toLocaleLowerCase('fr')
   return surfaces.filter((surface) => {
-    if (['Matières animées', 'Animées'].includes(category) && !surface.animated) return false
-    if (category === 'Matières' && (surface.animated || ['VFX', 'Audio', 'Asset', 'Assets', 'Meshes'].includes(surface.category))) return false
-    if (category === 'VFX' && surface.category !== 'VFX') return false
-    if (category === 'Assets' && !['Asset', 'Assets', 'Meshes'].includes(surface.category)) return false
-    if (category === 'Sons' && !['Audio', 'Son', 'Sons'].includes(surface.category)) return false
-    if (!['Tout', 'Matières', 'VFX', 'Assets', 'Sons', 'Matières animées', 'Animées'].includes(category) && surface.category !== category) return false
+    if (family) {
+      if (familyForSurface(surface) !== family) return false
+      if (!matchesSubcategory(surface, family, category)) return false
+    } else {
+      if (['Matières animées', 'Animées'].includes(category) && !surface.animated) return false
+      if (category === 'Matières' && familyForSurface(surface) !== 'Matières') return false
+      if (['VFX', 'Assets', 'Sons'].includes(category) && familyForSurface(surface) !== category) return false
+      if (!['Tout', 'Matières', 'VFX', 'Assets', 'Sons', 'Matières animées', 'Animées'].includes(category) && surface.category !== category) return false
+    }
     if (platform !== 'Toutes' && !surface.platforms.includes(platform)) return false
     if (!needle) return true
-    return [surface.name, surface.family, surface.category, surface.sourcePack]
-      .join(' ')
-      .toLocaleLowerCase('fr')
-      .includes(needle)
+    return surfaceSearchText(surface).includes(needle)
   })
 }

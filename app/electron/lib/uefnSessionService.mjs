@@ -4,7 +4,7 @@ import { findProjectConnection, loadProjectConnectionRegistry } from './projectC
 import { UefnMcpClient } from './uefnMcpClient.mjs'
 import { discoverOpenUefnProjects } from './uefnOpenProjectDiscovery.mjs'
 import { createUefnPortOwnershipVerifier } from './uefnProcessInspector.mjs'
-import { MATERIAL_RECIPE_REQUIREMENTS, summarizeTransferCapabilities } from './uefnTransferContract.mjs'
+import { MATERIAL_RECIPE_REQUIREMENTS, SOUND_HANDOFF_REQUIREMENTS, summarizeTransferCapabilities } from './uefnTransferContract.mjs'
 import { listUefnProjects } from './vaultService.mjs'
 
 const FAVORITES_SCHEMA_VERSION = 1
@@ -95,6 +95,10 @@ const createDefaultProbe = ({ timeoutMs = 700, verifyPortOwner = createUefnPortO
       if (capabilities.materialRecipe) {
         const missingTools = await client.missingTools(MATERIAL_RECIPE_REQUIREMENTS)
         capabilities.materialRecipe = missingTools.length === 0
+      }
+      if (capabilities.soundHandoff) {
+        const missingTools = await client.missingTools(SOUND_HANDOFF_REQUIREMENTS)
+        capabilities.soundHandoff = missingTools.length === 0
       }
       return {
         id: projectId(mount),
@@ -211,6 +215,7 @@ export const createUefnSessionService = ({
       // The MCP mount proves project identity, while the versioned profile port
       // proves routing identity. Both must match before an asset can be transferred.
       const toolsetReady = session.capabilities?.materialRecipe === true
+        || session.capabilities?.soundHandoff === true
       const portMismatch = !portMatchesAssignment
         ? { code: 'PORT_MISMATCH', expectedPort: assignedPort, actualPort: session.port }
         : null
@@ -332,11 +337,11 @@ export const createUefnSessionService = ({
     return listDestinations()
   }
 
-  const resolveActiveSession = async (requestedId) => {
+  const resolveActiveSession = async (requestedId, { capability = 'materialRecipe' } = {}) => {
     const destinations = await listDestinations()
     const selected = destinations.find((item) => item.id === requestedId)
     if (!selected) throw new Error('Choisis un projet UEFN ouvert')
-    if (!selected.connected || !selected.canInstall || !selected.endpoint) {
+    if (!selected.connected || !selected.canInstall || !selected.endpoint || selected.capabilities?.[capability] !== true) {
       throw new Error(`${selected.name} est ferm\u00e9 ou son serveur MCP ne r\u00e9pond pas`)
     }
     return selected

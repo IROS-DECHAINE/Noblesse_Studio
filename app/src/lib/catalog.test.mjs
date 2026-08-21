@@ -1,6 +1,16 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildSurfaceCatalog, categoryFor, familyFromNotes, filterAssets, filterSurfaces, textureRole } from './catalog.js'
+import {
+  buildSurfaceCatalog,
+  categoryFor,
+  coffreFamilies,
+  familyForSurface,
+  familyFromNotes,
+  filterAssets,
+  filterSurfaces,
+  subcategoriesForFamily,
+  textureRole,
+} from './catalog.js'
 import { unwrapPublicItemsV1, vaultPreview } from './desktopApi.js'
 
 const assets = [
@@ -13,6 +23,30 @@ test('maps canonical categories', () => {
   assert.equal(categoryFor(assets[1]), 'Textures')
 })
 
+test('publishes imported sounds as playable Coffre cards', () => {
+  globalThis.window = { noblesseDesktop: {} }
+  const surfaces = buildSurfaceCatalog([{
+    asset_id: 'NOB-AUDIO-01',
+    display_name: 'Impact lourd',
+    asset_type: 'SoundWave',
+    category: 'Effets',
+    status: 'VALIDATED',
+    audio_url: 'noblesse-vault://audio/NOB-AUDIO-01',
+    duration_seconds: 2.4,
+    sample_rate: 48_000,
+    channels: 2,
+    bit_depth: 24,
+    platforms: [],
+  }])
+  delete globalThis.window
+
+  assert.equal(surfaces.length, 1)
+  assert.equal(surfaces[0].kind, 'sound')
+  assert.equal(familyForSurface(surfaces[0]), 'Sons')
+  assert.equal(surfaces[0].audioUrl, 'noblesse-vault://audio/NOB-AUDIO-01')
+  assert.equal(filterSurfaces(surfaces, { family: 'Sons', category: 'Effets' }).length, 1)
+})
+
 test('extracts family and texture role', () => {
   assert.equal(familyFromNotes(assets[1].notes), 'Brick')
   assert.equal(textureRole(assets[1].display_name), 'ORM')
@@ -21,6 +55,56 @@ test('extracts family and texture role', () => {
 test('filters by category and query', () => {
   assert.equal(filterAssets(assets, { category: 'Textures', query: 'brick' }).length, 1)
   assert.equal(filterAssets(assets, { category: 'Matériaux', query: 'dark' }).length, 0)
+})
+
+test('keeps the Coffre hierarchy short and puts all current materials under Matières', () => {
+  assert.deepEqual(coffreFamilies.map((family) => family.id), ['Assets', 'Matières', 'VFX', 'Sons'])
+  for (const family of coffreFamilies) {
+    const subcategories = subcategoriesForFamily(family.id)
+    assert.equal(subcategories[0], 'Tout')
+    assert.equal(new Set(subcategories).size, subcategories.length)
+    assert.ok(subcategories.length <= 9)
+  }
+
+  const staticMaterial = {
+    id: 'static-material',
+    name: 'Sol béton',
+    family: 'ConcreteFloor',
+    category: 'Sol',
+    animated: false,
+    platforms: ['Unreal'],
+    assets: [{ asset_type: 'UnrealMaterialInstance' }],
+  }
+  const animatedMaterial = {
+    id: 'animated-material',
+    name: 'Dark Matter',
+    family: 'DarkMatter',
+    category: 'VFX',
+    animated: true,
+    platforms: ['UEFN'],
+    assets: [{ asset_type: 'MaterialRecipe' }],
+  }
+  const futureVfx = {
+    id: 'future-vfx',
+    name: 'Impact Niagara',
+    family: 'Impact',
+    category: 'VFX',
+    animated: true,
+    platforms: ['Unreal'],
+    assets: [{ asset_type: 'NiagaraSystem' }],
+  }
+
+  assert.equal(familyForSurface(staticMaterial), 'Matières')
+  assert.equal(familyForSurface(animatedMaterial), 'Matières')
+  assert.equal(familyForSurface(futureVfx), 'VFX')
+  assert.deepEqual(
+    filterSurfaces([staticMaterial, animatedMaterial, futureVfx], { family: 'Matières' }).map((surface) => surface.id),
+    ['static-material', 'animated-material'],
+  )
+  assert.deepEqual(
+    filterSurfaces([staticMaterial, animatedMaterial, futureVfx], { family: 'Matières', category: 'Matières animées' }).map((surface) => surface.id),
+    ['animated-material'],
+  )
 })
 
 test('groups technical texture maps into one useful surface', () => {

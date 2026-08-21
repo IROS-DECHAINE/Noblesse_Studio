@@ -1,8 +1,10 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { PanelLeftOpen } from 'lucide-react'
 import ModulePlaceholder from './components/ModulePlaceholder.jsx'
 import StudioSidebar from './components/StudioSidebar.jsx'
 import { buildSurfaceCatalog } from './lib/catalog.js'
 import { studioApi } from './lib/desktopApi.js'
+import { loadStudioLayout, saveStudioLayout } from './lib/layoutPreferences.js'
 
 const CalendarView = lazy(() => import('./components/CalendarView.jsx'))
 const CoffreView = lazy(() => import('./components/CoffreView.jsx'))
@@ -17,8 +19,10 @@ const moduleTitles = {
   roblox: 'Roblox',
 }
 
-const projectCanReceive = (project) => Boolean(
-  project?.canInstall && (project.transferReady ?? project.connected),
+const projectCanReceive = (project, capability = '') => Boolean(
+  project?.canInstall
+  && (project.transferReady ?? project.connected)
+  && (!capability || project.installCapabilities?.[capability] === true),
 )
 
 export default function App() {
@@ -29,9 +33,11 @@ export default function App() {
   const [launchingProfileId, setLaunchingProfileId] = useState('')
   const [selectedProjectId, setSelectedProjectId] = useState('')
   const [query, setQuery] = useState('')
+  const [vaultFamily, setVaultFamily] = useState('Matières')
   const [category, setCategory] = useState('Tout')
   const [platform, setPlatform] = useState('Toutes')
   const [selected, setSelected] = useState(null)
+  const [layout, setLayout] = useState(() => loadStudioLayout())
   const [installing, setInstalling] = useState(false)
   const [fortniteStats, setFortniteStats] = useState({
     connected: false,
@@ -64,6 +70,32 @@ export default function App() {
   const surfaces = useMemo(() => buildSurfaceCatalog(assets), [assets])
   const connected = useMemo(() => projects.some((project) => project.platform === 'UEFN' && project.connected), [projects])
 
+  useEffect(() => {
+    const saveTimer = window.setTimeout(() => saveStudioLayout(layout), 180)
+    return () => window.clearTimeout(saveTimer)
+  }, [layout])
+
+  const selectVaultFamily = useCallback((family) => {
+    setVaultFamily(family)
+    setCategory('Tout')
+  }, [])
+
+  const resizeSidebar = useCallback((sidebarWidth) => {
+    setLayout((current) => ({ ...current, sidebarWidth }))
+  }, [])
+
+  const resizeInspector = useCallback((inspectorWidth) => {
+    setLayout((current) => ({ ...current, inspectorWidth }))
+  }, [])
+
+  const collapseSidebar = useCallback(() => {
+    setLayout((current) => ({ ...current, sidebarCollapsed: true }))
+  }, [])
+
+  const restoreSidebar = useCallback(() => {
+    setLayout((current) => ({ ...current, sidebarCollapsed: false }))
+  }, [])
+
   const applyProjects = useCallback((items) => {
     const nextProjects = Array.isArray(items) ? items : []
     setProjects(nextProjects)
@@ -94,20 +126,24 @@ export default function App() {
       return []
     }), [])
 
+  const refreshAssets = useCallback(() => Promise.all([studioApi.assets(), studioApi.vaultHealth()])
+    .then(([items, integrity]) => {
+      const nextItems = Array.isArray(items) ? items : []
+      setAssets(nextItems)
+      setVaultIntegrity(integrity)
+      return nextItems
+    })
+    .catch(() => {
+      setAssets([])
+      setVaultIntegrity(null)
+      return []
+    }), [])
+
   useEffect(() => {
-    const refreshAssets = () => Promise.all([studioApi.assets(), studioApi.vaultHealth()])
-      .then(([items, integrity]) => {
-        setAssets(items)
-        setVaultIntegrity(integrity)
-      })
-      .catch(() => {
-        setAssets([])
-        setVaultIntegrity(null)
-      })
     refreshAssets()
     const unsubscribe = studioApi.onVaultUpdated(refreshAssets)
     return unsubscribe
-  }, [])
+  }, [refreshAssets])
 
   useEffect(() => {
     const refreshProjectWorkspace = () => Promise.all([refreshProjects(), refreshProjectLaunchProfiles()])
@@ -128,9 +164,9 @@ export default function App() {
   useEffect(() => {
     if (!selected?.platforms?.length || !projects.length) return
     const current = projects.find((project) => project.id === selectedProjectId)
-    if (projectCanReceive(current) && selected.platforms.includes(current.platform)) return
+    if (projectCanReceive(current, selected.installCapability) && selected.platforms.includes(current.platform)) return
     const compatible = projects.find((project) => (
-      projectCanReceive(project) && selected.platforms.includes(project.platform)
+      projectCanReceive(project, selected.installCapability) && selected.platforms.includes(project.platform)
     ))
     if (compatible) setSelectedProjectId(compatible.id)
   }, [projects, selected, selectedProjectId])
@@ -202,7 +238,7 @@ export default function App() {
       return
     }
     const destination = projects.find((project) => project.id === selectedProjectId)
-    if (!projectCanReceive(destination)) {
+    if (!projectCanReceive(destination, surface.installCapability)) {
       setToast('Ce projet destination n’est pas prêt au transfert.')
       return
     }
@@ -217,14 +253,27 @@ export default function App() {
         assetId: variant?.installAssetId || surface.installAssetId,
         projectId: selectedProjectId,
       })
-      const wording = result.mode === 'ALREADY_INSTALLED' ? 'déjà présent et vérifié' : 'installé et vérifié'
-      setToast(`${surface.name} ${wording} dans ${result.project}.`)
+      if (result.mode === 'MANUAL_AUDIO_IMPORT_READY') {
+        setToast(`${surface.name} est prêt : le dossier Audio est ouvert dans UEFN et le WAV est sélectionné dans l’Explorateur. Glisse-le dans UEFN pour terminer.`)
+      } else {
+        const wording = result.mode === 'ALREADY_INSTALLED' ? 'déjà présent et vérifié' : 'installé et vérifié'
+        setToast(`${surface.name} ${wording} dans ${result.project}.`)
+      }
     } catch (error) {
       setToast(error instanceof Error ? error.message : 'Installation impossible')
     } finally {
       setInstalling(false)
     }
   }
+
+  const handleSoundImported = useCallback(async (job) => {
+    const nextAssets = await refreshAssets()
+    setVaultFamily('Sons')
+    setCategory('Tout')
+    const importedAssetId = [...(job?.items || [])].reverse().find((item) => item.status === 'COMPLETED')?.result?.assetId
+    const importedSurface = buildSurfaceCatalog(nextAssets).find((surface) => surface.assets?.some((asset) => asset.asset_id === importedAssetId))
+    if (importedSurface) setSelected(importedSurface)
+  }, [refreshAssets])
 
   const toggleProjectFavorite = async (projectId, favorite) => {
     try {
@@ -255,9 +304,24 @@ export default function App() {
   }
 
   return (
-    <div className="studio-shell">
-      <StudioSidebar section={section} connected={connected} onNavigate={navigate} />
+    <div
+      className={`studio-shell${layout.sidebarCollapsed ? ' is-sidebar-collapsed' : ''}`}
+      style={{ '--studio-sidebar-width': `${layout.sidebarWidth}px` }}
+    >
+      <StudioSidebar
+        section={section}
+        connected={connected}
+        width={layout.sidebarWidth}
+        onNavigate={navigate}
+        onWidth={resizeSidebar}
+        onCollapse={collapseSidebar}
+      />
       <div className="studio-main">
+        {layout.sidebarCollapsed && (
+          <button className="studio-sidebar-restore" type="button" aria-label="Afficher la navigation" title="Afficher la navigation" onClick={restoreSidebar}>
+            <PanelLeftOpen size={20} />
+          </button>
+        )}
         <Suspense fallback={<div className="module-loading" role="status">Ouverture du module…</div>}>
         {section === 'home' && (
           <DashboardHome
@@ -281,6 +345,7 @@ export default function App() {
           <CoffreView
             surfaces={surfaces}
             query={query}
+            family={vaultFamily}
             category={category}
             platform={platform}
             selected={selected}
@@ -289,13 +354,19 @@ export default function App() {
             connected={connected}
             installing={installing}
             vaultIntegrity={vaultIntegrity}
+            inspectorWidth={layout.inspectorWidth}
             onQuery={setQuery}
+            onFamily={selectVaultFamily}
             onCategory={setCategory}
             onPlatform={setPlatform}
             onSelect={setSelected}
             onProject={setSelectedProjectId}
             onProjectFavorite={toggleProjectFavorite}
             onInstall={installSurface}
+            onInspectorWidth={resizeInspector}
+            onSoundImported={handleSoundImported}
+            onVaultChanged={refreshAssets}
+            onNotify={setToast}
           />
         )}
         {section === 'documents' && (

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T20:48:54.681Z",
+  "generatedAt": "2026-08-21T23:32:39.219Z",
   "authority": {
     "catalog": "library/storage/catalog.json",
     "integrity": "library/storage/integrity.json",
@@ -10,8 +10,8 @@
   },
   "integrity": {
     "status": "PASS",
-    "catalogSha256": "8f5faedfb540f1d2d4e05fc8325e02c412badc4bf4ecc69fd5637eaa85852c6f",
-    "checkedFileCount": 962,
+    "catalogSha256": "7552e30d02d10e3170865b5be140e78bedc158f79cdc57c093d981b43d4770fe",
+    "checkedFileCount": 1003,
     "missingFileCount": 0,
     "hashMismatchCount": 0
   },
@@ -19,9 +19,10 @@
     "assets": 0,
     "textures": 119,
     "materials": 235,
+    "sounds": 25,
     "documents": 17
   },
-  "totalLibraryItems": 354,
+  "totalLibraryItems": 379,
   "totalDocuments": 17,
   "relations": {
     "dependencyEdges": 5,
@@ -29,7 +30,7 @@
     "unresolved": 1
   },
   "storage": {
-    "managed": 338,
+    "managed": 363,
     "references": 16
   },
   "indexes": [
@@ -47,6 +48,11 @@
       "category": "materials",
       "json": "materials/index.json",
       "human": "materials/INDEX.md"
+    },
+    {
+      "category": "sounds",
+      "json": "sounds/index.json",
+      "human": "sounds/INDEX.md"
     },
     {
       "category": "documents",

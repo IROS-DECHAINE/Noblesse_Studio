@@ -42,6 +42,7 @@ const required = [
   'library/assets/index.json',
   'library/textures/index.json',
   'library/materials/index.json',
+  'library/sounds/index.json',
   'library/documents/index.json',
   'library/storage/catalog.json',
   'library/storage/integrity.json',
@@ -49,7 +50,7 @@ const required = [
 for (const relativePath of required) await access(path.join(appRoot, relativePath))
 await access(databaseFile)
 
-const [catalogBuffer, integrity, master, dependencies, assets, textures, materials, documents] = await Promise.all([
+const [catalogBuffer, integrity, master, dependencies, assets, textures, materials, sounds, documents] = await Promise.all([
   readFile(path.join(vaultRoot, 'catalog.json')),
   readJson(path.join(vaultRoot, 'integrity.json')),
   readJson(path.join(libraryRoot, 'index.json')),
@@ -57,6 +58,7 @@ const [catalogBuffer, integrity, master, dependencies, assets, textures, materia
   readJson(path.join(libraryRoot, 'assets', 'index.json')),
   readJson(path.join(libraryRoot, 'textures', 'index.json')),
   readJson(path.join(libraryRoot, 'materials', 'index.json')),
+  readJson(path.join(libraryRoot, 'sounds', 'index.json')),
   readJson(path.join(libraryRoot, 'documents', 'index.json')),
 ])
 const catalog = JSON.parse(catalogBuffer.toString('utf8').replace(/^\uFEFF/, ''))
@@ -66,7 +68,7 @@ if (sha256(catalogBuffer) !== integrity.catalogSha256) throw new Error('Le hash 
 if (catalog.assets.length !== integrity.assetCount) throw new Error('Le total catalogue/intégrité diffère.')
 if (new Set(catalog.assets.map((item) => item.asset_id)).size !== catalog.assets.length) throw new Error('Des IDs de bibliothèque sont dupliqués.')
 
-const indexedLibraryTotal = assets.count + textures.count + materials.count
+const indexedLibraryTotal = assets.count + textures.count + materials.count + sounds.count
 if (indexedLibraryTotal !== catalog.assets.length) throw new Error('Tous les éléments du catalogue ne sont pas classés.')
 if (master.totalLibraryItems !== catalog.assets.length || master.totalDocuments !== documents.count) {
   throw new Error('L’index maître ne correspond pas aux index de catégorie.')
@@ -78,7 +80,7 @@ if (master.schemaVersion < 2 || dependencies.schemaVersion !== 1 || dependencies
 if (master.storage.managed + master.storage.references !== catalog.assets.length) {
   throw new Error('Tous les éléments doivent déclarer un mode de stockage explicite.')
 }
-for (const item of [...assets.items, ...textures.items, ...materials.items]) {
+for (const item of [...assets.items, ...textures.items, ...materials.items, ...sounds.items]) {
   if (!['MANAGED', 'REFERENCE'].includes(item.storageMode)) throw new Error(`Mode de stockage invalide : ${item.id}`)
   if (item.storageMode === 'MANAGED' && !item.storagePath.startsWith('library/storage/')) throw new Error(`Emplacement géré invalide : ${item.id}`)
   if (item.storageMode === 'REFERENCE' && item.storagePath) throw new Error(`Une référence externe ne doit pas devenir un chemin de stockage : ${item.id}`)
@@ -117,6 +119,7 @@ console.log(JSON.stringify({
     assets: assets.count,
     textures: textures.count,
     materials: materials.count,
+    sounds: sounds.count,
     documents: documents.count,
     database: databaseCounts,
   },

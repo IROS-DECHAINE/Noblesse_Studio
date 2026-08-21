@@ -1,5 +1,7 @@
-import { Blocks, CalendarDays, FileText, FolderKanban, Gamepad2, Home, Settings, Vault, WalletCards } from 'lucide-react'
+import { Blocks, CalendarDays, FileText, FolderKanban, Gamepad2, Home, PanelLeftClose, Settings, Vault, WalletCards } from 'lucide-react'
 import { publicAsset } from '../lib/desktopApi.js'
+import { layoutLimits } from '../lib/layoutPreferences.js'
+import ColumnResizeHandle from './ColumnResizeHandle.jsx'
 
 const navItems = [
   { id: 'home', label: 'Accueil', icon: Home },
@@ -12,12 +14,15 @@ const navItems = [
   { id: 'calendar', label: 'Calendrier', icon: CalendarDays },
 ]
 
-export default function StudioSidebar({ section, connected, onNavigate }) {
+export default function StudioSidebar({ section, connected, width, onNavigate, onWidth, onCollapse }) {
   return (
-    <aside className="studio-sidebar" aria-label="Navigation Noblesse Studio">
+    <aside id="studio-sidebar" className="studio-sidebar" aria-label="Navigation Noblesse Studio">
       <button className="studio-brand" type="button" aria-label="Noblesse Studio — Accueil" onClick={() => onNavigate('home')}>
         <img src={publicAsset('assets/noblesse-vault-icon.png')} alt="" />
         <span>NOBLESSE STUDIO</span>
+      </button>
+      <button className="studio-sidebar-collapse" type="button" aria-label="Masquer la navigation" title="Masquer la navigation" onClick={onCollapse}>
+        <PanelLeftClose size={18} />
       </button>
 
       <nav className="studio-navigation">
@@ -35,6 +40,16 @@ export default function StudioSidebar({ section, connected, onNavigate }) {
         </div>
         <button type="button" aria-label="Réglages" title="Sécurité et récupération" className={section === 'settings' ? 'is-active' : ''} onClick={() => onNavigate('settings')}><Settings size={20} /></button>
       </div>
+
+      <ColumnResizeHandle
+        className="studio-sidebar-resizer"
+        label="Redimensionner la navigation"
+        value={width}
+        min={layoutLimits.sidebar.min}
+        max={layoutLimits.sidebar.max}
+        defaultValue={layoutLimits.sidebar.defaultValue}
+        onChange={onWidth}
+      />
     </aside>
   )
 }

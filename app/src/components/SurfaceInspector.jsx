@@ -1,19 +1,24 @@
-import { CheckCircle2, ChevronDown, Circle, Download, Layers3, LoaderCircle, ShieldCheck, Square } from 'lucide-react'
+import { CheckCircle2, ChevronDown, Circle, Layers3, LoaderCircle, ShieldCheck, Square, Trash2 } from 'lucide-react'
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { studioApi } from '../lib/desktopApi.js'
 import { usePreviewDescriptor } from './material-preview/usePreviewDescriptor.js'
-import ProjectDestinationPicker from './ProjectDestinationPicker.jsx'
+import SoundInspector from './SoundInspector.jsx'
+import VaultInstallControl from './VaultInstallControl.jsx'
 
 const MaterialPreview3D = lazy(() => import('./MaterialPreview3D.jsx'))
 
 export default function SurfaceInspector({
   surface,
+  soundSurfaces,
   projects,
   selectedProjectId,
   installing,
   onProject,
   onProjectFavorite,
   onInstall,
+  onSelect,
+  onTrash,
+  trashBusy,
 }) {
   const [shape, setShape] = useState('sphere')
   const [variantId, setVariantId] = useState('Standard')
@@ -40,13 +45,8 @@ export default function SurfaceInspector({
     [activeAssetId, activeVariant?.animated, activeVariant?.previewColor, activeVariant?.previewKind, surface],
   )
 
-  if (!surface) return <aside className="surface-inspector is-empty">Aucune matière dans cette sélection.</aside>
-
-  const selectedProject = projects.find((project) => project.id === selectedProjectId)
-  const projectCompatible = Boolean(selectedProject && surface.platforms.includes(selectedProject.platform))
-  const projectTransferReady = selectedProject?.canInstall
-    && (selectedProject.transferReady ?? selectedProject.connected)
-  const canInstall = surface.installable && projectCompatible && projectTransferReady && !installing
+  if (!surface) return <aside className="surface-inspector is-empty">Aucun élément dans cette sélection.</aside>
+  if (surface.kind === 'sound') return <SoundInspector surface={surface} sounds={soundSurfaces} projects={projects} selectedProjectId={selectedProjectId} installing={installing} onProject={onProject} onProjectFavorite={onProjectFavorite} onInstall={onInstall} onSelect={onSelect} onTrash={onTrash} trashBusy={trashBusy} />
   const technicalMapCount = Number(activeVariant?.technicalMaps) || technicalChannels.length
 
   return (
@@ -58,17 +58,6 @@ export default function SurfaceInspector({
           <button type="button" className={shape === 'plane' ? 'is-active' : ''} onClick={() => setShape('plane')}><Square size={15} /> Plane</button>
         </div>
       </div>
-      <div className="inspector-sphere">
-        <Suspense fallback={<div className="material-preview-loading" role="status"><LoaderCircle className="is-spinning" size={22} /> Préparation de l’aperçu 3D…</div>}>
-          <MaterialPreview3D
-            descriptorState={descriptorState}
-            surface={previewSurface}
-            shape={shape}
-            preview={activeVariant?.preview || surface.preview}
-          />
-        </Suspense>
-      </div>
-
       {surface.variantOptions?.length > 1 && (
         <div className="material-variants">
           <span>Variantes</span>
@@ -82,6 +71,17 @@ export default function SurfaceInspector({
           </div>
         </div>
       )}
+
+      <div className="inspector-sphere">
+        <Suspense fallback={<div className="material-preview-loading" role="status"><LoaderCircle className="is-spinning" size={22} /> Préparation de l’aperçu 3D…</div>}>
+          <MaterialPreview3D
+            descriptorState={descriptorState}
+            surface={previewSurface}
+            shape={shape}
+            preview={activeVariant?.preview || surface.preview}
+          />
+        </Suspense>
+      </div>
 
       <dl className="surface-facts">
         <div><dt>Catégorie</dt><dd>{surface.category}</dd></div>
@@ -100,22 +100,17 @@ export default function SurfaceInspector({
         </div>
       </details>
 
-      <ProjectDestinationPicker
+      <VaultInstallControl
+        surface={surface}
         projects={projects}
         selectedProjectId={selectedProjectId}
-        acceptedPlatforms={surface.platforms}
+        installing={installing}
         onProject={onProject}
-        onFavorite={onProjectFavorite}
+        onProjectFavorite={onProjectFavorite}
+        onInstall={onInstall}
+        variant={activeVariant}
       />
-
-      <button className="install-surface" type="button" disabled={!canInstall} onClick={() => onInstall(surface, activeVariant)}>
-        {installing ? <LoaderCircle className="is-spinning" size={19} /> : <Download size={19} />}
-        {installing
-          ? 'Installation et validation…'
-          : surface.installable
-            ? projectCompatible ? 'Installer dans ce projet' : `Choisir un projet ${surface.platforms.join(' / ')}`
-            : 'Conversion en recette requise'}
-      </button>
+      <button className="vault-trash-trigger" type="button" disabled={trashBusy || !surface.assets?.length} onClick={() => onTrash?.(surface)}><Trash2 size={16} /> Mettre cet élément dans la corbeille</button>
     </aside>
   )
 }

@@ -255,7 +255,11 @@ export const createMaterialPreviewDescriptor = ({ asset, nativePreview = null, r
     }
   }
 
-  if (asset.preview_kind === 'rendered_sphere' || asset.asset_type === 'UnrealMaterialInstance') {
+  // A rendered sphere may be the best catalogue thumbnail without being the
+  // runtime preview. Valid MaterialRecipe graphs must keep the same live
+  // renderer as every other recipe; the capture remains their safe fallback.
+  if (asset.asset_type === 'UnrealMaterialInstance'
+    || (!recipe && asset.preview_kind === 'rendered_sphere')) {
     return {
       ...base,
       mode: 'rendered_capture',

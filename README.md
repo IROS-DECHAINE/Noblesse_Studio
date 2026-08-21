@@ -21,6 +21,7 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 | Assets | `library/assets/` |
 | Textures | `library/textures/` |
 | Matériaux | `library/materials/` |
+| Sons | `library/sounds/` |
 | Documents | `library/documents/` |
 | Originaux gérés du Vault | `library/storage/` |
 | Base SQLite locale | `data/database/noblesse-studio.db` |
@@ -33,6 +34,8 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 | Sauvegarde et restauration | `docs/RECOVERY_RUNBOOK.md` |
 | Maintenance et livraisons | `docs/MAINTENANCE.md` |
 | Notes de version | `docs/RELEASE_NOTES.md` |
+| Décision des imports audio | `docs/DECISION_MANAGED_AUDIO_IMPORT_2026-08-22.md` |
+| Décision de la corbeille récupérable | `docs/DECISION_RECOVERABLE_LIBRARY_TRASH_2026-08-22.md` |
 | État de la migration | `docs/MIGRATION_2026-08-21.md` |
 
 ## Ce qui fait autorité
@@ -44,6 +47,10 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 5. SQLite est un index rapide et reconstructible; elle n’est jamais l’unique copie d’un original.
 
 Chaque asset, texture, matériau et document doit avoir un ID permanent. Un déplacement de fichier ne change jamais cet ID.
+
+Dans **Coffre > Sons**, le bouton **Ajouter des sons** accepte jusqu’à 200 WAV ou MP3 à la fois. Les titres sont proposés depuis les noms de fichiers et restent modifiables. Un WAV valide est conservé sans réencodage ; un MP3 est converti par le processus principal en WAV PCM 24 bits / 48 kHz. Le lot est persistant, annulable entre deux fichiers et reprenable sans rejouer les succès. Le lecteur permet précédent, suivant et boucle. Aucun chemin privé n’est transmis à l’interface.
+
+Chaque carte du Coffre peut être placée dans une corbeille après vérification du plan et deux confirmations. Les dépendances connues bloquent une suppression dangereuse, les originaux restent préservés et la restauration se fait depuis **Sécurité et récupération**. Les documents utilisent le même parcours utilisateur avec leur corbeille dédiée.
 
 ## Commandes fondatrices
 
@@ -59,6 +66,14 @@ pnpm.cmd build
 ```
 
 Ces commandes se lancent depuis `app/`. Ne modifiez pas les index générés à la main. Modifiez la source autoritaire, puis relancez `pnpm.cmd rebuild-indexes`.
+
+Pour livrer sur ce PC la version desktop locale réellement utilisée par le raccourci, lancez ensuite :
+
+```powershell
+pnpm.cmd desktop:deploy-local
+```
+
+Cette commande refuse une validation rouge, produit le paquet Windows, ferme proprement l’ancienne application, conserve le build précédent, remplace `app/build/`, vérifie l’exécutable et relance Noblesse Studio. Ce canal local ne remplace pas la publication signée.
 
 La section **Réglages** de l’application permet de créer et vérifier les sauvegardes, puis de reprendre ou annuler les imports interrompus. Une restauration complète se fait application fermée avec la procédure de [récupération](docs/RECOVERY_RUNBOOK.md).
 

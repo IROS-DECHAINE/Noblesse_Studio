@@ -7,6 +7,7 @@
     "application": "app",
     "database": "data/database/noblesse-studio.db",
     "state": "data/state",
+    "installHandoffs": "data/state/install-handoffs",
     "runtime": "data/runtime/electron-user-data",
     "backups": "data/backups",
     "logs": "data/logs",
@@ -15,6 +16,7 @@
     "assetsIndex": "library/assets/index.json",
     "texturesIndex": "library/textures/index.json",
     "materialsIndex": "library/materials/index.json",
+    "soundsIndex": "library/sounds/index.json",
     "documentsIndex": "library/documents/index.json",
     "companyDocuments": "../Documents",
     "fortniteProjects": "../Fortnite",
@@ -32,6 +34,7 @@
     "NOBLESSE_DOCUMENT_ROOT": "Bibliothèque documentaire",
     "NOBLESSE_UEFN_PROJECT_ROOTS": "Racines UEFN séparées par le séparateur système",
     "NOBLESSE_UNREAL_PROJECT_ROOT": "Racine des projets Unreal",
-    "NOBLESSE_UEFN_EDITOR_EXECUTABLE": "Chemin de secours vers l'exécutable officiel UnrealEditorFortnite-Win64-Shipping.exe"
+    "NOBLESSE_UEFN_EDITOR_EXECUTABLE": "Chemin de secours vers l'exécutable officiel UnrealEditorFortnite-Win64-Shipping.exe",
+    "NOBLESSE_FFMPEG_EXECUTABLE": "Chemin approuvé vers ffmpeg.exe pour convertir les MP3 en WAV"
   }
 }

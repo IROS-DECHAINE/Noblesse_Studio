@@ -36,3 +36,18 @@ test('the published Fab selection exactly mirrors the visually curated groups', 
     await access(path.join(vaultRoot, preview))
   }
 })
+
+test('Dark Matter keeps its rendered proof framing in the catalogue', {
+  skip: localVaultAvailable ? false : 'Le Vault local géré est volontairement absent du dépôt Git.',
+}, async () => {
+  const catalog = JSON.parse(await readFile(path.join(vaultRoot, 'catalog.json'), 'utf8'))
+  const asset = catalog.assets.find((item) => item.asset_id === 'NOB-MAT-DARK-MATTER-PREMIUM-V01')
+
+  assert.ok(asset)
+  assert.equal(asset.preview_kind, 'rendered_sphere')
+  assert.match(asset.preview_source, /\/proofs\/MI_NBL_DarkMatterPremium_Hero_v01\.png$/)
+
+  const surface = buildSurfaceCatalog([asset])[0]
+  assert.equal(surface.previewKind, 'rendered_sphere')
+  assert.equal(surface.variantOptions[0].previewKind, 'rendered_sphere')
+})

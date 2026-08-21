@@ -79,6 +79,27 @@ test('the same project discovered on multiple ports is exposed once using the lo
   assert.equal(destinations[0].canInstall, true)
 })
 
+test('resolves each install request against its own advertised capability', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-uefn-capability-'))
+  t.after(() => rm(root, { recursive: true, force: true }))
+  const service = createUefnSessionService({
+    favoritesFile: path.join(root, 'favorites.json'),
+    ports: [8010],
+    probePort: async () => ({
+      ...makeSession(8010, 'AUDIO_PROJECT'),
+      capabilities: { materialRecipe: false, soundHandoff: true, nativeUassetMigration: false },
+    }),
+    openProjectDiscovery: async () => [],
+    projectIndex: async () => [],
+    connectionRegistry: { version: 1, projects: [] },
+  })
+
+  const [destination] = await service.listDestinations()
+  assert.equal(destination.canInstall, true)
+  assert.equal((await service.resolveActiveSession(destination.id, { capability: 'soundHandoff' })).mount, 'AUDIO_PROJECT')
+  await assert.rejects(() => service.resolveActiveSession(destination.id), /ferm|MCP/i)
+})
+
 test('uses the approved connection ID instead of deriving public identity from the mount', async (t) => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-uefn-stable-id-'))
   t.after(() => rm(root, { recursive: true, force: true }))

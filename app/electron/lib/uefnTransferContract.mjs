@@ -21,10 +21,16 @@ export const MATERIAL_RECIPE_REQUIREMENTS = Object.freeze({
   [ASSET_TOOLSET]: ['exists', 'save_assets', 'is_dirty'],
 })
 
+export const SOUND_HANDOFF_REQUIREMENTS = Object.freeze({
+  [EDITOR_APP_TOOLSET]: ['GetContentBrowserPath', 'SetContentBrowserPath'],
+  [ASSET_TOOLSET]: ['create_folder'],
+})
+
 export const summarizeTransferCapabilities = (toolsets = []) => {
   const available = new Set(toolsets)
   return {
     materialRecipe: Object.keys(MATERIAL_RECIPE_REQUIREMENTS).every((name) => available.has(name)),
+    soundHandoff: Object.keys(SOUND_HANDOFF_REQUIREMENTS).every((name) => available.has(name)),
     nativeUassetMigration: false,
   }
 }

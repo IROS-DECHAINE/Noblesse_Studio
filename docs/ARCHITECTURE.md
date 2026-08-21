@@ -60,6 +60,8 @@ La position d’un fichier ne doit jamais devenir son identité. Les appels mét
 
 Les projets UEFN sont ouverts depuis des profils approuvés dans le registre Electron. Le renderer transmet uniquement un ID permanent ; il ne choisit jamais un chemin, un exécutable ou des arguments. Le processus principal vérifie le descripteur, l’installation Epic, l’absence de doublon et la disponibilité du port. Il prépare ensuite atomiquement les clés UEFN `LastProjectFileName`, `bStartupWithLastProject` et Model Context Protocol, avec sauvegarde adressée par contenu, avant de lancer l’éditeur. Les demandes concurrentes sont sérialisées.
 
+Le Coffre expose une zone d’installation commune, mais chaque type déclare une capacité précise (`material`, `sound`, `staticMesh`, `vfx`). Un projet n’est sélectionnable que si son adaptateur réel annonce cette capacité. Les matières utilisent l’installateur de recette vérifié. Les sons UEFN utilisent un handoff borné : validation du Vault, copie WAV reconstructible au nom unique, création du dossier Audio et navigation du Content Browser, puis import final humain tant que le connecteur Epic ne fournit pas d’importeur `SoundWave`. Aucun adaptateur ne peut réutiliser aveuglément les règles d’un autre type.
+
 Une session n’est « prête » que lorsque son identité MCP, son port attribué et les outils de transfert requis sont tous vérifiés. Unreal et Roblox auront des adaptateurs distincts. Voir [la décision du lanceur](DECISION_PROJECT_LAUNCHER_2026-08-21.md).
 
 ## Contrats IPC publics
@@ -77,6 +79,7 @@ Les schémas publics refusent les propriétés supplémentaires et toute valeur 
 | Assets génériques | `library/assets/` | `library/storage/` |
 | Textures | `library/textures/` | `library/storage/` |
 | Matériaux | `library/materials/` | `library/storage/` |
+| Sons | `library/sounds/` | `library/storage/user-audio/` |
 | Documents | `library/documents/` | `D:\NO_BLESSE Studio\Documents` ou source liée |
 
 Chaque dossier lisible contient :
@@ -85,6 +88,10 @@ Chaque dossier lisible contient :
 - `index.json` pour l’application et les IA.
 
 Le stockage interne conserve les packs et dépendances dans leur structure native lorsqu’un moteur l’exige. Les index donnent une vue simple sans casser les bundles Unreal ou UEFN.
+
+L’import audio utilise des jetons de sélection opaques. Un lot borné à 200 fichiers et 2 Go est persisté avant traitement ; chaque fichier possède son état et ses tentatives. Le renderer transmet seulement jeton, titre, catégorie et confirmation des droits. Le processus principal convertit les MP3 avec une commande fixe, puis un worker contrôle les WAV et calcule les hashes. La reprise ne rejoue que les échecs et les index sont reconstruits une fois par passe. Voir [la décision audio](DECISION_MANAGED_AUDIO_IMPORT_2026-08-22.md).
+
+La suppression d’un élément du Coffre est une mutation logique planifiée. Le renderer envoie uniquement des IDs ; le processus principal persiste un plan hashé, bloque les dépendances entrantes, exige deux validations et conserve les originaux. Les reçus privés vivent sous `library/storage/.trash/`, tandis que l’interface **Sécurité et récupération** permet la restauration. Les mutations audio et corbeille partagent une file afin d’éviter les courses sur le catalogue. Voir [la décision de corbeille](DECISION_RECOVERABLE_LIBRARY_TRASH_2026-08-22.md).
 
 Les anciens chemins Worker Rift présents dans certains champs `sourceOrigin` sont une provenance historique, pas un emplacement de fonctionnement. Une entrée `MANAGED` pointe toujours vers `library/storage/`. Les rares entrées `REFERENCE` décrivent un objet natif externe et sont affichées explicitement comme telles ; elles ne rendent jamais le démarrage du produit dépendant de Worker Rift.
 
