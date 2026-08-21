@@ -1,0 +1,2171 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-21T18:10:04.815Z",
+  "nodeCount": 354,
+  "edgeCount": 5,
+  "resolvedEdgeCount": 4,
+  "unresolvedEdgeCount": 1,
+  "nodes": [
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-BC",
+      "name": "T_PB_BaseClassic_ArtDeco_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-N",
+      "name": "T_PB_BaseClassic_ArtDeco_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-ORM",
+      "name": "T_PB_BaseClassic_ArtDeco_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-F-BC",
+      "name": "T_PB_BaseClassic_ArtDeco_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-F-N",
+      "name": "T_PB_BaseClassic_ArtDeco_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-F-ORM",
+      "name": "T_PB_BaseClassic_ArtDeco_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-W-BC",
+      "name": "T_PB_BaseClassic_ArtDeco_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-W-N",
+      "name": "T_PB_BaseClassic_ArtDeco_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-W-ORM",
+      "name": "T_PB_BaseClassic_ArtDeco_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-C-BC",
+      "name": "T_PB_BaseClassic_Brick_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-C-N",
+      "name": "T_PB_BaseClassic_Brick_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-C-ORM",
+      "name": "T_PB_BaseClassic_Brick_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-F-BC",
+      "name": "T_PB_BaseClassic_Brick_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-F-N",
+      "name": "T_PB_BaseClassic_Brick_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-F-ORM",
+      "name": "T_PB_BaseClassic_Brick_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-W-BC",
+      "name": "T_PB_BaseClassic_Brick_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-W-N",
+      "name": "T_PB_BaseClassic_Brick_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-BRICK-W-ORM",
+      "name": "T_PB_BaseClassic_Brick_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-C-BC",
+      "name": "T_PB_BaseClassic_Concrete_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-C-N",
+      "name": "T_PB_BaseClassic_Concrete_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-C-ORM",
+      "name": "T_PB_BaseClassic_Concrete_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-F-BC",
+      "name": "T_PB_BaseClassic_Concrete_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-F-N",
+      "name": "T_PB_BaseClassic_Concrete_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-F-ORM",
+      "name": "T_PB_BaseClassic_Concrete_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-W-BC",
+      "name": "T_PB_BaseClassic_Concrete_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-W-N",
+      "name": "T_PB_BaseClassic_Concrete_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-CONCRETE-W-ORM",
+      "name": "T_PB_BaseClassic_Concrete_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-C-BC",
+      "name": "T_PB_BaseClassic_Marble_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-C-N",
+      "name": "T_PB_BaseClassic_Marble_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-C-ORM",
+      "name": "T_PB_BaseClassic_Marble_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-F-BC",
+      "name": "T_PB_BaseClassic_Marble_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-F-N",
+      "name": "T_PB_BaseClassic_Marble_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-F-ORM",
+      "name": "T_PB_BaseClassic_Marble_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-W-BC",
+      "name": "T_PB_BaseClassic_Marble_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-W-N",
+      "name": "T_PB_BaseClassic_Marble_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-MARBLE-W-ORM",
+      "name": "T_PB_BaseClassic_Marble_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-C-BC",
+      "name": "T_PB_BaseClassic_Oak_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-C-N",
+      "name": "T_PB_BaseClassic_Oak_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-C-ORM",
+      "name": "T_PB_BaseClassic_Oak_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-F-BC",
+      "name": "T_PB_BaseClassic_Oak_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-F-N",
+      "name": "T_PB_BaseClassic_Oak_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-F-ORM",
+      "name": "T_PB_BaseClassic_Oak_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-W-BC",
+      "name": "T_PB_BaseClassic_Oak_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-W-N",
+      "name": "T_PB_BaseClassic_Oak_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-OAK-W-ORM",
+      "name": "T_PB_BaseClassic_Oak_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-C-BC",
+      "name": "T_PB_BaseClassic_Slate_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-C-N",
+      "name": "T_PB_BaseClassic_Slate_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-C-ORM",
+      "name": "T_PB_BaseClassic_Slate_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-F-BC",
+      "name": "T_PB_BaseClassic_Slate_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-F-N",
+      "name": "T_PB_BaseClassic_Slate_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-F-ORM",
+      "name": "T_PB_BaseClassic_Slate_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-W-BC",
+      "name": "T_PB_BaseClassic_Slate_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-W-N",
+      "name": "T_PB_BaseClassic_Slate_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SLATE-W-ORM",
+      "name": "T_PB_BaseClassic_Slate_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-C-BC",
+      "name": "T_PB_BaseClassic_SmokedChrome_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-C-N",
+      "name": "T_PB_BaseClassic_SmokedChrome_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-C-ORM",
+      "name": "T_PB_BaseClassic_SmokedChrome_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-F-BC",
+      "name": "T_PB_BaseClassic_SmokedChrome_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-F-N",
+      "name": "T_PB_BaseClassic_SmokedChrome_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-F-ORM",
+      "name": "T_PB_BaseClassic_SmokedChrome_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-W-BC",
+      "name": "T_PB_BaseClassic_SmokedChrome_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-W-N",
+      "name": "T_PB_BaseClassic_SmokedChrome_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-SMOKEDCHROME-W-ORM",
+      "name": "T_PB_BaseClassic_SmokedChrome_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-C-BC",
+      "name": "T_PB_BaseClassic_Steel_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-C-N",
+      "name": "T_PB_BaseClassic_Steel_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-C-ORM",
+      "name": "T_PB_BaseClassic_Steel_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-F-BC",
+      "name": "T_PB_BaseClassic_Steel_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-F-N",
+      "name": "T_PB_BaseClassic_Steel_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-F-ORM",
+      "name": "T_PB_BaseClassic_Steel_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-W-BC",
+      "name": "T_PB_BaseClassic_Steel_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-W-N",
+      "name": "T_PB_BaseClassic_Steel_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-STEEL-W-ORM",
+      "name": "T_PB_BaseClassic_Steel_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-C-BC",
+      "name": "T_PB_BaseClassic_Terrazzo_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-C-N",
+      "name": "T_PB_BaseClassic_Terrazzo_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-C-ORM",
+      "name": "T_PB_BaseClassic_Terrazzo_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-F-BC",
+      "name": "T_PB_BaseClassic_Terrazzo_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-F-N",
+      "name": "T_PB_BaseClassic_Terrazzo_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-F-ORM",
+      "name": "T_PB_BaseClassic_Terrazzo_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-W-BC",
+      "name": "T_PB_BaseClassic_Terrazzo_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-W-N",
+      "name": "T_PB_BaseClassic_Terrazzo_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TERRAZZO-W-ORM",
+      "name": "T_PB_BaseClassic_Terrazzo_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-C-BC",
+      "name": "T_PB_BaseClassic_Travertine_C_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-C-N",
+      "name": "T_PB_BaseClassic_Travertine_C_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-C-ORM",
+      "name": "T_PB_BaseClassic_Travertine_C_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-F-BC",
+      "name": "T_PB_BaseClassic_Travertine_F_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-F-N",
+      "name": "T_PB_BaseClassic_Travertine_F_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-F-ORM",
+      "name": "T_PB_BaseClassic_Travertine_F_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-W-BC",
+      "name": "T_PB_BaseClassic_Travertine_W_BC",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-W-N",
+      "name": "T_PB_BaseClassic_Travertine_W_N",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-TRAVERTINE-W-ORM",
+      "name": "T_PB_BaseClassic_Travertine_W_ORM",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-BC-V01",
+      "name": "T_WR_DM_CeilingService_BC_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-EM-V01",
+      "name": "T_WR_DM_CeilingService_EM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-N-V01",
+      "name": "T_WR_DM_CeilingService_N_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-CEILINGSERVICE-ORM-V01",
+      "name": "T_WR_DM_CeilingService_ORM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-01-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_01_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-02-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_02_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-03-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_03_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-04-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_04_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-05-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_05_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-06-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_06_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-07-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_07_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-08-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_08_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-DECALGRAFFITI-RGBA-V01",
+      "name": "T_WR_DM_DecalGraffiti_RGBA_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-BC-V01",
+      "name": "T_WR_DM_FloorArmor_BC_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-EM-V01",
+      "name": "T_WR_DM_FloorArmor_EM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-N-V01",
+      "name": "T_WR_DM_FloorArmor_N_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-FLOORARMOR-ORM-V01",
+      "name": "T_WR_DM_FloorArmor_ORM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-BC-V01",
+      "name": "T_WR_DM_WallGraffitiA_BC_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-EM-V01",
+      "name": "T_WR_DM_WallGraffitiA_EM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-N-V01",
+      "name": "T_WR_DM_WallGraffitiA_N_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIA-ORM-V01",
+      "name": "T_WR_DM_WallGraffitiA_ORM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-BC-V01",
+      "name": "T_WR_DM_WallGraffitiB_BC_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-EM-V01",
+      "name": "T_WR_DM_WallGraffitiB_EM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-N-V01",
+      "name": "T_WR_DM_WallGraffitiB_N_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLGRAFFITIB-ORM-V01",
+      "name": "T_WR_DM_WallGraffitiB_ORM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-BC-V01",
+      "name": "T_WR_DM_WallMeteorPanels_BC_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-EM-V01",
+      "name": "T_WR_DM_WallMeteorPanels_EM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-N-V01",
+      "name": "T_WR_DM_WallMeteorPanels_N_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-ORM-V01",
+      "name": "T_WR_DM_WallMeteorPanels_ORM_V01",
+      "type": "Texture2D",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-MAT-BASECLASSIC-MASTER-001",
+      "name": "M_PB_BaseClassic_Master_V01",
+      "type": "Material",
+      "version": "0.1.0"
+    },
+    {
+      "id": "PBR-SURF-MAT-DARKMETEOR-MASTER-001",
+      "name": "M_PB_DarkMeteor_Master_V01",
+      "type": "Material",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-ARTDECO-C-V01",
+      "name": "M_NBL_BaseClassic_ArtDeco_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-ARTDECO-F-V01",
+      "name": "M_NBL_BaseClassic_ArtDeco_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-ARTDECO-W-V01",
+      "name": "M_NBL_BaseClassic_ArtDeco_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-BRICK-C-V01",
+      "name": "M_NBL_BaseClassic_Brick_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-BRICK-F-V01",
+      "name": "M_NBL_BaseClassic_Brick_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-BRICK-W-V01",
+      "name": "M_NBL_BaseClassic_Brick_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-CONCRETE-C-V01",
+      "name": "M_NBL_BaseClassic_Concrete_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-CONCRETE-F-V01",
+      "name": "M_NBL_BaseClassic_Concrete_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-CONCRETE-W-V01",
+      "name": "M_NBL_BaseClassic_Concrete_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-MARBLE-C-V01",
+      "name": "M_NBL_BaseClassic_Marble_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-MARBLE-F-V01",
+      "name": "M_NBL_BaseClassic_Marble_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-MARBLE-W-V01",
+      "name": "M_NBL_BaseClassic_Marble_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-OAK-C-V01",
+      "name": "M_NBL_BaseClassic_Oak_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-OAK-F-V01",
+      "name": "M_NBL_BaseClassic_Oak_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-OAK-W-V01",
+      "name": "M_NBL_BaseClassic_Oak_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-SLATE-C-V01",
+      "name": "M_NBL_BaseClassic_Slate_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-SLATE-F-V01",
+      "name": "M_NBL_BaseClassic_Slate_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-SLATE-W-V01",
+      "name": "M_NBL_BaseClassic_Slate_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-SMOKEDCHROME-C-V01",
+      "name": "M_NBL_BaseClassic_SmokedChrome_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-SMOKEDCHROME-F-V01",
+      "name": "M_NBL_BaseClassic_SmokedChrome_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-SMOKEDCHROME-W-V01",
+      "name": "M_NBL_BaseClassic_SmokedChrome_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-STEEL-C-V01",
+      "name": "M_NBL_BaseClassic_Steel_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-STEEL-F-V01",
+      "name": "M_NBL_BaseClassic_Steel_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-STEEL-W-V01",
+      "name": "M_NBL_BaseClassic_Steel_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-TERRAZZO-C-V01",
+      "name": "M_NBL_BaseClassic_Terrazzo_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-TERRAZZO-F-V01",
+      "name": "M_NBL_BaseClassic_Terrazzo_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-TERRAZZO-W-V01",
+      "name": "M_NBL_BaseClassic_Terrazzo_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-TRAVERTINE-C-V01",
+      "name": "M_NBL_BaseClassic_Travertine_C_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-TRAVERTINE-F-V01",
+      "name": "M_NBL_BaseClassic_Travertine_F_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-BASE-TRAVERTINE-W-V01",
+      "name": "M_NBL_BaseClassic_Travertine_W_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-DM-CEILINGSERVICE-V01",
+      "name": "M_WR_DM_CeilingService_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-DM-FLOORARMOR-V01",
+      "name": "M_WR_DM_FloorArmor_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-DM-WALLGRAFFITIA-V01",
+      "name": "M_WR_DM_WallGraffitiA_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-DM-WALLGRAFFITIB-V01",
+      "name": "M_WR_DM_WallGraffitiB_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-MAT-DM-WALLMETEORPANELS-V01",
+      "name": "M_WR_DM_WallMeteorPanels_V01",
+      "type": "MaterialRecipe",
+      "version": "0.2.0"
+    },
+    {
+      "id": "NOB-REF-BASE-SURFACE-PARENT-V01",
+      "name": "M_WR_Base_Surface_Parent_V01",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-BASE-NEON-PARENT-V01",
+      "name": "M_WR_Base_Neon_Parent_V01",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-BASE-GLASS-PARENT-V01",
+      "name": "M_WR_Base_Glass_Parent_V01",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-DM-FLOORARMOR-V02",
+      "name": "M_WR_DM_FloorArmor_V02",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SLOT-HOLO-V01",
+      "name": "M_BSP_E01_HoloTop",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SCOREBOARD-DYNAMIC-V02",
+      "name": "M_WR_SlotScoreboard_Dynamic_V2",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SOCLE-BODY-V18",
+      "name": "MAT_WR_SlotPedestal_Body_V18",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SOCLE-FRAME-V18",
+      "name": "MAT_WR_SlotPedestal_Frame_V18",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SOCLE-GROOVE-V18",
+      "name": "MAT_WR_SlotPedestal_GrooveNeon_V18",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SOCLE-RARITY-V18",
+      "name": "MAT_WR_SlotPedestal_Rarity_V18",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SCOREBOARD-BODY-V03",
+      "name": "M_WR_ScoreboardV03_BodyMaster_VertexMask",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SCOREBOARD-RARITY-V03",
+      "name": "M_WR_ScoreboardV03_RarityAccent_VertexMask",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-SCOREBOARD-SCREEN-V03",
+      "name": "M_WR_ScoreboardV03_ScreenDynamic",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-REF-BOTDEX-HOLOGRAM-V01",
+      "name": "M_VFX_BDX_Hologram",
+      "type": "MaterialReference",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-SECRETFLOW-V01",
+      "name": "MAT_WR_SecretFlow",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-FX-PRISMFLOW-V01",
+      "name": "MAT_WR_PrismFlow",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-FX-ROYALGOLD-V01",
+      "name": "MAT_WR_RoyalGold",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-BLACK-V01",
+      "name": "MAT_WR_Neon_Black_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-BLUE-V01",
+      "name": "MAT_WR_Neon_Blue_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-GREEN-V01",
+      "name": "MAT_WR_Neon_Green_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-ORANGE-V01",
+      "name": "MAT_WR_Neon_Orange_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-RED-V01",
+      "name": "MAT_WR_Neon_Red_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-VIOLET-V01",
+      "name": "MAT_WR_Neon_Violet_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-WHITE-V01",
+      "name": "MAT_WR_Neon_White_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-NEON-YELLOW-V01",
+      "name": "MAT_WR_Neon_Yellow_Final_V01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-DARK-MATTER-PREMIUM-V01",
+      "name": "M_NBL_DarkMatterPremium_Master_v01",
+      "type": "MaterialRecipe",
+      "version": "1.0.0"
+    },
+    {
+      "id": "NOB-MAT-PREMIUM-GOLD-V01",
+      "name": "MAT_WR_Surf_Gold_V01",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-PREMIUM-RAINBOW-V01",
+      "name": "MAT_WR_Surf_Rainbow_V01",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-PREMIUM-HOLO-V01",
+      "name": "MAT_WR_Surf_Holo_V01",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-PREMIUM-OBSIDIAN-V01",
+      "name": "MAT_WR_Surf_Obsidian_V01",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-PREMIUM-PEARL-V01",
+      "name": "MAT_WR_Surf_Pearl_V01",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-SOLARFORGE-V03",
+      "name": "MAT_WR_SolarForge_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-TOXICSLIME-V03",
+      "name": "MAT_WR_ToxicSlime_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-FROZENCORE-V03",
+      "name": "MAT_WR_FrozenCore_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-MAGMACRUST-V03",
+      "name": "MAT_WR_MagmaCrust_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-HOLOGRID-V03",
+      "name": "MAT_WR_HoloGrid_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-VOIDSTARS-V03",
+      "name": "MAT_WR_VoidStars_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-CANDYFLUX-V03",
+      "name": "MAT_WR_CandyFlux_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-LIQUIDCHROME-V03",
+      "name": "MAT_WR_LiquidChrome_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-DIGITALGLITCH-V03",
+      "name": "MAT_WR_DigitalGlitch_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-EMERALDVEIN-V03",
+      "name": "MAT_WR_EmeraldVein_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-STORMCIRCUIT-V03",
+      "name": "MAT_WR_StormCircuit_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-RUNEVAULT-V03",
+      "name": "MAT_WR_RuneVault_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-PORTALVORTEX-V03",
+      "name": "MAT_WR_PortalVortex_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-ENERGYSHIELD-V03",
+      "name": "MAT_WR_EnergyShield_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-MAT-FX-CHRONOSAND-V03",
+      "name": "MAT_WR_ChronoSand_V03",
+      "type": "MaterialRecipe",
+      "version": "0.1.0"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-02-WITHBUMP",
+      "name": "MI_ConcreteFloor_D_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-04-WITHBUMP",
+      "name": "MI_ConcreteFloor_D_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-05-WITHBUMP",
+      "name": "MI_ConcreteFloor_D_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-07-WITHBUMP",
+      "name": "MI_ConcreteFloor_D_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-02-WITHOUTBUMP",
+      "name": "MI_ConcreteFloor_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-04-WITHOUTBUMP",
+      "name": "MI_ConcreteFloor_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-05-WITHOUTBUMP",
+      "name": "MI_ConcreteFloor_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEFLOOR-CONCRETEFLOOR-07-WITHOUTBUMP",
+      "name": "MI_ConcreteFloor_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-01-WITHBUMP",
+      "name": "MI_ConcreteWall_D_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-02-WITHBUMP",
+      "name": "MI_ConcreteWall_D_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-04-WITHBUMP",
+      "name": "MI_ConcreteWall_D_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-07-WITHBUMP",
+      "name": "MI_ConcreteWall_D_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-08-WITHBUMP",
+      "name": "MI_ConcreteWall_D_08",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-09-WITHBUMP",
+      "name": "MI_ConcreteWall_D_09",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-10-WITHBUMP",
+      "name": "MI_ConcreteWall_D_10",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-11-WITHBUMP",
+      "name": "MI_ConcreteWall_D_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-13-WITHBUMP",
+      "name": "MI_ConcreteWall_D_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-19-WITHBUMP",
+      "name": "MI_ConcreteWall_D_19",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-20-WITHBUMP",
+      "name": "MI_ConcreteWall_D_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-21-WITHBUMP",
+      "name": "MI_ConcreteWall_D_21",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-01-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-02-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-04-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-07-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-08-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_08",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-09-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_09",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-10-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_10",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-11-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-13-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-19-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_19",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-20-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-CONCRETEWALL-CONCRETEWALL-21-WITHOUTBUMP",
+      "name": "MI_ConcreteWall_21",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-FABRIC-FABRIC-04-WITHBUMP",
+      "name": "MI_Fabric_D_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-FABRIC-FABRIC-05-WITHBUMP",
+      "name": "MI_Fabric_D_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-FABRIC-FABRIC-04-WITHOUTBUMP",
+      "name": "MI_Fabric_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-FABRIC-FABRIC-05-WITHOUTBUMP",
+      "name": "MI_Fabric_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-01-WITHBUMP",
+      "name": "MI_Ground_D_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-02-WITHBUMP",
+      "name": "MI_Ground_D_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-03-WITHBUMP",
+      "name": "MI_Ground_D_03",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-04-WITHBUMP",
+      "name": "MI_Ground_D_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-05-WITHBUMP",
+      "name": "MI_Ground_D_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-06-WITHBUMP",
+      "name": "MI_Ground_D_06",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-07-WITHBUMP",
+      "name": "MI_Ground_D_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-08-WITHBUMP",
+      "name": "MI_Ground_D_08",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-10-WITHBUMP",
+      "name": "MI_Ground_D_10",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-11-WITHBUMP",
+      "name": "MI_Ground_D_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-13-WITHBUMP",
+      "name": "MI_Ground_D_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-15-WITHBUMP",
+      "name": "MI_Ground_D_15",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-16-WITHBUMP",
+      "name": "MI_Ground_D_16",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-18-WITHBUMP",
+      "name": "MI_Ground_D_18",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-20-WITHBUMP",
+      "name": "MI_Ground_D_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-01-WITHOUTBUMP",
+      "name": "MI_Ground_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-02-WITHOUTBUMP",
+      "name": "MI_Ground_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-03-WITHOUTBUMP",
+      "name": "MI_Ground_03",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-04-WITHOUTBUMP",
+      "name": "MI_Ground_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-05-WITHOUTBUMP",
+      "name": "MI_Ground_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-06-WITHOUTBUMP",
+      "name": "MI_Ground_06",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-07-WITHOUTBUMP",
+      "name": "MI_Ground_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-08-WITHOUTBUMP",
+      "name": "MI_Ground_08",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-10-WITHOUTBUMP",
+      "name": "MI_Ground_10",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-11-WITHOUTBUMP",
+      "name": "MI_Ground_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-13-WITHOUTBUMP",
+      "name": "MI_Ground_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-15-WITHOUTBUMP",
+      "name": "MI_Ground_15",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-16-WITHOUTBUMP",
+      "name": "MI_Ground_16",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-18-WITHOUTBUMP",
+      "name": "MI_Ground_18",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-GROUND-GROUND-20-WITHOUTBUMP",
+      "name": "MI_Ground_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-01-WITHBUMP",
+      "name": "MI_Metal_D_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-02-WITHBUMP",
+      "name": "MI_Metal_D_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-03-WITHBUMP",
+      "name": "MI_Metal_D_03",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-04-WITHBUMP",
+      "name": "MI_Metal_D_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-05-WITHBUMP",
+      "name": "MI_Metal_D_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-06-WITHBUMP",
+      "name": "MI_Metal_D_06",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-01-WITHOUTBUMP",
+      "name": "MI_Metal_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-02-WITHOUTBUMP",
+      "name": "MI_Metal_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-03-WITHOUTBUMP",
+      "name": "MI_Metal_03",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-04-WITHOUTBUMP",
+      "name": "MI_Metal_04",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-05-WITHOUTBUMP",
+      "name": "MI_Metal_05",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-METAL-METAL-06-WITHOUTBUMP",
+      "name": "MI_Metal_06",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-02-WITHBUMP",
+      "name": "MI_StreetBrick_D_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-03-WITHBUMP",
+      "name": "MI_StreetBrick_D_03",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-07-WITHBUMP",
+      "name": "MI_StreetBrick_D_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-08-WITHBUMP",
+      "name": "MI_StreetBrick_D_08",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-09-WITHBUMP",
+      "name": "MI_StreetBrick_D_09",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-11-WITHBUMP",
+      "name": "MI_StreetBrick_D_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-12-WITHBUMP",
+      "name": "MI_StreetBrick_D_12",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-15-WITHBUMP",
+      "name": "MI_StreetBrick_D_15",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-16-WITHBUMP",
+      "name": "MI_StreetBrick_D_16",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-17-WITHBUMP",
+      "name": "MI_StreetBrick_D_17",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-19-WITHBUMP",
+      "name": "MI_StreetBrick_D_19",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-20-WITHBUMP",
+      "name": "MI_StreetBrick_D_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-23-WITHBUMP",
+      "name": "MI_StreetBrick_D_23",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-26-WITHBUMP",
+      "name": "MI_StreetBrick_D_26",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-02-WITHOUTBUMP",
+      "name": "MI_StreetBrick_02",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-03-WITHOUTBUMP",
+      "name": "MI_StreetBrick_03",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-07-WITHOUTBUMP",
+      "name": "MI_StreetBrick_07",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-08-WITHOUTBUMP",
+      "name": "MI_StreetBrick_08",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-09-WITHOUTBUMP",
+      "name": "MI_StreetBrick_09",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-11-WITHOUTBUMP",
+      "name": "MI_StreetBrick_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-12-WITHOUTBUMP",
+      "name": "MI_StreetBrick_12",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-15-WITHOUTBUMP",
+      "name": "MI_StreetBrick_15",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-16-WITHOUTBUMP",
+      "name": "MI_StreetBrick_16",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-17-WITHOUTBUMP",
+      "name": "MI_StreetBrick_17",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-19-WITHOUTBUMP",
+      "name": "MI_StreetBrick_19",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-20-WITHOUTBUMP",
+      "name": "MI_StreetBrick_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-23-WITHOUTBUMP",
+      "name": "MI_StreetBrick_23",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-STREETBRICK-STREETBRICK-26-WITHOUTBUMP",
+      "name": "MI_StreetBrick_26",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-01-WITHBUMP",
+      "name": "MI_WallBrick_D_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-10-WITHBUMP",
+      "name": "MI_WallBrick_D_10",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-12-WITHBUMP",
+      "name": "MI_WallBrick_D_12",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-13-WITHBUMP",
+      "name": "MI_WallBrick_D_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-14-WITHBUMP",
+      "name": "MI_WallBrick_D_14",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-17-WITHBUMP",
+      "name": "MI_WallBrick_D_17",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-18-WITHBUMP",
+      "name": "MI_WallBrick_D_18",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-19-WITHBUMP",
+      "name": "MI_WallBrick_D_19",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-2-WITHBUMP",
+      "name": "MI_WallBrick_D_2",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-20-WITHBUMP",
+      "name": "MI_WallBrick_D_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-21-WITHBUMP",
+      "name": "MI_WallBrick_D_21",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-23-WITHBUMP",
+      "name": "MI_WallBrick_D_23",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-24-WITHBUMP",
+      "name": "MI_WallBrick_D_24",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-3-WITHBUMP",
+      "name": "MI_WallBrick_D_3",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-5-WITHBUMP",
+      "name": "MI_WallBrick_D_5",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-6-WITHBUMP",
+      "name": "MI_WallBrick_D_6",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-7-WITHBUMP",
+      "name": "MI_WallBrick_D_7",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-8-WITHBUMP",
+      "name": "MI_WallBrick_D_8",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-01-WITHOUTBUMP",
+      "name": "MI_WallBrick_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-10-WITHOUTBUMP",
+      "name": "MI_WallBrick_10",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-12-WITHOUTBUMP",
+      "name": "MI_WallBrick_12",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-13-WITHOUTBUMP",
+      "name": "MI_WallBrick_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-14-WITHOUTBUMP",
+      "name": "MI_WallBrick_14",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-17-WITHOUTBUMP",
+      "name": "MI_WallBrick_17",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-18-WITHOUTBUMP",
+      "name": "MI_WallBrick_18",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-19-WITHOUTBUMP",
+      "name": "MI_WallBrick_19",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-2-WITHOUTBUMP",
+      "name": "MI_WallBrick_2",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-20-WITHOUTBUMP",
+      "name": "MI_WallBrick_20",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-21-WITHOUTBUMP",
+      "name": "MI_WallBrick_21",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-23-WITHOUTBUMP",
+      "name": "MI_WallBrick_23",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-24-WITHOUTBUMP",
+      "name": "MI_WallBrick_24",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-3-WITHOUTBUMP",
+      "name": "MI_WallBrick_3",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-5-WITHOUTBUMP",
+      "name": "MI_WallBrick_5",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-6-WITHOUTBUMP",
+      "name": "MI_WallBrick_6",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-7-WITHOUTBUMP",
+      "name": "MI_WallBrick_7",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WALLBRICK-WALLBRICK-8-WITHOUTBUMP",
+      "name": "MI_WallBrick_8",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-01-WITHBUMP",
+      "name": "MI_Wood_D_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-11-WITHBUMP",
+      "name": "MI_Wood_D_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-12-WITHBUMP",
+      "name": "MI_Wood_D_12",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-13-WITHBUMP",
+      "name": "MI_Wood_D_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-14-WITHBUMP",
+      "name": "MI_Wood_D_14",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-01-WITHOUTBUMP",
+      "name": "MI_Wood_01",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-11-WITHOUTBUMP",
+      "name": "MI_Wood_11",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-12-WITHOUTBUMP",
+      "name": "MI_Wood_12",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-13-WITHOUTBUMP",
+      "name": "MI_Wood_13",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    },
+    {
+      "id": "NOB-UE-MAT-WOOD-WOOD-14-WITHOUTBUMP",
+      "name": "MI_Wood_14",
+      "type": "UnrealMaterialInstance",
+      "version": "1.0.4"
+    }
+  ],
+  "edges": [
+    {
+      "fromId": "PBR-SURF-MAT-BASECLASSIC-MASTER-001",
+      "toId": null,
+      "reference": "UNRESOLVED_LIVE_SOURCE_GRAPH_INSPECTION",
+      "relationType": "DEPENDS_ON",
+      "status": "UNRESOLVED"
+    },
+    {
+      "fromId": "PBR-SURF-MAT-DARKMETEOR-MASTER-001",
+      "toId": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-BC-V01",
+      "reference": "T_WR_DM_WallMeteorPanels_BC_V01",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "PBR-SURF-MAT-DARKMETEOR-MASTER-001",
+      "toId": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-N-V01",
+      "reference": "T_WR_DM_WallMeteorPanels_N_V01",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "PBR-SURF-MAT-DARKMETEOR-MASTER-001",
+      "toId": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-ORM-V01",
+      "reference": "T_WR_DM_WallMeteorPanels_ORM_V01",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "PBR-SURF-MAT-DARKMETEOR-MASTER-001",
+      "toId": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-EM-V01",
+      "reference": "T_WR_DM_WallMeteorPanels_EM_V01",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    }
+  ]
+}

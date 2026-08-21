@@ -35,9 +35,11 @@ export const BLOCKED_DOCUMENT_EXTENSIONS = Object.freeze([
 const ALLOWED_PROJECT_SET = new Set(ALLOWED_DOCUMENT_PROJECTS)
 const BLOCKED_EXTENSION_SET = new Set(BLOCKED_DOCUMENT_EXTENSIONS)
 const CANONICAL_STATUSES = new Set(['CANON', 'REFERENCE', 'WORKING', 'ARCHIVE'])
+const HISTORY_ACTIONS = new Set(['BASELINE', 'IMPORT', 'REPLACE', 'REVERT', 'DELETE', 'RESTORE'])
 const MANIFEST_VERSION = 1
 const DEFAULT_TEXT_LIMIT = 4 * 1024 * 1024
 const DEFAULT_SELECTION_TTL = 15 * 60 * 1000
+const DEFAULT_DOCUMENT_SIZE_LIMIT = 8 * 1024 * 1024 * 1024
 const ID_PATTERN = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/
 const SHA256_PATTERN = /^[a-f0-9]{64}$/
 
@@ -212,7 +214,40 @@ const safeEqual = (left, right) => {
   return leftBuffer.length === rightBuffer.length && timingSafeEqual(leftBuffer, rightBuffer)
 }
 
-const noPublicPath = (manifest, available) => ({
+const historyEntryFor = (manifest, { revision, action, at, restoredFromRevision = null } = {}) => ({
+  revision,
+  action,
+  at,
+  sha256: manifest.sha256,
+  sizeBytes: manifest.sizeBytes,
+  originalName: manifest.originalName,
+  extension: manifest.extension,
+  kind: manifest.kind,
+  mimeType: manifest.mimeType,
+  ...(restoredFromRevision === null ? {} : { restoredFromRevision }),
+})
+
+const versionedManifest = (manifest) => {
+  const revision = Number.isSafeInteger(manifest.revision) && manifest.revision >= 1 ? manifest.revision : 1
+  const history = Array.isArray(manifest.history) && manifest.history.length
+    ? manifest.history.map((entry) => ({ ...entry }))
+    : [historyEntryFor(manifest, { revision: 1, action: 'BASELINE', at: manifest.createdAt })]
+  return { ...manifest, revision, history }
+}
+
+const appendHistory = (manifest, action, at, extras = {}) => {
+  const current = versionedManifest(manifest)
+  const revision = current.revision + 1
+  return {
+    ...current,
+    revision,
+    history: [...current.history, historyEntryFor(current, { revision, action, at, ...extras })],
+  }
+}
+
+const noPublicPath = (sourceManifest, available) => {
+  const manifest = versionedManifest(sourceManifest)
+  return {
   id: manifest.id,
   projectId: manifest.projectId,
   title: manifest.title,
@@ -222,6 +257,7 @@ const noPublicPath = (manifest, available) => ({
   mimeType: manifest.mimeType,
   sizeBytes: manifest.sizeBytes,
   sha256: manifest.sha256,
+  revision: manifest.revision,
   canonicalStatus: manifest.canonicalStatus,
   tags: [...manifest.tags],
   origin: manifest.origin.kind,
@@ -229,10 +265,18 @@ const noPublicPath = (manifest, available) => ({
   updatedAt: manifest.updatedAt,
   deletedAt: manifest.deletedAt || null,
   available: Boolean(available),
-})
+  }
+}
 
 export class DocumentLibrary {
-  constructor({ root, bootstrapFile = '', now = () => new Date(), idFactory = randomUUID, selectionTtlMs = DEFAULT_SELECTION_TTL } = {}) {
+  constructor({
+    root,
+    bootstrapFile = '',
+    now = () => new Date(),
+    idFactory = randomUUID,
+    selectionTtlMs = DEFAULT_SELECTION_TTL,
+    maxFileBytes = DEFAULT_DOCUMENT_SIZE_LIMIT,
+  } = {}) {
     if (typeof root !== 'string' || !path.isAbsolute(root)) {
       throw libraryError('INVALID_ROOT', 'La bibliothèque documentaire exige une racine locale absolue.')
     }
@@ -246,11 +290,16 @@ export class DocumentLibrary {
       throw libraryError('INVALID_CONFIGURATION', 'La durée des sélections documentaires est invalide.')
     }
 
+    if (!Number.isSafeInteger(maxFileBytes) || maxFileBytes <= 0) {
+      throw libraryError('INVALID_CONFIGURATION', 'La taille maximale des documents est invalide.')
+    }
+
     this.root = path.resolve(root)
     this.bootstrapFile = bootstrapFile ? path.resolve(bootstrapFile) : ''
     this.now = now
     this.idFactory = idFactory
     this.selectionTtlMs = selectionTtlMs
+    this.maxFileBytes = maxFileBytes
     this.manifestRoot = path.join(this.root, 'manifests')
     this.objectRoot = path.join(this.root, 'objects')
     this.planRoot = path.join(this.root, 'plans')
@@ -387,6 +436,9 @@ export class DocumentLibrary {
       throw libraryError('SYMLINK_NOT_ALLOWED', 'Les liens symboliques ne sont pas acceptés comme documents.')
     }
     if (!details.isFile()) throw libraryError('NOT_A_FILE', 'La sélection doit désigner un fichier.')
+    if (details.size > this.maxFileBytes) {
+      throw libraryError('FILE_TOO_LARGE', `Le document dépasse la limite de ${this.maxFileBytes} octets.`)
+    }
     const resolvedReal = await realpath(resolved)
     if (normalizeForComparison(resolvedReal) !== normalizeForComparison(resolved)) {
       throw libraryError('SYMLINK_NOT_ALLOWED', 'Les chemins traversant un lien symbolique ne sont pas acceptés.')
@@ -465,6 +517,30 @@ export class DocumentLibrary {
     isoFrom(manifest.createdAt)
     isoFrom(manifest.updatedAt)
     if (manifest.deletedAt) isoFrom(manifest.deletedAt)
+    if (manifest.importOperationId !== undefined) validateId(manifest.importOperationId, 'identifiant d’importation')
+    if (manifest.revision !== undefined || manifest.history !== undefined) {
+      if (!Number.isSafeInteger(manifest.revision) || manifest.revision < 1 || !Array.isArray(manifest.history) || !manifest.history.length) {
+        throw libraryError('MANIFEST_INVALID', 'L’historique du document est invalide.')
+      }
+      let previousRevision = 0
+      for (const entry of manifest.history) {
+        if (!entry || !Number.isSafeInteger(entry.revision) || entry.revision <= previousRevision || !HISTORY_ACTIONS.has(entry.action)) {
+          throw libraryError('MANIFEST_INVALID', 'Une révision documentaire est invalide.')
+        }
+        isoFrom(entry.at)
+        if (!SHA256_PATTERN.test(entry.sha256) || !Number.isSafeInteger(entry.sizeBytes) || entry.sizeBytes < 0) {
+          throw libraryError('MANIFEST_INVALID', 'L’intégrité d’une révision documentaire est invalide.')
+        }
+        if (typeof entry.originalName !== 'string' || path.basename(entry.originalName) !== entry.originalName) {
+          throw libraryError('MANIFEST_INVALID', 'Le nom d’une révision documentaire est invalide.')
+        }
+        if (entry.restoredFromRevision !== undefined && (!Number.isSafeInteger(entry.restoredFromRevision) || entry.restoredFromRevision < 1)) {
+          throw libraryError('MANIFEST_INVALID', 'La source d’une restauration documentaire est invalide.')
+        }
+        previousRevision = entry.revision
+      }
+      if (previousRevision !== manifest.revision) throw libraryError('MANIFEST_INVALID', 'La révision courante ne correspond pas à l’historique.')
+    }
     if (!manifest.origin || !['managed', 'linked'].includes(manifest.origin.kind)) {
       throw libraryError('MANIFEST_INVALID', 'L’origine d’un document est invalide.')
     }
@@ -647,6 +723,40 @@ export class DocumentLibrary {
     return Promise.all(filePaths.map((file) => this._validateExternalFile(file)))
   }
 
+  async prepareImport({ projectId, selectionTokens, title, canonicalStatus = 'REFERENCE', tags = [] } = {}) {
+    await this.ensure()
+    validateProjectId(projectId)
+    if (!Array.isArray(selectionTokens) || !selectionTokens.length) {
+      throw libraryError('EMPTY_SELECTION', 'Aucun document n’a été sélectionné.')
+    }
+    const sources = await this._sourcesFromImportRequest({ selectionTokens })
+    for (const source of sources) if (source.selectionToken) this._selectionTokens.delete(source.selectionToken)
+    return {
+      projectId,
+      title: sources.length === 1 ? cleanTitle(title, derivedTitle(sources[0].originalName)) : '',
+      canonicalStatus: cleanCanonicalStatus(canonicalStatus),
+      tags: cleanTags(tags),
+      sources: sources.map((source) => ({
+        file: source.file,
+        originalName: source.originalName,
+        extension: source.extension,
+        kind: source.kind,
+        mimeType: source.mimeType,
+        sizeBytes: source.details.size,
+      })),
+    }
+  }
+
+  async _findByImportOperationId(operationItemId) {
+    if (!operationItemId) return null
+    validateId(operationItemId, 'identifiant d’importation')
+    const active = await this._manifestEntries(this.manifestRoot, false)
+    const deleted = await this._manifestEntries(this.trashManifestRoot, true)
+    const manifest = [...active, ...deleted].find((entry) => entry.importOperationId === operationItemId)
+    if (!manifest) return null
+    return noPublicPath(manifest, await this._isAvailable(manifest, Boolean(manifest.deletedAt)))
+  }
+
   async _nextDocumentId() {
     for (let attempt = 0; attempt < 20; attempt += 1) {
       const id = String(this.idFactory())
@@ -680,7 +790,9 @@ export class DocumentLibrary {
     }
   }
 
-  async _importManagedSource(source, { projectId, title, canonicalStatus, tags }) {
+  async _importManagedSource(source, { projectId, title, canonicalStatus, tags, operationItemId = '' }) {
+    const existingImport = await this._findByImportOperationId(operationItemId)
+    if (existingImport) return existingImport
     const copied = await this._copyAndHash(source.file)
     const objectFile = this._objectPath(copied.sha256)
     let objectCreated = false
@@ -715,7 +827,10 @@ export class DocumentLibrary {
         updatedAt: timestamp,
         deletedAt: null,
         origin: { kind: 'managed', objectKey: copied.sha256 },
+        ...(operationItemId ? { importOperationId: operationItemId } : {}),
       }
+      manifest.revision = 1
+      manifest.history = [historyEntryFor(manifest, { revision: 1, action: 'IMPORT', at: timestamp })]
       this._validateManifest(manifest, id)
       await this._atomicWriteJson(this._manifestPath(id), manifest)
       if (source.selectionToken) this._selectionTokens.delete(source.selectionToken)
@@ -727,13 +842,16 @@ export class DocumentLibrary {
     }
   }
 
-  async import({ projectId, selectionTokens, filePaths, title, canonicalStatus = 'REFERENCE', tags = [] } = {}) {
+  async import({ projectId, selectionTokens, filePaths, title, canonicalStatus = 'REFERENCE', tags = [], operationItemId = '' } = {}) {
     await this.ensure()
     validateProjectId(projectId)
     const status = cleanCanonicalStatus(canonicalStatus)
     const cleanTagList = cleanTags(tags)
     return this._withMutation(async () => {
       const sources = await this._sourcesFromImportRequest({ selectionTokens, filePaths })
+      if (operationItemId && sources.length !== 1) {
+        throw libraryError('INVALID_IMPORT_OPERATION', 'Une opération reprenable doit correspondre à un seul document.')
+      }
       const singleTitle = sources.length === 1 ? title : undefined
       const imported = []
       for (const source of sources) {
@@ -742,6 +860,7 @@ export class DocumentLibrary {
           title: singleTitle,
           canonicalStatus: status,
           tags: cleanTagList,
+          operationItemId,
         }))
       }
       return imported
@@ -823,6 +942,8 @@ export class DocumentLibrary {
             deletedAt: null,
             origin: { kind: 'linked', sourcePath: source.file, sourceRealPath: source.file },
           }
+          manifest.revision = 1
+          manifest.history = [historyEntryFor(manifest, { revision: 1, action: 'IMPORT', at: timestamp })]
           this._validateManifest(manifest, entry.id)
           await this._atomicWriteJson(this._manifestPath(entry.id), manifest)
           result.added += 1
@@ -865,6 +986,93 @@ export class DocumentLibrary {
       mimeType: resolved.document.mimeType,
       sha256: createHash('sha256').update(buffer).digest('hex'),
     }
+  }
+
+  async listHistory(id) {
+    await this.ensure()
+    const { manifest } = await this._locateManifest(id, true)
+    const versioned = versionedManifest(manifest)
+    return versioned.history
+      .map((entry) => ({ ...entry, current: entry.revision === versioned.revision }))
+      .sort((left, right) => right.revision - left.revision)
+  }
+
+  async replaceVersion(id, selectionToken) {
+    await this.ensure()
+    validateId(id)
+    return this._withMutation(async () => {
+      const manifest = await this._readManifest(id)
+      if (manifest.deletedAt) throw libraryError('DOCUMENT_DELETED', 'Un document supprimé ne peut pas recevoir une nouvelle version.')
+      if (manifest.origin.kind !== 'managed') throw libraryError('LINKED_VERSION_UNSUPPORTED', 'Un document lié doit être importé en mode géré avant de créer des versions.')
+      const [source] = await this._sourcesFromImportRequest({ selectionTokens: [selectionToken] })
+      const copied = await this._copyAndHash(source.file)
+      const objectFile = this._objectPath(copied.sha256)
+      let objectCreated = false
+      try {
+        if (await pathExists(objectFile)) {
+          await this._assertInternalFile(objectFile)
+          if (await sha256File(objectFile) !== copied.sha256) throw libraryError('OBJECT_CORRUPT', 'La version existante a échoué au contrôle d’intégrité.')
+          await rm(copied.temp, { force: true })
+        } else {
+          await rename(copied.temp, objectFile)
+          objectCreated = true
+        }
+        const updatedAt = this._nowIso()
+        const content = {
+          ...versionedManifest(manifest),
+          originalName: source.originalName,
+          extension: source.extension,
+          kind: source.kind,
+          mimeType: source.mimeType,
+          sizeBytes: copied.sizeBytes,
+          sha256: copied.sha256,
+          updatedAt,
+          origin: { kind: 'managed', objectKey: copied.sha256 },
+        }
+        const updated = appendHistory(content, 'REPLACE', updatedAt)
+        this._validateManifest(updated, id)
+        await this._atomicWriteJson(this._manifestPath(id), updated)
+        this._selectionTokens.delete(selectionToken)
+        return noPublicPath(updated, true)
+      } catch (error) {
+        await rm(copied.temp, { force: true }).catch(() => {})
+        if (objectCreated) await rm(objectFile, { force: true }).catch(() => {})
+        throw error
+      }
+    })
+  }
+
+  async revertVersion(id, targetRevision) {
+    await this.ensure()
+    validateId(id)
+    if (!Number.isSafeInteger(targetRevision) || targetRevision < 1) throw libraryError('INVALID_REVISION', 'La révision demandée est invalide.')
+    return this._withMutation(async () => {
+      const manifest = await this._readManifest(id)
+      if (manifest.deletedAt) throw libraryError('DOCUMENT_DELETED', 'Restaure le document avant de revenir à une ancienne version.')
+      if (manifest.origin.kind !== 'managed') throw libraryError('LINKED_VERSION_UNSUPPORTED', 'Les documents liés ne possèdent pas de versions gérées.')
+      const versioned = versionedManifest(manifest)
+      const target = versioned.history.find((entry) => entry.revision === targetRevision)
+      if (!target) throw libraryError('REVISION_NOT_FOUND', 'La version demandée est introuvable.')
+      const objectFile = this._objectPath(target.sha256)
+      await this._assertInternalFile(objectFile)
+      if (await sha256File(objectFile) !== target.sha256) throw libraryError('OBJECT_CORRUPT', 'La version demandée a échoué au contrôle d’intégrité.')
+      const updatedAt = this._nowIso()
+      const content = {
+        ...versioned,
+        originalName: target.originalName,
+        extension: target.extension,
+        kind: target.kind,
+        mimeType: target.mimeType,
+        sizeBytes: target.sizeBytes,
+        sha256: target.sha256,
+        updatedAt,
+        origin: { kind: 'managed', objectKey: target.sha256 },
+      }
+      const updated = appendHistory(content, 'REVERT', updatedAt, { restoredFromRevision: targetRevision })
+      this._validateManifest(updated, id)
+      await this._atomicWriteJson(this._manifestPath(id), updated)
+      return noPublicPath(updated, true)
+    })
   }
 
   _revisionForManifest(manifest) {
@@ -1006,7 +1214,7 @@ export class DocumentLibrary {
     if (await pathExists(trashFile)) throw libraryError('TRASH_CONFLICT', 'Une entrée de corbeille utilise déjà cet identifiant.')
 
     const deletedAt = this._nowIso()
-    const deletedManifest = { ...manifest, updatedAt: deletedAt, deletedAt }
+    const deletedManifest = appendHistory({ ...manifest, updatedAt: deletedAt, deletedAt }, 'DELETE', deletedAt)
     await this._atomicWriteJson(activeFile, deletedManifest)
     await rename(activeFile, trashFile)
     if (manifest.origin.kind === 'managed') await this._moveManagedObjectToTrash(manifest)
@@ -1045,7 +1253,7 @@ export class DocumentLibrary {
         }
       }
       const restoredAt = this._nowIso()
-      const restored = { ...manifest, updatedAt: restoredAt, deletedAt: null }
+      const restored = appendHistory({ ...manifest, updatedAt: restoredAt, deletedAt: null }, 'RESTORE', restoredAt)
       await this._atomicWriteJson(trashFile, restored)
       await rename(trashFile, activeFile)
       return noPublicPath(restored, true)

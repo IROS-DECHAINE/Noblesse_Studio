@@ -10,7 +10,9 @@ import {
   studioVaultRoot,
 } from '../electron/lib/studioPaths.mjs'
 
-const SCHEMA_VERSION = 1
+const SCHEMA_VERSION = 2
+const DEPENDENCY_SCHEMA_VERSION = 1
+const UNRESOLVED_DEPENDENCY_MARKERS = new Set(['UNRESOLVED_LIVE_SOURCE_GRAPH_INSPECTION'])
 const generatedAt = new Date().toISOString()
 const appRoot = studioAppRoot()
 const libraryRoot = studioLibraryRoot()
@@ -32,6 +34,11 @@ const sha256 = (buffer) => createHash('sha256').update(buffer).digest('hex')
 const slash = (value) => String(value || '').replaceAll('\\', '/')
 const markdown = (value) => String(value ?? '').replaceAll('|', '\\|').replaceAll('\n', ' ')
 
+const dependencyReferences = (value) => {
+  const values = Array.isArray(value) ? value : String(value || '').split(/[;,\n]/u)
+  return [...new Set(values.map((item) => String(item || '').trim()).filter(Boolean))]
+}
+
 const atomicWrite = async (file, content) => {
   await mkdir(path.dirname(file), { recursive: true })
   const temporary = `${file}.tmp-${process.pid}`
@@ -50,7 +57,7 @@ const storagePathFor = (asset) => {
   if (asset.asset_type === 'MaterialRecipe') {
     return `library/storage/packs/${asset.pack_id}/recipes.json#${asset.asset_id}`
   }
-  return slash(asset.source_path || asset.native_source_project || '')
+  return ''
 }
 
 const normalizeAsset = (asset) => {
@@ -64,32 +71,48 @@ const normalizeAsset = (asset) => {
     status: asset.status || 'UNKNOWN',
     packId: asset.pack_id || '',
     hash: asset.source_sha256 || asset.preview_sha256 || '',
+    storageMode: asset.source || asset.asset_type === 'MaterialRecipe' ? 'MANAGED' : 'REFERENCE',
     storagePath: storagePathFor(asset),
     previewPath: asset.preview_source ? slash(path.join('library', 'storage', asset.preview_source)) : '',
     sourceOrigin: slash(asset.source_origin || asset.source_path || asset.source_project || ''),
     licenseEvidence: slash(asset.license_evidence || ''),
     platforms: Array.isArray(asset.platforms) ? asset.platforms : [],
-    dependencies: Array.isArray(asset.dependencies) ? asset.dependencies : [],
+    dependencies: dependencyReferences(asset.dependencies),
     tags: [asset.asset_type, asset.category, asset.surface_group, asset.group_label, asset.pack_id].filter(Boolean),
   }
 }
 
-const normalizeDocument = (manifest, manifestFile) => ({
-  id: manifest.id,
-  name: manifest.title,
-  category: 'documents',
-  type: manifest.kind || 'document',
-  version: String(manifest.schemaVersion || 1),
-  status: manifest.deletedAt ? 'DELETED' : (manifest.canonicalStatus || 'REFERENCE'),
-  projectId: manifest.projectId || '',
-  hash: manifest.sha256 || '',
-  storagePath: slash(path.relative(appRoot, manifestFile)),
-  sourceOrigin: slash(manifest.origin?.sourcePath || manifest.origin?.objectKey || ''),
-  sizeBytes: Number(manifest.sizeBytes || 0),
-  tags: Array.isArray(manifest.tags) ? manifest.tags : [],
-  createdAt: manifest.createdAt || '',
-  updatedAt: manifest.updatedAt || '',
-})
+const normalizeDocument = (manifest, manifestFile) => {
+  const revision = Number.isSafeInteger(manifest.revision) ? manifest.revision : 1
+  const history = Array.isArray(manifest.history) && manifest.history.length
+    ? manifest.history
+    : [{
+        revision: 1,
+        action: 'BASELINE',
+        at: manifest.createdAt || manifest.updatedAt,
+        sha256: manifest.sha256 || '',
+        sizeBytes: Number(manifest.sizeBytes || 0),
+        originalName: manifest.originalName || manifest.title,
+      }]
+  return {
+    id: manifest.id,
+    name: manifest.title,
+    category: 'documents',
+    type: manifest.kind || 'document',
+    version: String(manifest.schemaVersion || 1),
+    revision,
+    history,
+    status: manifest.deletedAt ? 'DELETED' : (manifest.canonicalStatus || 'REFERENCE'),
+    projectId: manifest.projectId || '',
+    hash: manifest.sha256 || '',
+    storagePath: slash(path.relative(appRoot, manifestFile)),
+    sourceOrigin: slash(manifest.origin?.sourcePath || manifest.origin?.objectKey || ''),
+    sizeBytes: Number(manifest.sizeBytes || 0),
+    tags: Array.isArray(manifest.tags) ? manifest.tags : [],
+    createdAt: manifest.createdAt || '',
+    updatedAt: manifest.updatedAt || '',
+  }
+}
 
 const catalogFile = path.join(vaultRoot, 'catalog.json')
 const integrityFile = path.join(vaultRoot, 'integrity.json')
@@ -106,6 +129,30 @@ const items = catalog.assets.map(normalizeAsset)
 const uniqueIds = new Set(items.map((item) => item.id))
 if (uniqueIds.size !== items.length || items.some((item) => !item.id || !item.name)) {
   throw new Error('Chaque entrée de bibliothèque doit avoir un ID et un nom uniques.')
+}
+
+const assetsById = new Map(items.map((item) => [item.id, item]))
+const assetIdsByName = new Map(items.map((item) => [item.name, item.id]))
+const dependencyEdges = items.flatMap((item) => item.dependencies.map((reference) => {
+  const marker = UNRESOLVED_DEPENDENCY_MARKERS.has(reference)
+  const targetId = marker ? null : (assetsById.has(reference) ? reference : assetIdsByName.get(reference) || null)
+  return {
+    fromId: item.id,
+    toId: targetId,
+    reference,
+    relationType: 'DEPENDS_ON',
+    status: targetId ? 'RESOLVED' : 'UNRESOLVED',
+  }
+}))
+const dependencyGraph = {
+  schemaVersion: DEPENDENCY_SCHEMA_VERSION,
+  generatedAt,
+  nodeCount: items.length,
+  edgeCount: dependencyEdges.length,
+  resolvedEdgeCount: dependencyEdges.filter((edge) => edge.status === 'RESOLVED').length,
+  unresolvedEdgeCount: dependencyEdges.filter((edge) => edge.status === 'UNRESOLVED').length,
+  nodes: items.map((item) => ({ id: item.id, name: item.name, type: item.type, version: item.version })),
+  edges: dependencyEdges,
 }
 
 const documentManifestRoot = path.join(documentsRoot, 'manifests')
@@ -143,6 +190,7 @@ const master = {
     integrity: 'library/storage/integrity.json',
     database: 'data/database/noblesse-studio.db',
     databaseRole: 'REBUILDABLE_INDEX',
+    dependencies: 'library/dependencies.json',
   },
   integrity: {
     status: integrity.status,
@@ -154,6 +202,15 @@ const master = {
   counts: Object.fromEntries(Object.entries(categories).map(([key, list]) => [key, list.length])),
   totalLibraryItems: items.length,
   totalDocuments: documents.length,
+  relations: {
+    dependencyEdges: dependencyGraph.edgeCount,
+    resolved: dependencyGraph.resolvedEdgeCount,
+    unresolved: dependencyGraph.unresolvedEdgeCount,
+  },
+  storage: {
+    managed: items.filter((item) => item.storageMode === 'MANAGED').length,
+    references: items.filter((item) => item.storageMode === 'REFERENCE').length,
+  },
   indexes: Object.keys(categories).map((category) => ({ category, json: `${category}/index.json`, human: `${category}/INDEX.md` })),
 }
 
@@ -175,9 +232,9 @@ const categoryMarkdown = (category, list) => {
     '',
   ]
   if (!list.length) return `${lines.join('\n')}Aucune entrée pour le moment.\n`
-  lines.push('| ID permanent | Nom | Type | Version | Statut | Emplacement |', '|---|---|---|---:|---|---|')
+  lines.push('| ID permanent | Nom | Type | Version | Statut | Mode | Emplacement |', '|---|---|---|---:|---|---|---|')
   for (const item of list) {
-    lines.push(`| ${markdown(item.id)} | ${markdown(item.name)} | ${markdown(item.type)} | ${markdown(item.version)} | ${markdown(item.status)} | ${markdown(item.storagePath || item.sourceOrigin)} |`)
+    lines.push(`| ${markdown(item.id)} | ${markdown(item.name)} | ${markdown(item.type)} | ${markdown(item.version)} | ${markdown(item.status)} | ${markdown(item.storageMode || 'MANAGED')} | ${markdown(item.storagePath || 'Référence externe — provenance conservée')} |`)
   }
   return `${lines.join('\n')}\n`
 }
@@ -190,6 +247,19 @@ for (const [category, list] of Object.entries(categories)) {
 }
 
 await atomicWrite(path.join(libraryRoot, 'index.json'), `${JSON.stringify(master, null, 2)}\n`)
+await atomicWrite(path.join(libraryRoot, 'dependencies.json'), `${JSON.stringify(dependencyGraph, null, 2)}\n`)
+await atomicWrite(path.join(libraryRoot, 'DEPENDENCIES.md'), `# Dépendances de la bibliothèque
+
+Index généré automatiquement le ${generatedAt}. Les références non résolues restent visibles : elles ne sont jamais supprimées silencieusement.
+
+| Relations | Résolues | À résoudre |
+|---:|---:|---:|
+| ${dependencyGraph.edgeCount} | ${dependencyGraph.resolvedEdgeCount} | ${dependencyGraph.unresolvedEdgeCount} |
+
+${dependencyEdges.length ? `| Source | Référence | Cible | État |
+|---|---|---|---|
+${dependencyEdges.map((edge) => `| ${markdown(edge.fromId)} | ${markdown(edge.reference)} | ${markdown(edge.toId || '—')} | ${edge.status} |`).join('\n')}` : 'Aucune dépendance déclarée pour le moment.'}
+`)
 await atomicWrite(path.join(libraryRoot, 'INDEX.md'), `# Bibliothèque Noblesse Studio
 
 Point d’entrée humain et IA de la bibliothèque locale. Généré le ${generatedAt}.
@@ -200,6 +270,8 @@ Point d’entrée humain et IA de la bibliothèque locale. Généré le ${genera
 | Textures | ${categories.textures.length} | [textures/INDEX.md](textures/INDEX.md) | [textures/index.json](textures/index.json) |
 | Matériaux | ${categories.materials.length} | [materials/INDEX.md](materials/INDEX.md) | [materials/index.json](materials/index.json) |
 | Documents | ${categories.documents.length} | [documents/INDEX.md](documents/INDEX.md) | [documents/index.json](documents/index.json) |
+
+Les relations entre éléments sont consultables dans [DEPENDENCIES.md](DEPENDENCIES.md) et [dependencies.json](dependencies.json).
 
 ## Règles d’autorité
 
@@ -246,6 +318,7 @@ try {
       status TEXT NOT NULL,
       pack_id TEXT NOT NULL,
       sha256 TEXT NOT NULL,
+      storage_mode TEXT NOT NULL CHECK (storage_mode IN ('MANAGED', 'REFERENCE')),
       storage_path TEXT NOT NULL,
       preview_path TEXT NOT NULL,
       source_origin TEXT NOT NULL,
@@ -259,6 +332,7 @@ try {
       project_id TEXT NOT NULL,
       name TEXT NOT NULL,
       document_type TEXT NOT NULL,
+      current_revision INTEGER NOT NULL,
       status TEXT NOT NULL,
       sha256 TEXT NOT NULL,
       size_bytes INTEGER NOT NULL,
@@ -268,31 +342,65 @@ try {
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
     );
+    CREATE TABLE document_revisions (
+      document_id TEXT NOT NULL,
+      revision INTEGER NOT NULL,
+      action TEXT NOT NULL,
+      recorded_at TEXT NOT NULL,
+      sha256 TEXT NOT NULL,
+      size_bytes INTEGER NOT NULL,
+      original_name TEXT NOT NULL,
+      restored_from_revision INTEGER,
+      PRIMARY KEY (document_id, revision),
+      FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE
+    );
+    CREATE TABLE library_relations (
+      source_id TEXT NOT NULL,
+      target_id TEXT,
+      relation_type TEXT NOT NULL,
+      reference TEXT NOT NULL,
+      status TEXT NOT NULL CHECK (status IN ('RESOLVED', 'UNRESOLVED')),
+      metadata_json TEXT NOT NULL,
+      PRIMARY KEY (source_id, relation_type, reference),
+      FOREIGN KEY (source_id) REFERENCES library_items(id) ON DELETE CASCADE,
+      FOREIGN KEY (target_id) REFERENCES library_items(id) ON DELETE SET NULL
+    );
+    CREATE INDEX library_relations_target_idx ON library_relations(target_id);
+    CREATE INDEX document_revisions_hash_idx ON document_revisions(sha256);
     CREATE VIRTUAL TABLE library_search USING fts5(id UNINDEXED, category UNINDEXED, name, item_type, tags);
   `)
-  db.prepare('INSERT INTO schema_migrations(version, applied_at) VALUES (?, ?)').run(SCHEMA_VERSION, generatedAt)
+  const insertMigration = db.prepare('INSERT INTO schema_migrations(version, applied_at) VALUES (?, ?)')
+  for (let version = 1; version <= SCHEMA_VERSION; version += 1) insertMigration.run(version, generatedAt)
   const insertMeta = db.prepare('INSERT INTO metadata(key, value) VALUES (?, ?)')
   insertMeta.run('generated_at', generatedAt)
   insertMeta.run('catalog_sha256', integrity.catalogSha256)
   insertMeta.run('database_role', 'REBUILDABLE_INDEX')
   const insertItem = db.prepare(`INSERT INTO library_items (
-    id, category, item_type, name, version, status, pack_id, sha256, storage_path,
+    id, category, item_type, name, version, status, pack_id, sha256, storage_mode, storage_path,
     preview_path, source_origin, license_evidence, platforms_json, dependencies_json, tags_json
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
   const insertDocument = db.prepare(`INSERT INTO documents (
-    id, project_id, name, document_type, status, sha256, size_bytes, storage_path,
+    id, project_id, name, document_type, current_revision, status, sha256, size_bytes, storage_path,
     source_origin, tags_json, created_at, updated_at
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
   const insertSearch = db.prepare('INSERT INTO library_search(id, category, name, item_type, tags) VALUES (?, ?, ?, ?, ?)')
+  const insertRelation = db.prepare('INSERT INTO library_relations(source_id, target_id, relation_type, reference, status, metadata_json) VALUES (?, ?, ?, ?, ?, ?)')
+  const insertRevision = db.prepare('INSERT INTO document_revisions(document_id, revision, action, recorded_at, sha256, size_bytes, original_name, restored_from_revision) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
   db.exec('BEGIN IMMEDIATE')
   try {
     for (const item of items) {
-      insertItem.run(item.id, item.category, item.type, item.name, item.version, item.status, item.packId, item.hash, item.storagePath, item.previewPath, item.sourceOrigin, item.licenseEvidence, JSON.stringify(item.platforms), JSON.stringify(item.dependencies), JSON.stringify(item.tags))
+      insertItem.run(item.id, item.category, item.type, item.name, item.version, item.status, item.packId, item.hash, item.storageMode, item.storagePath, item.previewPath, item.sourceOrigin, item.licenseEvidence, JSON.stringify(item.platforms), JSON.stringify(item.dependencies), JSON.stringify(item.tags))
       insertSearch.run(item.id, item.category, item.name, item.type, item.tags.join(' '))
     }
     for (const item of documents) {
-      insertDocument.run(item.id, item.projectId, item.name, item.type, item.status, item.hash, item.sizeBytes, item.storagePath, item.sourceOrigin, JSON.stringify(item.tags), item.createdAt, item.updatedAt)
+      insertDocument.run(item.id, item.projectId, item.name, item.type, item.revision, item.status, item.hash, item.sizeBytes, item.storagePath, item.sourceOrigin, JSON.stringify(item.tags), item.createdAt, item.updatedAt)
       insertSearch.run(item.id, item.category, item.name, item.type, item.tags.join(' '))
+      for (const revision of item.history) {
+        insertRevision.run(item.id, revision.revision, revision.action, revision.at, revision.sha256, revision.sizeBytes, revision.originalName, revision.restoredFromRevision ?? null)
+      }
+    }
+    for (const edge of dependencyEdges) {
+      insertRelation.run(edge.fromId, edge.toId, edge.relationType, edge.reference, edge.status, '{}')
     }
     db.exec('COMMIT')
   } catch (error) {

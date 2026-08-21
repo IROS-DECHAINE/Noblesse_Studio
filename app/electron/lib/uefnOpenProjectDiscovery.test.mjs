@@ -18,6 +18,16 @@ test('extractLastOpenedProject prefers the last successfully opened project', ()
   )
 })
 
+test('extractLastOpenedProject accepts an apostrophe inside the Windows project path', () => {
+  const projectPath = "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/PRIME INDUSTRY/WTF_IDLE_TYCOON/WTF_IDLE_TYCOON.uefnproject"
+  const content = [
+    `LogValkyrie: Opening project '${projectPath}'`,
+    `LogValkyrie: Display: Successfully opened project '${projectPath}' and 0 dependency project(s)`,
+  ].join('\n')
+
+  assert.equal(extractLastOpenedProject(content), projectPath.replaceAll('/', path.sep))
+})
+
 test('extractMcpIssue reports the exact occupied MCP port', () => {
   const content = '[0] LogHttpListener: Error: HttpListener unable to bind to 127.0.0.1:8000'
   assert.deepEqual(extractMcpIssue(content), { code: 'PORT_CONFLICT', port: 8000 })
@@ -50,4 +60,32 @@ test('discoverOpenUefnProjects exposes only as many current logs as editor proce
   assert.equal(projects[0].mount, 'WTF_IDLE_TYCOON')
   assert.equal(projects[0].opened, true)
   assert.equal(projects[0].processId, 42)
+})
+
+test('discoverOpenUefnProjects keeps three simultaneous projects with apostrophes in their paths', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'noblesse-open-three-uefn-'))
+  t.after(() => rm(root, { recursive: true, force: true }))
+  const projects = [
+    ['UnrealEditorFortnite.log', "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/WORKER_RIFT/uefn/STEAL_THE_RIFT_BOTS/STEAL_THE_RIFT_BOTS.uefnproject"],
+    ['UnrealEditorFortnite_2.log', 'D:/NO_BLESSE Studio/Fortnite/Bibliotheque/NOBLESSE_BIBLIOTHEQUE/NOBLESSE_BIBLIOTHEQUE.uefnproject'],
+    ['UnrealEditorFortnite_3.log', "D:/DON'T_TOUCH_ONLY_HUMAIN/THEO/PRIME INDUSTRY/WTF_IDLE_TYCOON/WTF_IDLE_TYCOON.uefnproject"],
+  ]
+  for (const [name, projectPath] of projects) {
+    await writeFile(
+      path.join(root, name),
+      `LogValkyrie: Display: Successfully opened project '${projectPath}' and 0 dependency project(s)`,
+    )
+    await new Promise((resolve) => setTimeout(resolve, 15))
+  }
+
+  const discovered = await discoverOpenUefnProjects({
+    logsDirectory: root,
+    processIds: async () => [101, 102, 103],
+  })
+
+  assert.deepEqual(
+    discovered.map((project) => project.mount).toSorted(),
+    ['NOBLESSE_BIBLIOTHEQUE', 'STEAL_THE_RIFT_BOTS', 'WTF_IDLE_TYCOON'],
+  )
+  assert.equal(discovered.every((project) => project.opened), true)
 })

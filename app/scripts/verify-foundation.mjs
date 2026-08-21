@@ -37,6 +37,8 @@ const required = [
   'data/README.md',
   'library/INDEX.md',
   'library/index.json',
+  'library/DEPENDENCIES.md',
+  'library/dependencies.json',
   'library/assets/index.json',
   'library/textures/index.json',
   'library/materials/index.json',
@@ -47,10 +49,11 @@ const required = [
 for (const relativePath of required) await access(path.join(appRoot, relativePath))
 await access(databaseFile)
 
-const [catalogBuffer, integrity, master, assets, textures, materials, documents] = await Promise.all([
+const [catalogBuffer, integrity, master, dependencies, assets, textures, materials, documents] = await Promise.all([
   readFile(path.join(vaultRoot, 'catalog.json')),
   readJson(path.join(vaultRoot, 'integrity.json')),
   readJson(path.join(libraryRoot, 'index.json')),
+  readJson(path.join(libraryRoot, 'dependencies.json')),
   readJson(path.join(libraryRoot, 'assets', 'index.json')),
   readJson(path.join(libraryRoot, 'textures', 'index.json')),
   readJson(path.join(libraryRoot, 'materials', 'index.json')),
@@ -69,6 +72,21 @@ if (master.totalLibraryItems !== catalog.assets.length || master.totalDocuments 
   throw new Error('L’index maître ne correspond pas aux index de catégorie.')
 }
 
+if (master.schemaVersion < 2 || dependencies.schemaVersion !== 1 || dependencies.nodeCount !== catalog.assets.length) {
+  throw new Error('Le graphe de dépendances ou le schéma maître est obsolète.')
+}
+if (master.storage.managed + master.storage.references !== catalog.assets.length) {
+  throw new Error('Tous les éléments doivent déclarer un mode de stockage explicite.')
+}
+for (const item of [...assets.items, ...textures.items, ...materials.items]) {
+  if (!['MANAGED', 'REFERENCE'].includes(item.storageMode)) throw new Error(`Mode de stockage invalide : ${item.id}`)
+  if (item.storageMode === 'MANAGED' && !item.storagePath.startsWith('library/storage/')) throw new Error(`Emplacement géré invalide : ${item.id}`)
+  if (item.storageMode === 'REFERENCE' && item.storagePath) throw new Error(`Une référence externe ne doit pas devenir un chemin de stockage : ${item.id}`)
+}
+if (dependencies.edgeCount !== dependencies.edges.length || dependencies.resolvedEdgeCount + dependencies.unresolvedEdgeCount !== dependencies.edgeCount) {
+  throw new Error('Les compteurs du graphe de dépendances sont incohérents.')
+}
+
 const db = new DatabaseSync(databaseFile, { readOnly: true })
 let databaseCounts
 try {
@@ -76,6 +94,11 @@ try {
     libraryItems: Number(db.prepare('SELECT COUNT(*) AS count FROM library_items').get().count),
     documents: Number(db.prepare('SELECT COUNT(*) AS count FROM documents').get().count),
     migrations: Number(db.prepare('SELECT COUNT(*) AS count FROM schema_migrations').get().count),
+    maxMigration: Number(db.prepare('SELECT MAX(version) AS version FROM schema_migrations').get().version),
+    relations: Number(db.prepare('SELECT COUNT(*) AS count FROM library_relations').get().count),
+    revisions: Number(db.prepare('SELECT COUNT(*) AS count FROM document_revisions').get().count),
+    managedItems: Number(db.prepare("SELECT COUNT(*) AS count FROM library_items WHERE storage_mode = 'MANAGED'").get().count),
+    referenceItems: Number(db.prepare("SELECT COUNT(*) AS count FROM library_items WHERE storage_mode = 'REFERENCE'").get().count),
   }
 } finally {
   db.close()
@@ -83,7 +106,9 @@ try {
 
 if (databaseCounts.libraryItems !== catalog.assets.length) throw new Error('La base SQLite ne contient pas tous les éléments de bibliothèque.')
 if (databaseCounts.documents !== documents.count) throw new Error('La base SQLite ne contient pas tous les documents indexés.')
-if (databaseCounts.migrations < 1) throw new Error('La base SQLite n’a aucune migration enregistrée.')
+if (databaseCounts.migrations < 2 || databaseCounts.maxMigration < 2) throw new Error('La base SQLite n’a pas toutes ses migrations enregistrées.')
+if (databaseCounts.relations !== dependencies.edgeCount) throw new Error('La base SQLite ne contient pas toutes les relations indexées.')
+if (databaseCounts.managedItems !== master.storage.managed || databaseCounts.referenceItems !== master.storage.references) throw new Error('Les modes de stockage SQLite ne correspondent pas aux index.')
 
 console.log(JSON.stringify({
   status: 'PASS',

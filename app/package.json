@@ -1,7 +1,7 @@
 {
-  "name": "noblesse-vault-catalog",
+  "name": "noblesse-studio",
   "private": true,
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Application locale Noblesse Studio pour piloter les projets, les documents, les finances, le planning et la bibliothèque d’assets.",
   "author": "Noblesse Studio",
   "packageManager": "pnpm@10.32.1",
@@ -10,7 +10,9 @@
   "scripts": {
     "rebuild-indexes": "node scripts/rebuild-library-index.mjs",
     "verify-foundation": "node scripts/verify-foundation.mjs",
+    "verify-source": "node scripts/verify-source-contracts.mjs",
     "sync-data": "node scripts/sync-data.mjs",
+    "recovery": "node scripts/recovery-cli.mjs",
     "postinstall": "node scripts/repair-pnpm-links.mjs && node node_modules/electron/install.js",
     "predev": "node scripts/sync-data.mjs",
     "dev": "vite --host 127.0.0.1",
@@ -51,7 +53,11 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
+      "!electron/**/*.test.js",
+      "!electron/**/*.test.mjs",
       "shared/**/*",
+      "!shared/**/*.test.js",
+      "!shared/**/*.test.mjs",
       "package.json"
     ],
     "win": {

@@ -1,9 +1,10 @@
 import { CheckCircle2, ChevronDown, Circle, Download, Layers3, LoaderCircle, ShieldCheck, Square } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { studioApi } from '../lib/desktopApi.js'
-import MaterialPreview3D from './MaterialPreview3D.jsx'
-import { usePreviewDescriptor } from './material-preview/index.js'
+import { usePreviewDescriptor } from './material-preview/usePreviewDescriptor.js'
 import ProjectDestinationPicker from './ProjectDestinationPicker.jsx'
+
+const MaterialPreview3D = lazy(() => import('./MaterialPreview3D.jsx'))
 
 export default function SurfaceInspector({
   surface,
@@ -58,12 +59,14 @@ export default function SurfaceInspector({
         </div>
       </div>
       <div className="inspector-sphere">
-        <MaterialPreview3D
-          descriptorState={descriptorState}
-          surface={previewSurface}
-          shape={shape}
-          preview={activeVariant?.preview || surface.preview}
-        />
+        <Suspense fallback={<div className="material-preview-loading" role="status"><LoaderCircle className="is-spinning" size={22} /> Préparation de l’aperçu 3D…</div>}>
+          <MaterialPreview3D
+            descriptorState={descriptorState}
+            surface={previewSurface}
+            shape={shape}
+            preview={activeVariant?.preview || surface.preview}
+          />
+        </Suspense>
       </div>
 
       {surface.variantOptions?.length > 1 && (

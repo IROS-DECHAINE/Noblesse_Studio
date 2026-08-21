@@ -1,0 +1,55 @@
+name: Livraison Windows signée
+
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: app
+    env:
+      CSC_LINK: ${{ secrets.WINDOWS_CSC_LINK }}
+      CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CSC_KEY_PASSWORD }}
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v6
+      - name: Exiger le certificat de signature
+        shell: pwsh
+        run: if ([string]::IsNullOrWhiteSpace($env:CSC_LINK)) { throw 'Le secret WINDOWS_CSC_LINK est obligatoire pour une livraison.' }
+      - name: Installer pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.32.1
+      - name: Installer Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: app/pnpm-lock.yaml
+      - name: Installer les dépendances verrouillées
+        run: pnpm install --frozen-lockfile
+      - name: Vérifier le code
+        run: pnpm verify-source && pnpm test && pnpm audit --prod --audit-level high
+      - name: Produire l’installateur signé
+        run: pnpm desktop:pack
+      - name: Vérifier la signature Authenticode
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem -LiteralPath release -Filter 'Noblesse-Studio-*.exe' | Select-Object -First 1
+          if (-not $installer) { throw 'Installateur introuvable.' }
+          $signature = Get-AuthenticodeSignature -LiteralPath $installer.FullName
+          if ($signature.Status -ne 'Valid') { throw "Signature invalide : $($signature.Status)" }
+      - name: Publier l’artefact
+        uses: actions/upload-artifact@v6
+        with:
+          name: Noblesse-Studio-Windows-${{ github.ref_name }}
+          path: app/release/Noblesse-Studio-*.exe
+          if-no-files-found: error
+          retention-days: 30

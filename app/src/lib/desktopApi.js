@@ -101,6 +101,12 @@ export const studioApi = {
     if (!window.noblesseDesktop?.importDocuments) throw new Error('L’import est disponible dans l’application desktop.')
     return window.noblesseDesktop.importDocuments(request)
   },
+  documentHistory: (id) => window.noblesseDesktop?.getDocumentHistory?.(id)
+    ?? Promise.reject(new Error('L’historique est disponible dans l’application desktop.')),
+  replaceDocumentVersion: (id, selectionToken) => window.noblesseDesktop?.replaceDocumentVersion?.(id, selectionToken)
+    ?? Promise.reject(new Error('Le versionnage est disponible dans l’application desktop.')),
+  revertDocumentVersion: (id, revision) => window.noblesseDesktop?.revertDocumentVersion?.(id, revision)
+    ?? Promise.reject(new Error('Le versionnage est disponible dans l’application desktop.')),
   planDeleteDocument: (id) => {
     if (!window.noblesseDesktop?.planDeleteDocument) throw new Error('La suppression est disponible dans l’application desktop.')
     return window.noblesseDesktop.planDeleteDocument(id)
@@ -112,6 +118,19 @@ export const studioApi = {
   restoreDocument: (id) => window.noblesseDesktop?.restoreDocument?.(id) ?? Promise.reject(new Error('La restauration est disponible dans l’application desktop.')),
   openDocument: (id) => window.noblesseDesktop?.openDocument?.(id) ?? Promise.reject(new Error('L’ouverture locale est disponible dans l’application desktop.')),
   revealDocument: (id) => window.noblesseDesktop?.revealDocument?.(id) ?? Promise.reject(new Error('L’accès au dossier est disponible dans l’application desktop.')),
+  operations: () => window.noblesseDesktop?.listOperations?.() ?? Promise.resolve([]),
+  resumeOperation: (jobId) => window.noblesseDesktop?.resumeOperation?.(jobId)
+    ?? Promise.reject(new Error('La reprise est disponible dans l’application desktop.')),
+  cancelOperation: (jobId) => window.noblesseDesktop?.cancelOperation?.(jobId)
+    ?? Promise.reject(new Error('L’annulation est disponible dans l’application desktop.')),
+  recoveryStatus: () => window.noblesseDesktop?.recoveryStatus?.()
+    ?? Promise.reject(new Error('Les sauvegardes sont disponibles dans l’application desktop.')),
+  createRecoverySnapshot: (label) => window.noblesseDesktop?.createRecoverySnapshot?.(label)
+    ?? Promise.reject(new Error('Les sauvegardes sont disponibles dans l’application desktop.')),
+  verifyRecoverySnapshot: (snapshotId) => window.noblesseDesktop?.verifyRecoverySnapshot?.(snapshotId)
+    ?? Promise.reject(new Error('La vérification est disponible dans l’application desktop.')),
+  revealRecoveryRepository: () => window.noblesseDesktop?.revealRecoveryRepository?.()
+    ?? Promise.reject(new Error('Le dépôt de sauvegarde est disponible dans l’application desktop.')),
   financeDashboard: (options) => window.noblesseDesktop?.getFinanceDashboard?.(options)
     ?? Promise.reject(new Error('Finances disponibles uniquement dans l’application Noblesse Studio')),
   financeTransactions: (options) => window.noblesseDesktop?.listFinanceTransactions?.(options)
@@ -131,5 +150,7 @@ export const studioApi = {
   onCalendarUpdated: (callback) => window.noblesseDesktop?.onCalendarUpdated?.(callback) || calendarWebRepository.onUpdated(callback),
   onNavigate: (callback) => window.noblesseDesktop?.onNavigate?.(callback) || (() => {}),
   onDocumentsUpdated: (callback) => window.noblesseDesktop?.onDocumentsUpdated?.(callback) || (() => {}),
+  onOperationsUpdated: (callback) => window.noblesseDesktop?.onOperationsUpdated?.(callback) || (() => {}),
+  onRecoveryProgress: (callback) => window.noblesseDesktop?.onRecoveryProgress?.(callback) || (() => {}),
   onVaultUpdated: (callback) => window.noblesseDesktop?.onVaultUpdated?.(callback) || (() => {}),
 }

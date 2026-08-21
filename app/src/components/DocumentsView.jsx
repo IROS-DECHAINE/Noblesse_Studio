@@ -127,6 +127,8 @@ export default function DocumentsView({ onNotify }) {
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
   const [textState, setTextState] = useState({ id: '', text: '', loading: false, error: '' })
+  const [historyState, setHistoryState] = useState({ id: '', items: [], loading: false, error: '' })
+  const [versioning, setVersioning] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
   const [deletePlan, setDeletePlan] = useState(null)
   const [planningDeleteId, setPlanningDeleteId] = useState('')
@@ -173,6 +175,23 @@ export default function DocumentsView({ onNotify }) {
     }), [documents, selectedProjectId])
 
   const selectedDocument = projectDocuments.find((document) => document.id === selectedDocumentId) || null
+
+  useEffect(() => {
+    if (!selectedDocument?.id || typeof studioApi.documentHistory !== 'function') {
+      setHistoryState({ id: selectedDocument?.id || '', items: [], loading: false, error: '' })
+      return undefined
+    }
+    let active = true
+    setHistoryState({ id: selectedDocument.id, items: [], loading: true, error: '' })
+    studioApi.documentHistory(selectedDocument.id)
+      .then((items) => {
+        if (active) setHistoryState({ id: selectedDocument.id, items: Array.isArray(items) ? items : [], loading: false, error: '' })
+      })
+      .catch((error) => {
+        if (active) setHistoryState({ id: selectedDocument.id, items: [], loading: false, error: errorMessage(error, 'Historique indisponible.') })
+      })
+    return () => { active = false }
+  }, [selectedDocument?.id, selectedDocument?.revision])
 
   useEffect(() => {
     if (selectedDocumentId && projectDocuments.some((document) => document.id === selectedDocumentId)) return
@@ -239,6 +258,11 @@ export default function DocumentsView({ onNotify }) {
   const importDocuments = async (request) => {
     if (typeof studioApi.importDocuments !== 'function') throw new Error('L’import est disponible dans l’application desktop.')
     const result = await studioApi.importDocuments(request)
+    if (result?.type === 'DOCUMENT_IMPORT') {
+      setSelectedProjectId(request.projectId)
+      notify(`Import sécurisé lancé : ${result.progress.total} document${result.progress.total > 1 ? 's' : ''}. La reprise restera disponible en cas d’interruption.`)
+      return
+    }
     const imported = normalizeDocumentsResponse(result)
     setSelectedProjectId(request.projectId)
     const refreshed = await loadDocuments({ quiet: true })
@@ -255,6 +279,36 @@ export default function DocumentsView({ onNotify }) {
       await action(document.id)
     } catch (error) {
       notify(errorMessage(error, fallback))
+    }
+  }
+
+  const replaceVersion = async (document) => {
+    setVersioning(true)
+    try {
+      const selections = await chooseFiles()
+      const allowed = Array.isArray(selections) ? selections.filter((item) => item?.allowed !== false && item?.selectionToken) : []
+      if (allowed.length !== 1) throw new Error('Choisis exactement un fichier pour créer la nouvelle version.')
+      await studioApi.replaceDocumentVersion(document.id, allowed[0].selectionToken)
+      await loadDocuments({ quiet: true })
+      notify(`Nouvelle version de « ${document.title} » enregistrée sans supprimer l’ancienne.`)
+    } catch (error) {
+      notify(errorMessage(error, 'Impossible de créer la nouvelle version.'))
+    } finally {
+      setVersioning(false)
+    }
+  }
+
+  const revertVersion = async (document, revision) => {
+    if (!window.confirm(`Revenir au contenu de la version ${revision} ? La version actuelle restera dans l’historique.`)) return
+    setVersioning(true)
+    try {
+      await studioApi.revertDocumentVersion(document.id, revision)
+      await loadDocuments({ quiet: true })
+      notify(`« ${document.title} » utilise maintenant le contenu de la version ${revision}.`)
+    } catch (error) {
+      notify(errorMessage(error, 'Impossible de restaurer cette version.'))
+    } finally {
+      setVersioning(false)
     }
   }
 
@@ -325,8 +379,14 @@ export default function DocumentsView({ onNotify }) {
           textLoading={textState.id === selectedDocument?.id && textState.loading}
           textError={textState.id === selectedDocument?.id ? textState.error : ''}
           deleting={planningDeleteId === selectedDocument?.id || deleting}
+          versioning={versioning}
+          history={historyState.id === selectedDocument?.id ? historyState.items : []}
+          historyLoading={historyState.id === selectedDocument?.id && historyState.loading}
+          historyError={historyState.id === selectedDocument?.id ? historyState.error : ''}
           onOpen={(document) => runDocumentAction(studioApi.openDocument, document, 'Impossible d’ouvrir ce document.')}
           onReveal={(document) => runDocumentAction(studioApi.revealDocument, document, 'Impossible d’afficher ce document dans son dossier.')}
+          onReplaceVersion={replaceVersion}
+          onRevertVersion={revertVersion}
           onDelete={planDelete}
         />
       </div>

@@ -12,7 +12,7 @@ Ce dossier contient uniquement les données mutables de l’application.
 
 Les originaux d’assets ne vont pas ici. Ils restent dans `../library/storage/`.
 
-La base canonique est `database/noblesse-studio.db`. Elle peut être reconstruite à partir du catalogue, des manifestes et des originaux avec :
+La base locale de recherche est `database/noblesse-studio.db`. C’est une projection reconstructible à partir du catalogue, des manifestes et des originaux avec :
 
 ```powershell
 Set-Location ..\app

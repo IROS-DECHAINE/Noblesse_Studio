@@ -43,8 +43,8 @@ vers :
 - [x] SQLite contient les mêmes totaux.
 - [x] Les tests passent.
 - [x] Le build de production passe.
-- [ ] L’application démarre depuis la nouvelle racine.
-- [ ] Theo valide la structure avant toute suppression de l’ancien emplacement.
+- [x] L’application démarre depuis la nouvelle racine.
+- [x] Theo valide la structure avant toute suppression de l’ancien emplacement.
 
 ## Preuves actuelles
 
@@ -55,11 +55,11 @@ vers :
 - Assets génériques : 0, aucun n’existe encore dans le catalogue
 - Documents : 17
 - Intégrité : 962 fichiers contrôlés, 0 manquant, 0 hash invalide
-- SQLite : 354 éléments de bibliothèque, 17 documents, migration de schéma v1
-- Tests : 161/161 en PASS après regroupement du code sous `app/`
+- SQLite : 354 éléments de bibliothèque, 17 documents, 5 relations, 17 révisions de référence, migrations de schéma v1 et v2
+- Tests : 172/172 en PASS après durcissement de production
 - Build Vite de production : PASS
 - Racine lisible : code et fichiers techniques regroupés sous `app/`; seuls `README.md`, `AGENTS.md` et `.gitignore` restent comme fichiers de premier niveau
 
 ## État
 
-La migration de fichiers, données et index est validée automatiquement. L’ancien emplacement est conservé. Il reste à ouvrir l’application depuis la nouvelle racine avec l’autorisation explicite de Theo, puis à obtenir sa validation visuelle avant tout retrait de l’ancien emplacement.
+La migration de fichiers, données, index et raccourci est validée automatiquement et visuellement. L’ancien emplacement reste conservé comme preuve historique ; aucune suppression n’est autorisée implicitement.

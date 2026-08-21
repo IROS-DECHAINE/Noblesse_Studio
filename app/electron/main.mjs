@@ -5,13 +5,22 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createDocumentLibrary } from './lib/documentLibrary.mjs'
 import { createCalendarReminderScheduler } from './lib/calendarReminderScheduler.mjs'
 import { createCalendarStore } from './lib/calendarStore.mjs'
+import { createBackupService } from './lib/backupService.mjs'
+import { createDocumentImportService } from './lib/documentImportService.mjs'
 import { createFinanceService, financeIpcChannels } from './lib/financeService.mjs'
 import { createFortnitePrimebotFetcher } from './lib/fortniteData.mjs'
 import { installVaultAsset } from './lib/uefnInstaller.mjs'
 import { installUnrealNativeAsset } from './lib/unrealNativeInstaller.mjs'
 import { createUefnSessionService } from './lib/uefnSessionService.mjs'
+import { createOperationJobStore } from './lib/operationJobStore.mjs'
 import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultPreviewSource, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
-import { studioDocumentsRoot, studioRuntimeRoot, studioStateRoot } from './lib/studioPaths.mjs'
+import {
+  studioBackupsRoot,
+  studioDocumentsRoot,
+  studioOperationsRoot,
+  studioRuntimeRoot,
+  studioStateRoot,
+} from './lib/studioPaths.mjs'
 
 app.setName('Noblesse Studio')
 
@@ -23,6 +32,8 @@ const hasSingleInstanceLock = app.requestSingleInstanceLock()
 let vaultWatcher = null
 let vaultRefreshTimer = null
 let documentLibrary = null
+let documentImportService = null
+let backupService = null
 let financeService = null
 let calendarStore = null
 let calendarScheduler = null
@@ -32,6 +43,7 @@ let calendarRunsInBackground = false
 let isQuitting = false
 let uefnSessionService = null
 const activeCalendarNotifications = new Set()
+const trustedWebContents = new Set()
 const getFortnitePrimebot = createFortnitePrimebotFetcher()
 
 if (process.platform === 'win32') app.setAppUserModelId('studio.noblesse.desktop')
@@ -60,7 +72,9 @@ const getAssets = async () => {
 
 const requireStudioSender = (event) => {
   const owner = BrowserWindow.fromWebContents(event.sender)
-  if (!owner || owner.isDestroyed()) throw new Error('Client Noblesse Studio non autorisé.')
+  if (!owner || owner.isDestroyed() || !trustedWebContents.has(event.sender.id) || event.senderFrame !== event.sender.mainFrame) {
+    throw new Error('Client Noblesse Studio non autorisé.')
+  }
   return owner
 }
 
@@ -72,6 +86,16 @@ const requireFinanceService = () => {
 const requireDocumentLibrary = () => {
   if (!documentLibrary) throw new Error('La bibliothèque de documents locale est indisponible.')
   return documentLibrary
+}
+
+const requireDocumentImportService = () => {
+  if (!documentImportService) throw new Error('Le gestionnaire d’importations documentaires est indisponible.')
+  return documentImportService
+}
+
+const requireBackupService = () => {
+  if (!backupService) throw new Error('Le service de sauvegarde est indisponible.')
+  return backupService
 }
 
 const requireCalendarStore = () => {
@@ -158,6 +182,17 @@ const notifyDocumentsUpdated = () => {
   }
 }
 
+const broadcast = (channel, payload) => {
+  for (const targetWindow of BrowserWindow.getAllWindows()) {
+    if (!targetWindow.isDestroyed() && trustedWebContents.has(targetWindow.webContents.id)) {
+      targetWindow.webContents.send(channel, payload)
+    }
+  }
+}
+
+const notifyOperationUpdated = (job) => broadcast('noblesse:operations-updated', job)
+const notifyRecoveryProgress = (progress) => broadcast('noblesse:recovery-progress', progress)
+
 const listDocuments = async (filters) => {
   const documents = await requireDocumentLibrary().list(filters)
   return documents.map(withPreviewUrl)
@@ -223,6 +258,31 @@ const handleVaultPreviewProtocol = async (request) => {
   }
 }
 
+const productionRendererFile = path.resolve(currentDir, '..', 'dist', 'index.html')
+const configuredDevUrl = String(process.env.VITE_DEV_SERVER_URL || '').trim()
+const allowedDevUrl = configuredDevUrl === 'http://127.0.0.1:4178' ? configuredDevUrl : ''
+
+const isAllowedRendererUrl = (value) => {
+  try {
+    const url = new URL(value)
+    if (allowedDevUrl && url.origin === new URL(allowedDevUrl).origin) return true
+    if (url.protocol !== 'file:') return false
+    return path.resolve(fileURLToPath(url)) === productionRendererFile
+  } catch {
+    return false
+  }
+}
+
+const safeExternalHttpsUrl = (value) => {
+  try {
+    const url = new URL(value)
+    if (url.protocol !== 'https:' || !url.hostname || url.username || url.password || value.length > 2048) return ''
+    return url.toString()
+  } catch {
+    return ''
+  }
+}
+
 const createWindow = () => {
   const window = new BrowserWindow({
     width: 1536,
@@ -239,8 +299,14 @@ const createWindow = () => {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
+      webSecurity: true,
+      allowRunningInsecureContent: false,
     },
   })
+  trustedWebContents.add(window.webContents.id)
+  window.webContents.once('destroyed', () => trustedWebContents.delete(window.webContents.id))
+  window.webContents.session.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false))
+  window.webContents.on('will-attach-webview', (event) => event.preventDefault())
   window.once('ready-to-show', () => window.show())
   window.on('close', (event) => {
     if (!isQuitting && calendarRunsInBackground) {
@@ -250,16 +316,15 @@ const createWindow = () => {
     }
   })
   window.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('https://')) shell.openExternal(url)
+    const external = safeExternalHttpsUrl(url)
+    if (external) shell.openExternal(external).catch(() => undefined)
     return { action: 'deny' }
   })
   window.webContents.on('will-navigate', (event, url) => {
-    const allowed = url.startsWith('file://') || url.startsWith('http://127.0.0.1:4178')
-    if (!allowed) event.preventDefault()
+    if (!isAllowedRendererUrl(url)) event.preventDefault()
   })
-  const devUrl = process.env.VITE_DEV_SERVER_URL
-  if (devUrl) window.loadURL(devUrl)
-  else window.loadFile(path.join(currentDir, '..', 'dist', 'index.html'))
+  if (allowedDevUrl) window.loadURL(allowedDevUrl)
+  else window.loadFile(productionRendererFile)
   return window
 }
 
@@ -273,17 +338,26 @@ const startVaultWatcher = () => {
   })
 }
 
-ipcMain.handle('noblesse:fortnite-primebot', (_event, options) => getFortnitePrimebot(options))
+ipcMain.handle('noblesse:fortnite-primebot', (event, options) => {
+  requireStudioSender(event)
+  return getFortnitePrimebot(options)
+})
 ipcMain.handle('noblesse:uefn-health', (event) => {
   requireStudioSender(event)
   return getUefnHealth()
 })
-ipcMain.handle('noblesse:assets', getAssets)
+ipcMain.handle('noblesse:assets', (event) => {
+  requireStudioSender(event)
+  return getAssets()
+})
 ipcMain.handle('noblesse:material-preview', (event, request) => {
   requireStudioSender(event)
   return loadMaterialPreviewDescriptor(request?.assetId)
 })
-ipcMain.handle('noblesse:vault-health', () => validateVaultIntegrity())
+ipcMain.handle('noblesse:vault-health', (event) => {
+  requireStudioSender(event)
+  return validateVaultIntegrity()
+})
 ipcMain.handle('noblesse:projects', async (event) => {
   requireStudioSender(event)
   const [uefnProjects, unrealProjects] = await Promise.all([
@@ -317,9 +391,8 @@ ipcMain.handle('noblesse:documents:register-drop', (event, request) => {
 })
 ipcMain.handle('noblesse:documents:import', async (event, request) => {
   requireStudioSender(event)
-  const result = await requireDocumentLibrary().import(request)
-  notifyDocumentsUpdated()
-  return Array.isArray(result) ? result.map(withPreviewUrl) : result
+  if (request?.filePaths !== undefined) throw new Error('Les chemins directs ne sont pas acceptés depuis l’interface.')
+  return requireDocumentImportService().start(request)
 })
 ipcMain.handle('noblesse:documents:plan-delete', (event, request) => {
   requireStudioSender(event)
@@ -336,6 +409,56 @@ ipcMain.handle('noblesse:documents:restore', async (event, request) => {
   const result = await requireDocumentLibrary().restore(request?.id)
   notifyDocumentsUpdated()
   return withPreviewUrl(result)
+})
+ipcMain.handle('noblesse:documents:history', (event, request) => {
+  requireStudioSender(event)
+  return requireDocumentLibrary().listHistory(request?.id)
+})
+ipcMain.handle('noblesse:documents:replace-version', async (event, request) => {
+  requireStudioSender(event)
+  const result = await requireDocumentLibrary().replaceVersion(request?.id, request?.selectionToken)
+  notifyDocumentsUpdated()
+  return withPreviewUrl(result)
+})
+ipcMain.handle('noblesse:documents:revert-version', async (event, request) => {
+  requireStudioSender(event)
+  const result = await requireDocumentLibrary().revertVersion(request?.id, request?.revision)
+  notifyDocumentsUpdated()
+  return withPreviewUrl(result)
+})
+ipcMain.handle('noblesse:operations:list', (event) => {
+  requireStudioSender(event)
+  return requireDocumentImportService().list()
+})
+ipcMain.handle('noblesse:operations:resume', (event, request) => {
+  requireStudioSender(event)
+  return requireDocumentImportService().resume(request?.jobId)
+})
+ipcMain.handle('noblesse:operations:cancel', (event, request) => {
+  requireStudioSender(event)
+  return requireDocumentImportService().cancel(request?.jobId)
+})
+ipcMain.handle('noblesse:recovery:status', (event) => {
+  requireStudioSender(event)
+  return requireBackupService().status()
+})
+ipcMain.handle('noblesse:recovery:create-snapshot', (event, request) => {
+  requireStudioSender(event)
+  return requireBackupService().createSnapshot({
+    reason: 'manual',
+    label: request?.label,
+    onProgress: notifyRecoveryProgress,
+  })
+})
+ipcMain.handle('noblesse:recovery:verify-snapshot', (event, request) => {
+  requireStudioSender(event)
+  return requireBackupService().verifySnapshot(request?.snapshotId, { onProgress: notifyRecoveryProgress })
+})
+ipcMain.handle('noblesse:recovery:reveal', async (event) => {
+  requireStudioSender(event)
+  await requireBackupService().ensure()
+  shell.showItemInFolder(studioBackupsRoot())
+  return { revealed: true }
 })
 ipcMain.handle('noblesse:documents:open', (event, request) => {
   requireStudioSender(event)
@@ -466,6 +589,23 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
     console.error('[Noblesse Calendar] Initialisation impossible', error)
   }
   documentLibrary = createDocumentLibrary({ root: documentsRoot(), bootstrapFile: documentBootstrapFile })
+  backupService = createBackupService({
+    backupRoot: studioBackupsRoot(),
+    roots: {
+      vault: vaultRoot(),
+      documents: documentsRoot(),
+      state: studioStateRoot(),
+    },
+  })
+  const operationJobStore = createOperationJobStore({ root: studioOperationsRoot() })
+  documentImportService = createDocumentImportService({
+    documentLibrary,
+    jobStore: operationJobStore,
+    onChanged: (job) => {
+      notifyOperationUpdated(job)
+      if (job?.progress?.completed) notifyDocumentsUpdated()
+    },
+  })
   try {
     await protocol.handle('noblesse-vault', handleVaultPreviewProtocol)
   } catch (error) {
@@ -474,6 +614,7 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
   try {
     await documentLibrary.ensure()
     await documentLibrary.bootstrap()
+    await documentImportService.initialize()
     await protocol.handle('noblesse-doc', handleDocumentProtocol)
   } catch (error) {
     console.error('[Noblesse Documents] Initialisation impossible', error)

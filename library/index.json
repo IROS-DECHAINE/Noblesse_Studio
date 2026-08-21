@@ -1,11 +1,12 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-08-21T16:54:26.837Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T18:10:04.815Z",
   "authority": {
     "catalog": "library/storage/catalog.json",
     "integrity": "library/storage/integrity.json",
     "database": "data/database/noblesse-studio.db",
-    "databaseRole": "REBUILDABLE_INDEX"
+    "databaseRole": "REBUILDABLE_INDEX",
+    "dependencies": "library/dependencies.json"
   },
   "integrity": {
     "status": "PASS",
@@ -22,6 +23,15 @@
   },
   "totalLibraryItems": 354,
   "totalDocuments": 17,
+  "relations": {
+    "dependencyEdges": 5,
+    "resolved": 4,
+    "unresolved": 1
+  },
+  "storage": {
+    "managed": 338,
+    "references": 16
+  },
   "indexes": [
     {
       "category": "assets",

@@ -1,8 +1,8 @@
 import { CheckCircle2, Search } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { filterSurfaces, platformFilters, surfaceCategories } from '../lib/catalog.js'
-import SurfaceCard from './SurfaceCard.jsx'
 import SurfaceInspector from './SurfaceInspector.jsx'
+import VirtualizedSurfaceGrid from './VirtualizedSurfaceGrid.jsx'
 
 export default function CoffreView({ surfaces, query, category, platform, selected, projects, selectedProjectId, connected, installing, vaultIntegrity, onQuery, onCategory, onPlatform, onSelect, onProject, onProjectFavorite, onInstall }) {
   const filtered = filterSurfaces(surfaces, { query, category, platform })
@@ -41,9 +41,7 @@ export default function CoffreView({ surfaces, query, category, platform, select
         </div>
 
         {filtered.length ? (
-          <div className="surface-grid">
-            {filtered.map((surface) => <SurfaceCard key={surface.id} surface={surface} selected={visibleSelected?.id === surface.id} onSelect={onSelect} />)}
-          </div>
+          <VirtualizedSurfaceGrid surfaces={filtered} selectedId={visibleSelected?.id} onSelect={onSelect} scrollContainerRef={mainRef} />
         ) : (
           <div className="coffre-empty">
             <strong>Aucune matière validée ici.</strong>

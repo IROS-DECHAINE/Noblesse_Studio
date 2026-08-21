@@ -26,6 +26,7 @@
     "NOBLESSE_STUDIO_ROOT": "Racine du dossier entreprise",
     "NOBLESSE_APP_ROOT": "Racine de l'application",
     "NOBLESSE_DATA_ROOT": "Données locales mutables",
+    "NOBLESSE_BACKUP_ROOT": "Dépôt de sauvegarde local ou disque externe",
     "NOBLESSE_LIBRARY_ROOT": "Bibliothèque et index",
     "NOBLESSE_VAULT_ROOT": "Stockage géré du Vault",
     "NOBLESSE_DOCUMENT_ROOT": "Bibliothèque documentaire",

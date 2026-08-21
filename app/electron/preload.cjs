@@ -18,11 +18,21 @@ contextBridge.exposeInMainWorld('noblesseDesktop', Object.freeze({
     return ipcRenderer.invoke('noblesse:documents:register-drop', { filePaths })
   },
   importDocuments: (request) => ipcRenderer.invoke('noblesse:documents:import', request),
+  getDocumentHistory: (id) => ipcRenderer.invoke('noblesse:documents:history', { id }),
+  replaceDocumentVersion: (id, selectionToken) => ipcRenderer.invoke('noblesse:documents:replace-version', { id, selectionToken }),
+  revertDocumentVersion: (id, revision) => ipcRenderer.invoke('noblesse:documents:revert-version', { id, revision }),
   planDeleteDocument: (id) => ipcRenderer.invoke('noblesse:documents:plan-delete', { id }),
   deleteDocument: (confirmation) => ipcRenderer.invoke('noblesse:documents:delete', confirmation),
   restoreDocument: (id) => ipcRenderer.invoke('noblesse:documents:restore', { id }),
   openDocument: (id) => ipcRenderer.invoke('noblesse:documents:open', { id }),
   revealDocument: (id) => ipcRenderer.invoke('noblesse:documents:reveal', { id }),
+  listOperations: () => ipcRenderer.invoke('noblesse:operations:list'),
+  resumeOperation: (jobId) => ipcRenderer.invoke('noblesse:operations:resume', { jobId }),
+  cancelOperation: (jobId) => ipcRenderer.invoke('noblesse:operations:cancel', { jobId }),
+  recoveryStatus: () => ipcRenderer.invoke('noblesse:recovery:status'),
+  createRecoverySnapshot: (label) => ipcRenderer.invoke('noblesse:recovery:create-snapshot', { label }),
+  verifyRecoverySnapshot: (snapshotId) => ipcRenderer.invoke('noblesse:recovery:verify-snapshot', { snapshotId }),
+  revealRecoveryRepository: () => ipcRenderer.invoke('noblesse:recovery:reveal'),
   getFinanceDashboard: (options) => ipcRenderer.invoke('finance:get-dashboard', options),
   listFinanceTransactions: (options) => ipcRenderer.invoke('finance:list-transactions', options),
   planFinanceTransaction: (draft) => ipcRenderer.invoke('finance:plan-transaction', draft),
@@ -53,6 +63,16 @@ contextBridge.exposeInMainWorld('noblesseDesktop', Object.freeze({
     const listener = () => callback()
     ipcRenderer.on('noblesse:documents-updated', listener)
     return () => ipcRenderer.removeListener('noblesse:documents-updated', listener)
+  },
+  onOperationsUpdated: (callback) => {
+    const listener = (_event, payload) => callback(payload)
+    ipcRenderer.on('noblesse:operations-updated', listener)
+    return () => ipcRenderer.removeListener('noblesse:operations-updated', listener)
+  },
+  onRecoveryProgress: (callback) => {
+    const listener = (_event, payload) => callback(payload)
+    ipcRenderer.on('noblesse:recovery-progress', listener)
+    return () => ipcRenderer.removeListener('noblesse:recovery-progress', listener)
   },
   onVaultUpdated: (callback) => {
     const listener = () => callback()

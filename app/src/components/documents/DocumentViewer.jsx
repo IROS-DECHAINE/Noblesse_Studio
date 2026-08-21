@@ -3,10 +3,13 @@ import {
   ExternalLink,
   FileQuestion,
   FolderOpen,
+  History,
   ImageOff,
   LoaderCircle,
   Music2,
+  RotateCcw,
   Trash2,
+  Upload,
 } from 'lucide-react'
 
 import { parseInlineMarkdown, parseMarkdownDocument, safeDocumentUrl } from '../../lib/markdownDocument.js'
@@ -119,8 +122,14 @@ export default function DocumentViewer({
   textLoading = false,
   textError = '',
   deleting = false,
+  versioning = false,
+  history = [],
+  historyLoading = false,
+  historyError = '',
   onOpen,
   onReveal,
+  onReplaceVersion,
+  onRevertVersion,
   onDelete,
 }) {
   if (!document) {
@@ -177,6 +186,12 @@ export default function DocumentViewer({
           <button className="document-viewer-action" type="button" onClick={() => onReveal(document)}>
             <FolderOpen size={16} aria-hidden="true" /> Afficher dans le dossier
           </button>
+          {document.origin === 'managed' && (
+            <button className="document-viewer-action" type="button" disabled={versioning} onClick={() => onReplaceVersion(document)}>
+              {versioning ? <LoaderCircle size={16} aria-hidden="true" /> : <Upload size={16} aria-hidden="true" />}
+              <span>Nouvelle version</span>
+            </button>
+          )}
           <button className="document-viewer-action is-danger" type="button" aria-label={`Supprimer ${document.title}`} disabled={deleting} onClick={() => onDelete(document)}>
             {deleting ? <LoaderCircle size={16} aria-hidden="true" /> : <Trash2 size={16} aria-hidden="true" />}
             <span>Supprimer</span>
@@ -184,6 +199,34 @@ export default function DocumentViewer({
         </div>
       </header>
       <div className={`document-viewer-stage is-${kind}`}>{preview}</div>
+      {document.origin === 'managed' && (
+        <aside className="document-history" aria-label={`Historique de ${document.title}`}>
+          <header><History size={15} aria-hidden="true" /><strong>Historique immuable</strong><span>Version actuelle : {document.revision || 1}</span></header>
+          {historyLoading ? (
+            <p className="document-history-state"><LoaderCircle size={14} aria-hidden="true" /> Chargement de l’historique…</p>
+          ) : historyError ? (
+            <p className="document-history-state is-error" role="alert">{historyError}</p>
+          ) : (
+            <ol className="document-history-list">
+              {history.slice(0, 8).map((entry) => (
+                <li key={entry.revision} className={entry.current ? 'is-current' : ''}>
+                  <div>
+                    <strong>Version {entry.revision}</strong>
+                    <span>{entry.action} · {new Date(entry.at).toLocaleString('fr-FR')}</span>
+                  </div>
+                  {entry.current ? (
+                    <b>Actuelle</b>
+                  ) : (
+                    <button type="button" disabled={versioning} onClick={() => onRevertVersion(document, entry.revision)}>
+                      <RotateCcw size={13} aria-hidden="true" /> Restaurer
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+        </aside>
+      )}
     </section>
   )
 }

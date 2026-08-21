@@ -7,8 +7,10 @@ import { promisify } from 'node:util'
 const execFileAsync = promisify(execFile)
 const ACTIVE_LOG_PATTERN = /^UnrealEditorFortnite(?:_\d+)?\.log$/i
 const PROJECT_PATTERNS = [
-  /LogValkyrie: Display: Successfully opened project '([^'\r\n]+\.uefnproject)'/gi,
-  /LogValkyrie: Opening project '([^'\r\n]+\.uefnproject)'/gi,
+  // A Windows project path may contain an apostrophe (for example
+  // D:\DON'T_TOUCH...). The descriptor suffix is the reliable delimiter.
+  /LogValkyrie: Display: Successfully opened project '([^\r\n]+?\.uefnproject)'/gi,
+  /LogValkyrie: Opening project '([^\r\n]+?\.uefnproject)'/gi,
 ]
 
 const lastMatch = (content, pattern) => {

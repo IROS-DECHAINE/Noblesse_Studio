@@ -25,7 +25,11 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 | Base SQLite locale | `data/database/noblesse-studio.db` |
 | Calendrier, finances et favoris | `data/state/` |
 | Sauvegardes | `data/backups/` |
+| Dépendances entre assets | `library/DEPENDENCIES.md` |
 | Architecture | `docs/ARCHITECTURE.md` |
+| Sauvegarde et restauration | `docs/RECOVERY_RUNBOOK.md` |
+| Maintenance et livraisons | `docs/MAINTENANCE.md` |
+| Notes de version | `docs/RELEASE_NOTES.md` |
 | État de la migration | `docs/MIGRATION_2026-08-21.md` |
 
 ## Ce qui fait autorité
@@ -45,11 +49,15 @@ Set-Location app
 pnpm.cmd install --frozen-lockfile
 pnpm.cmd rebuild-indexes
 pnpm.cmd verify-foundation
+pnpm.cmd verify-source
 pnpm.cmd test
+pnpm.cmd audit --prod --audit-level high
 pnpm.cmd build
 ```
 
 Ces commandes se lancent depuis `app/`. Ne modifiez pas les index générés à la main. Modifiez la source autoritaire, puis relancez `pnpm.cmd rebuild-indexes`.
+
+La section **Réglages** de l’application permet de créer et vérifier les sauvegardes, puis de reprendre ou annuler les imports interrompus. Une restauration complète se fait application fermée avec la procédure de [récupération](docs/RECOVERY_RUNBOOK.md).
 
 ## Périmètre actuel
 

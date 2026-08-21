@@ -33,7 +33,7 @@ export default function StudioSidebar({ section, connected, onNavigate }) {
         <div className={`live-state ${connected ? 'is-connected' : ''}`}>
           <span /> {connected ? 'UEFN connecté' : 'UEFN hors ligne'}
         </div>
-        <button type="button" aria-label="Réglages"><Settings size={20} /></button>
+        <button type="button" aria-label="Réglages" title="Sécurité et récupération" className={section === 'settings' ? 'is-active' : ''} onClick={() => onNavigate('settings')}><Settings size={20} /></button>
       </div>
     </aside>
   )

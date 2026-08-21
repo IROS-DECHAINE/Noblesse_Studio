@@ -33,6 +33,7 @@ Après une modification de fondation :
 Set-Location app
 pnpm.cmd rebuild-indexes
 pnpm.cmd verify-foundation
+pnpm.cmd verify-source
 pnpm.cmd test
 pnpm.cmd build
 ```

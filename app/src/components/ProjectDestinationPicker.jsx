@@ -14,13 +14,14 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
     && (project.transferReady ?? project.connected)
     && isCompatible(project),
   )
-  const isLive = (project) => project.connected && isReady(project)
-  const isLocalReady = (project) => !project.connected && project.localReady && isReady(project)
+  const isLive = (project) => Boolean(
+    isReady(project)
+    && (project.connected || (project.platform === 'Unreal' && project.opened)),
+  )
   const availableProjects = useMemo(
     () => projects.filter((project) => (
       project.opened
       || project.connected
-      || (project.localReady && isCompatible(project))
     )),
     [projects, acceptedPlatforms],
   )
@@ -39,10 +40,9 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
 
   const projectStatus = (project) => {
     if (!isCompatible(project)) return `Incompatible avec cette matière · ${project.platform}`
-    if (project.platform === 'Unreal' && isReady(project)) {
-      return project.opened
-        ? `Unreal ouvert · import natif local ${project.engineVersion}`
-        : `Projet local fermé · import automatisé ${project.engineVersion}`
+    if (project.platform === 'Unreal') {
+      if (project.opened && isReady(project)) return `Unreal ouvert · import natif local ${project.engineVersion}`
+      if (!project.opened) return `Projet Unreal fermé · version ${project.engineVersion || 'inconnue'}`
     }
     if (project.connected && project.canInstall && project.mcpWarning?.code === 'PORT_PREFERENCE_MISMATCH') {
       return `Prêt · MCP ${project.port} · port préféré ${project.mcpWarning.preferredPort}`
@@ -86,7 +86,7 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
           setOpen(false)
         }}
       >
-        <i className={`destination-led${isLive(project) ? ' is-online' : ''}${isLocalReady(project) ? ' is-local-ready' : ''}`} />
+        <i className={`destination-led${isLive(project) ? ' is-online' : ''}`} />
         <span>
           <strong>{project.name}</strong>
           <small>{projectStatus(project)}</small>
@@ -116,7 +116,7 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
       >
-        <i className={`destination-led${selected && isLive(selected) ? ' is-online' : ''}${selected && isLocalReady(selected) ? ' is-local-ready' : ''}`} />
+        <i className={`destination-led${selected && isLive(selected) ? ' is-online' : ''}`} />
         <span>
           <strong>{selected?.name || 'Choisir un projet ouvert'}</strong>
           <small>{selected
@@ -130,7 +130,7 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
         <div className="project-destination-menu" role="listbox" aria-label="Projets compatibles avec la matière">
           <div className="destination-menu-heading">
             <strong>Projets destination</strong>
-            <span>{readyProjects.length} prêt{readyProjects.length > 1 ? 's' : ''}</span>
+            <span>{readyProjects.length} disponible{readyProjects.length > 1 ? 's' : ''}</span>
           </div>
           {readyProjects.length ? readyProjects.map(renderProject) : (
             <p className="destination-empty">Aucun projet prêt au transfert.</p>
@@ -153,7 +153,7 @@ export default function ProjectDestinationPicker({ projects, selectedProjectId, 
         {selected && isReady(selected)
           ? selected && isLive(selected)
             ? 'LED verte : session éditeur identifiée, transfert disponible'
-            : 'LED or : projet local disponible pour import automatisé'
+            : 'Projet détecté mais aucune session active pour le transfert'
           : `Choisis un projet ${acceptedPlatforms.join(' / ') || 'compatible'} prêt au transfert`}
       </small>
     </div>

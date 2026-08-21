@@ -377,3 +377,48 @@ test('two injected roots remain fully isolated', async (t) => {
   assert.equal((await left.list()).length, 1)
   assert.equal((await right.list()).length, 0)
 })
+
+test('managed documents keep immutable version history and can revert without losing newer objects', async (t) => {
+  const { library, libraryRoot, sourceRoot } = await fixture(t)
+  const firstSource = path.join(sourceRoot, 'brief-v1.md')
+  const secondSource = path.join(sourceRoot, 'brief-v2.md')
+  await writeFile(firstSource, '# Version 1\n', 'utf8')
+  await writeFile(secondSource, '# Version 2\n', 'utf8')
+
+  const [first] = await library.import({
+    projectId: 'studio',
+    filePaths: [firstSource],
+    operationItemId: 'job-item-1',
+  })
+  assert.equal(first.revision, 1)
+
+  const [idempotent] = await library.import({
+    projectId: 'studio',
+    filePaths: [firstSource],
+    operationItemId: 'job-item-1',
+  })
+  assert.equal(idempotent.id, first.id)
+  assert.equal((await readdir(path.join(libraryRoot, 'manifests'))).length, 1)
+
+  const [replacementSelection] = await library.describeSelection([secondSource])
+  const second = await library.replaceVersion(first.id, replacementSelection.selectionToken)
+  assert.equal(second.revision, 2)
+  assert.notEqual(second.sha256, first.sha256)
+  assert.equal((await library.readText(first.id)).text, '# Version 2\n')
+
+  const historyAfterReplace = await library.listHistory(first.id)
+  assert.deepEqual(historyAfterReplace.map((entry) => entry.action), ['REPLACE', 'IMPORT'])
+  assert.equal(historyAfterReplace[0].current, true)
+
+  const reverted = await library.revertVersion(first.id, 1)
+  assert.equal(reverted.revision, 3)
+  assert.equal(reverted.sha256, first.sha256)
+  assert.equal((await library.readText(first.id)).text, '# Version 1\n')
+  assert.deepEqual((await readdir(path.join(libraryRoot, 'objects'))).sort(), [first.sha256, second.sha256].sort())
+
+  const plan = await library.planDelete(first.id)
+  await library.applyDelete({ operationId: plan.operationId, planHash: plan.planHash })
+  const restored = await library.restore(first.id)
+  assert.equal(restored.revision, 5)
+  assert.deepEqual((await library.listHistory(first.id)).map((entry) => entry.action), ['RESTORE', 'DELETE', 'REVERT', 'REPLACE', 'IMPORT'])
+})

@@ -34,6 +34,8 @@ export const studioDataRoot = () => configuredPath('NOBLESSE_DATA_ROOT') || path
 export const studioStateRoot = () => path.join(studioDataRoot(), 'state')
 export const studioRuntimeRoot = () => path.join(studioDataRoot(), 'runtime', 'electron-user-data')
 export const studioDatabaseFile = () => path.join(studioDataRoot(), 'database', 'noblesse-studio.db')
+export const studioBackupsRoot = () => configuredPath('NOBLESSE_BACKUP_ROOT') || path.join(studioDataRoot(), 'backups', 'repository-v1')
+export const studioOperationsRoot = () => path.join(studioStateRoot(), 'operations')
 
 export const studioLibraryRoot = () => configuredPath('NOBLESSE_LIBRARY_ROOT') || path.join(studioAppRoot(), 'library')
 export const studioVaultRoot = () => configuredPath('NOBLESSE_VAULT_ROOT') || path.join(studioLibraryRoot(), 'storage')
@@ -53,6 +55,8 @@ export const describeStudioPaths = () => ({
   stateRoot: studioStateRoot(),
   runtimeRoot: studioRuntimeRoot(),
   databaseFile: studioDatabaseFile(),
+  backupsRoot: studioBackupsRoot(),
+  operationsRoot: studioOperationsRoot(),
   libraryRoot: studioLibraryRoot(),
   vaultRoot: studioVaultRoot(),
   documentsRoot: studioDocumentsRoot(),

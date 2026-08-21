@@ -1,6 +1,6 @@
 # Bibliothèque Noblesse Studio
 
-Point d’entrée humain et IA de la bibliothèque locale. Généré le 2026-08-21T16:54:26.837Z.
+Point d’entrée humain et IA de la bibliothèque locale. Généré le 2026-08-21T18:10:04.815Z.
 
 | Domaine | Nombre | Index lisible | Index machine |
 |---|---:|---|---|
@@ -8,6 +8,8 @@ Point d’entrée humain et IA de la bibliothèque locale. Généré le 2026-08-
 | Textures | 119 | [textures/INDEX.md](textures/INDEX.md) | [textures/index.json](textures/index.json) |
 | Matériaux | 235 | [materials/INDEX.md](materials/INDEX.md) | [materials/index.json](materials/index.json) |
 | Documents | 17 | [documents/INDEX.md](documents/INDEX.md) | [documents/index.json](documents/index.json) |
+
+Les relations entre éléments sont consultables dans [DEPENDENCIES.md](DEPENDENCIES.md) et [dependencies.json](dependencies.json).
 
 ## Règles d’autorité
 

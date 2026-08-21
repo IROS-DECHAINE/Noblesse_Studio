@@ -147,6 +147,7 @@ const scanUnrealProjects = async (root, results, openProjectsByPath, depth = 0) 
     const openProject = openProjectsByPath.get(normalizeProjectDescriptorPath(fullPath)) || null
     const opened = Boolean(openProject)
     const localReady = engineVersion === '5.8'
+    const transferReady = localReady && opened
     results.push({
       id: `unreal:${fullPath.toLowerCase()}`,
       name,
@@ -159,13 +160,15 @@ const scanUnrealProjects = async (root, results, openProjectsByPath, depth = 0) 
       connected: false,
       processId: openProject?.processId || null,
       localReady,
-      canInstall: localReady,
-      transferReady: localReady,
+      canInstall: transferReady,
+      transferReady,
       favorite: false,
       status: localReady
-        ? opened ? 'EDITOR_OPEN_LOCAL_PROJECT' : 'LOCAL_PROJECT_READY'
+        ? opened ? 'EDITOR_OPEN_LOCAL_PROJECT' : 'PROJECT_CLOSED'
         : 'ENGINE_VERSION_UNSUPPORTED',
-      protection: localReady ? 'LOCAL_COMMANDLET_INSTALL' : 'ENGINE_VERSION_UNSUPPORTED',
+      protection: localReady
+        ? opened ? 'LOCAL_COMMANDLET_INSTALL' : 'PROJECT_CLOSED'
+        : 'ENGINE_VERSION_UNSUPPORTED',
     })
   }
 }

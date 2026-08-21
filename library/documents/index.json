@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-08-21T16:54:26.837Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T18:10:04.815Z",
   "category": "documents",
   "count": 17,
   "items": [
@@ -10,6 +10,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.168Z",
+          "sha256": "2b4f94c087de6b540df0bfaf6b80dbb7f3e892dc111273efa24345c05b41ad88",
+          "sizeBytes": 24450,
+          "originalName": "GAMEPLAY_FEEL_AUDIT.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "primebot-rush",
       "hash": "2b4f94c087de6b540df0bfaf6b80dbb7f3e892dc111273efa24345c05b41ad88",
@@ -30,6 +41,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.203Z",
+          "sha256": "973be777d1f2b0ec2c533d45984ca588741bba10427fe192b7e7f1f1bd9169b3",
+          "sizeBytes": 34029,
+          "originalName": "CANON.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "prime-industry",
       "hash": "973be777d1f2b0ec2c533d45984ca588741bba10427fe192b7e7f1f1bd9169b3",
@@ -49,6 +71,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.257Z",
+          "sha256": "3cef1b9a24df832b12516736be8a8b4f48ef18a73595708c765c94b59cc15aeb",
+          "sizeBytes": 5665,
+          "originalName": "DECISIONS.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "how-many-boxes",
       "hash": "3cef1b9a24df832b12516736be8a8b4f48ef18a73595708c765c94b59cc15aeb",
@@ -68,6 +101,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.225Z",
+          "sha256": "269d65871368e3cd617acc2c1c6507c4a701a4b16c068bcc023d2bb35adaa339",
+          "sizeBytes": 18254,
+          "originalName": "DECISIONS.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "prime-industry",
       "hash": "269d65871368e3cd617acc2c1c6507c4a701a4b16c068bcc023d2bb35adaa339",
@@ -87,6 +131,17 @@
       "category": "documents",
       "type": "pdf",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.385Z",
+          "sha256": "5aba975d2ed847aa5489bef5fc6c43a1ef5032592861f5e44460bc7b3facfc90",
+          "sizeBytes": 6973940,
+          "originalName": "how-many-boxes-can-you-carry-dossier-investisseur.pdf"
+        }
+      ],
       "status": "REFERENCE",
       "projectId": "how-many-boxes",
       "hash": "5aba975d2ed847aa5489bef5fc6c43a1ef5032592861f5e44460bc7b3facfc90",
@@ -107,6 +162,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.191Z",
+          "sha256": "1d3b22547e7715ea8983dacc6d7fbc8e40acf15b9bc09ee967d4aa6b6167fd6a",
+          "sizeBytes": 47848,
+          "originalName": "BOT_ECONOMY_CANON.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "primebot-rush",
       "hash": "1d3b22547e7715ea8983dacc6d7fbc8e40acf15b9bc09ee967d4aa6b6167fd6a",
@@ -127,6 +193,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.267Z",
+          "sha256": "a881ab751ccddb0046179013cd4ccae78a3372510d2c38d79310ee6a34df35be",
+          "sizeBytes": 10501,
+          "originalName": "ECONOMY.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "how-many-boxes",
       "hash": "a881ab751ccddb0046179013cd4ccae78a3372510d2c38d79310ee6a34df35be",
@@ -146,6 +223,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.246Z",
+          "sha256": "24cbc118b38b2779868dfd9c39c5f6be04d8553c97ba1719a499305b23115e9a",
+          "sizeBytes": 18336,
+          "originalName": "CURRENT_STATE.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "how-many-boxes",
       "hash": "24cbc118b38b2779868dfd9c39c5f6be04d8553c97ba1719a499305b23115e9a",
@@ -165,6 +253,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.214Z",
+          "sha256": "07fb892f7e4d21ad6f382dc6c03a988265c0af6a42e086f75f33e888acad3223",
+          "sizeBytes": 4236,
+          "originalName": "CURRENT_STATE.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "prime-industry",
       "hash": "07fb892f7e4d21ad6f382dc6c03a988265c0af6a42e086f75f33e888acad3223",
@@ -184,6 +283,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.140Z",
+          "sha256": "6bd07c7b5a97a26c8ef4ac2eba3004d5dda095cb93c92818af02e74ba4322b21",
+          "sizeBytes": 16504,
+          "originalName": "NOBLESSE_STUDIO_PORTFOLIO_GOVERNANCE_CANON_2026-08-14.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "studio",
       "hash": "6bd07c7b5a97a26c8ef4ac2eba3004d5dda095cb93c92818af02e74ba4322b21",
@@ -204,6 +314,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.157Z",
+          "sha256": "5470da5691347db3b15bc1cd7a1cf47856a6dddc7b881e3585c93d6d8460ad8f",
+          "sizeBytes": 426022,
+          "originalName": "CURRENT_CANON_INDEX.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "primebot-rush",
       "hash": "5470da5691347db3b15bc1cd7a1cf47856a6dddc7b881e3585c93d6d8460ad8f",
@@ -224,6 +345,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.300Z",
+          "sha256": "da044453aea4bf653606740070d0149508f45db32f3121bb8b00bbf0a452cab9",
+          "sizeBytes": 11348,
+          "originalName": "PLAYTEST_LOG.md"
+        }
+      ],
       "status": "REFERENCE",
       "projectId": "how-many-boxes",
       "hash": "da044453aea4bf653606740070d0149508f45db32f3121bb8b00bbf0a452cab9",
@@ -243,6 +375,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.278Z",
+          "sha256": "aaade911aaabe2ea635d8e050d7511daa24a250f4e127506c81ca92adaeb962b",
+          "sizeBytes": 30311,
+          "originalName": "CANON_V4_COMPLIANCE_MATRIX.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "how-many-boxes",
       "hash": "aaade911aaabe2ea635d8e050d7511daa24a250f4e127506c81ca92adaeb962b",
@@ -263,6 +406,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.179Z",
+          "sha256": "a5a7ff45592a3201f839a21a372c003c1077f32ae2efa454e48f4ad0c0838473",
+          "sizeBytes": 16754,
+          "originalName": "MVP_SPEC.md"
+        }
+      ],
       "status": "CANON",
       "projectId": "primebot-rush",
       "hash": "a5a7ff45592a3201f839a21a372c003c1077f32ae2efa454e48f4ad0c0838473",
@@ -283,6 +437,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.153Z",
+          "sha256": "419be7bc7a27dc7a9aa7e407b1b49912d43d5a5a40d1579cd1b2b7b8a5e4a48f",
+          "sizeBytes": 5419,
+          "originalName": "NOBLESSE_STUDIO_X_RECRUITMENT_PUBLICATION_TRACKING_2026-08-14.md"
+        }
+      ],
       "status": "REFERENCE",
       "projectId": "studio",
       "hash": "419be7bc7a27dc7a9aa7e407b1b49912d43d5a5a40d1579cd1b2b7b8a5e4a48f",
@@ -303,6 +468,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.289Z",
+          "sha256": "0d695df696b22d78c214e3132619a52b6485ab64f6169ab46da62eb51d108be7",
+          "sizeBytes": 12473,
+          "originalName": "HANDOFF.md"
+        }
+      ],
       "status": "REFERENCE",
       "projectId": "how-many-boxes",
       "hash": "0d695df696b22d78c214e3132619a52b6485ab64f6169ab46da62eb51d108be7",
@@ -322,6 +498,17 @@
       "category": "documents",
       "type": "markdown",
       "version": "1",
+      "revision": 1,
+      "history": [
+        {
+          "revision": 1,
+          "action": "BASELINE",
+          "at": "2026-08-21T00:17:41.234Z",
+          "sha256": "3d9b6c5d768a26f0a17b2b0c7c08621a0bf4e9269c6d4e057a0f1757a2822cd5",
+          "sizeBytes": 2907,
+          "originalName": "HANDOFF.md"
+        }
+      ],
       "status": "REFERENCE",
       "projectId": "prime-industry",
       "hash": "3d9b6c5d768a26f0a17b2b0c7c08621a0bf4e9269c6d4e057a0f1757a2822cd5",

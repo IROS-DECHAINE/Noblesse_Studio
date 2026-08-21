@@ -1,15 +1,16 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
-import CoffreView from './components/CoffreView.jsx'
-import CalendarView from './components/CalendarView.jsx'
-import DashboardHome from './components/DashboardHome.jsx'
-import FinanceView from './components/FinanceView.jsx'
 import ModulePlaceholder from './components/ModulePlaceholder.jsx'
-import ProjectsView from './components/ProjectsView.jsx'
 import StudioSidebar from './components/StudioSidebar.jsx'
 import { buildSurfaceCatalog } from './lib/catalog.js'
 import { studioApi } from './lib/desktopApi.js'
 
+const CalendarView = lazy(() => import('./components/CalendarView.jsx'))
+const CoffreView = lazy(() => import('./components/CoffreView.jsx'))
+const DashboardHome = lazy(() => import('./components/DashboardHome.jsx'))
 const DocumentsView = lazy(() => import('./components/DocumentsView.jsx'))
+const FinanceView = lazy(() => import('./components/FinanceView.jsx'))
+const ProjectsView = lazy(() => import('./components/ProjectsView.jsx'))
+const RecoveryView = lazy(() => import('./components/RecoveryView.jsx'))
 
 const moduleTitles = {
   fortnite: 'Fortnite',
@@ -224,6 +225,7 @@ export default function App() {
     <div className="studio-shell">
       <StudioSidebar section={section} connected={connected} onNavigate={navigate} />
       <div className="studio-main">
+        <Suspense fallback={<div className="module-loading" role="status">Ouverture du module…</div>}>
         {section === 'home' && (
           <DashboardHome
             connected={connected}
@@ -256,15 +258,17 @@ export default function App() {
           />
         )}
         {section === 'documents' && (
-          <Suspense fallback={<div className="module-loading" role="status">Ouverture de la bibliothèque…</div>}>
-            <DocumentsView onNotify={setToast} />
-          </Suspense>
+          <DocumentsView onNotify={setToast} />
         )}
         {section === 'finance' && <FinanceView />}
         {section === 'calendar' && (
           <CalendarView openItemId={calendarOpenItemId} onOpenItemHandled={() => setCalendarOpenItemId(null)} />
         )}
+        {section === 'settings' && (
+          <RecoveryView />
+        )}
         {moduleTitles[section] && <ModulePlaceholder title={moduleTitles[section]} />}
+        </Suspense>
       </div>
       {toast && <div className="studio-toast" role="status">{toast}</div>}
     </div>

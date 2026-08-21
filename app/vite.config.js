@@ -99,7 +99,7 @@ export function localUefnBridge() {
             'Transférer par UEFN MCP ou migration officielle',
             'Relire les références et lancer la validation UEFN',
           ],
-          warning: "Aucune mutation n'est exécutée depuis le prototype catalogue.",
+          warning: "Aucune mutation n’est exécutée depuis le mode aperçu navigateur.",
         })
       } catch {
         json(res, 400, { accepted: false, error: 'Requête invalide' })
