@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T23:32:39.219Z",
+  "generatedAt": "2026-08-22T03:58:27.545Z",
   "authority": {
     "catalog": "library/storage/catalog.json",
     "integrity": "library/storage/integrity.json",
@@ -10,27 +10,27 @@
   },
   "integrity": {
     "status": "PASS",
-    "catalogSha256": "7552e30d02d10e3170865b5be140e78bedc158f79cdc57c093d981b43d4770fe",
-    "checkedFileCount": 1003,
+    "catalogSha256": "d5c31037cb9435dfe766c0bbf5773f861d8fbe59700ad5acf7a1bd1952ef2a2d",
+    "checkedFileCount": 1037,
     "missingFileCount": 0,
     "hashMismatchCount": 0
   },
   "counts": {
-    "assets": 0,
-    "textures": 119,
-    "materials": 235,
+    "assets": 1,
+    "textures": 129,
+    "materials": 238,
     "sounds": 25,
     "documents": 17
   },
-  "totalLibraryItems": 379,
+  "totalLibraryItems": 393,
   "totalDocuments": 17,
   "relations": {
-    "dependencyEdges": 5,
-    "resolved": 4,
+    "dependencyEdges": 18,
+    "resolved": 17,
     "unresolved": 1
   },
   "storage": {
-    "managed": 363,
+    "managed": 377,
     "references": 16
   },
   "indexes": [

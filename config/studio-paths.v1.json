@@ -8,6 +8,7 @@
     "database": "data/database/noblesse-studio.db",
     "state": "data/state",
     "installHandoffs": "data/state/install-handoffs",
+    "integrations": "data/state/integrations",
     "runtime": "data/runtime/electron-user-data",
     "backups": "data/backups",
     "logs": "data/logs",

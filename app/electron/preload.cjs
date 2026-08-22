@@ -58,10 +58,21 @@ contextBridge.exposeInMainWorld('noblesseDesktop', Object.freeze({
   calendarImportLegacy: (items) => ipcRenderer.invoke('noblesse:calendar:import-legacy', { items }),
   calendarUpdateSettings: (patch) => ipcRenderer.invoke('noblesse:calendar:update-settings', patch),
   calendarTestNotification: () => ipcRenderer.invoke('noblesse:calendar:test-notification'),
+  googleCalendarStatus: () => ipcRenderer.invoke('noblesse:google-calendar:status'),
+  googleCalendarChooseCredentials: () => ipcRenderer.invoke('noblesse:google-calendar:choose-credentials'),
+  googleCalendarConnect: () => ipcRenderer.invoke('noblesse:google-calendar:connect'),
+  googleCalendarDisconnect: () => ipcRenderer.invoke('noblesse:google-calendar:disconnect'),
+  googleCalendarSync: () => ipcRenderer.invoke('noblesse:google-calendar:sync'),
+  newsRadarSnapshot: (force = false) => ipcRenderer.invoke('noblesse:news-radar:snapshot', { force }),
   onCalendarUpdated: (callback) => {
     const listener = (_event, payload) => callback(payload)
     ipcRenderer.on('noblesse:calendar-updated', listener)
     return () => ipcRenderer.removeListener('noblesse:calendar-updated', listener)
+  },
+  onGoogleCalendarChanged: (callback) => {
+    const listener = (_event, payload) => callback(payload)
+    ipcRenderer.on('noblesse:google-calendar-changed', listener)
+    return () => ipcRenderer.removeListener('noblesse:google-calendar-changed', listener)
   },
   onNavigate: (callback) => {
     const listener = (_event, payload) => callback(payload)

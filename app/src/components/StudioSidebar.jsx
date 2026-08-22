@@ -1,4 +1,4 @@
-import { Blocks, CalendarDays, FileText, FolderKanban, Gamepad2, Home, PanelLeftClose, Settings, Vault, WalletCards } from 'lucide-react'
+import { Blocks, CalendarDays, FileText, FolderKanban, Gamepad2, Home, Palette, PanelLeftClose, Settings, Vault, WalletCards } from 'lucide-react'
 import { publicAsset } from '../lib/desktopApi.js'
 import { layoutLimits } from '../lib/layoutPreferences.js'
 import ColumnResizeHandle from './ColumnResizeHandle.jsx'
@@ -12,6 +12,7 @@ const navItems = [
   { id: 'documents', label: 'Documents', icon: FileText },
   { id: 'finance', label: 'Finances', icon: WalletCards },
   { id: 'calendar', label: 'Calendrier', icon: CalendarDays },
+  { id: 'skins', label: 'Skins', icon: Palette },
 ]
 
 export default function StudioSidebar({ section, connected, width, onNavigate, onWidth, onCollapse }) {

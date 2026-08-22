@@ -47,6 +47,37 @@ test('publishes imported sounds as playable Coffre cards', () => {
   assert.equal(filterSurfaces(surfaces, { family: 'Sons', category: 'Effets' }).length, 1)
 })
 
+test('groups modular static meshes into one Assets card and hides technical material dependencies', () => {
+  globalThis.window = { noblesseDesktop: {} }
+  const surfaces = buildSurfaceCatalog([
+    {
+      asset_id: 'NOB-MESH-BASE-A', asset_type: 'StaticMesh', display_name: 'Base A', group_label: 'Base PrimeBot',
+      asset_group: 'primebot-base', module_id: 'floor', module_label: 'Sol', module_order: 1, category: 'Architecture',
+      status: 'VALIDATED', platforms: ['UEFN'], preview_url: 'noblesse-vault://preview/NOB-MESH-BASE-A',
+      model_preview_url: 'noblesse-vault://model/NOB-MESH-BASE-A', triangle_count: 1200,
+    },
+    {
+      asset_id: 'NOB-MESH-BASE-B', asset_type: 'StaticMesh', display_name: 'Base B', group_label: 'Base PrimeBot',
+      asset_group: 'primebot-base', module_id: 'wall', module_label: 'Mur', module_order: 2, category: 'Architecture',
+      status: 'VALIDATED', platforms: ['UEFN'], preview_url: 'noblesse-vault://preview/NOB-MESH-BASE-B',
+      model_preview_url: 'noblesse-vault://model/NOB-MESH-BASE-B', triangle_count: 900,
+    },
+    {
+      asset_id: 'NOB-MAT-BASE-TECH', asset_type: 'MaterialRecipe', display_name: 'Matériau technique',
+      catalog_visibility: 'dependency', status: 'VALIDATED', pack_id: 'PrimeBot',
+    },
+  ])
+  delete globalThis.window
+
+  assert.equal(surfaces.length, 1)
+  assert.equal(surfaces[0].kind, 'asset')
+  assert.equal(surfaces[0].variantOptions.length, 2)
+  assert.equal(surfaces[0].variantOptions[1].label, 'Mur')
+  assert.equal(surfaces[0].installCapability, 'staticMesh')
+  assert.equal(familyForSurface(surfaces[0]), 'Assets')
+  assert.equal(filterSurfaces(surfaces, { family: 'Assets', category: 'Modules' }).length, 1)
+})
+
 test('extracts family and texture role', () => {
   assert.equal(familyFromNotes(assets[1].notes), 'Brick')
   assert.equal(textureRole(assets[1].display_name), 'ORM')

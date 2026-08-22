@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-21T23:32:39.219Z",
-  "nodeCount": 379,
-  "edgeCount": 5,
-  "resolvedEdgeCount": 4,
+  "generatedAt": "2026-08-22T03:58:27.545Z",
+  "nodeCount": 393,
+  "edgeCount": 18,
+  "resolvedEdgeCount": 17,
   "unresolvedEdgeCount": 1,
   "nodes": [
     {
@@ -2279,6 +2279,90 @@
       "name": "WTF",
       "type": "SoundWave",
       "version": "1.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-TANK-WOOD-BC",
+      "name": "T_NBL_NYC_Water_TankWood_BC",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-TANK-WOOD-N",
+      "name": "T_NBL_NYC_Water_TankWood_N",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-TANK-WOOD-R",
+      "name": "T_NBL_NYC_Water_TankWood_R",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-ROOF-WOOD-BC",
+      "name": "T_NBL_NYC_Water_RoofWood_BC",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-ROOF-WOOD-N",
+      "name": "T_NBL_NYC_Water_RoofWood_N",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-ROOF-WOOD-R",
+      "name": "T_NBL_NYC_Water_RoofWood_R",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-BC",
+      "name": "T_NBL_NYC_Water_Metal_BC",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-N",
+      "name": "T_NBL_NYC_Water_Metal_N",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-R",
+      "name": "T_NBL_NYC_Water_Metal_R",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-M",
+      "name": "T_NBL_NYC_Water_Metal_M",
+      "type": "Texture2D",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "name": "M_NBL_NYC_Water_TankWood",
+      "type": "MaterialRecipe",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "name": "M_NBL_NYC_Water_RoofWood",
+      "type": "MaterialRecipe",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-MAT-NYC-WATER-METAL",
+      "name": "M_NBL_NYC_Water_Metal",
+      "type": "MaterialRecipe",
+      "version": "2.0.0"
+    },
+    {
+      "id": "NOB-MESH-NYC-WATER-TANK-HERO",
+      "name": "NYC Water Tank VFX",
+      "type": "StaticMesh",
+      "version": "2.0.0"
     }
   ],
   "edges": [
@@ -2314,6 +2398,97 @@
       "fromId": "PBR-SURF-MAT-DARKMETEOR-MASTER-001",
       "toId": "PBR-SURF-TEX-T-WR-DM-WALLMETEORPANELS-EM-V01",
       "reference": "T_WR_DM_WallMeteorPanels_EM_V01",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "toId": "NOB-TEX-NYC-WATER-TANK-WOOD-BC",
+      "reference": "NOB-TEX-NYC-WATER-TANK-WOOD-BC",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "toId": "NOB-TEX-NYC-WATER-TANK-WOOD-N",
+      "reference": "NOB-TEX-NYC-WATER-TANK-WOOD-N",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "toId": "NOB-TEX-NYC-WATER-TANK-WOOD-R",
+      "reference": "NOB-TEX-NYC-WATER-TANK-WOOD-R",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "toId": "NOB-TEX-NYC-WATER-ROOF-WOOD-BC",
+      "reference": "NOB-TEX-NYC-WATER-ROOF-WOOD-BC",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "toId": "NOB-TEX-NYC-WATER-ROOF-WOOD-N",
+      "reference": "NOB-TEX-NYC-WATER-ROOF-WOOD-N",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "toId": "NOB-TEX-NYC-WATER-ROOF-WOOD-R",
+      "reference": "NOB-TEX-NYC-WATER-ROOF-WOOD-R",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-METAL",
+      "toId": "NOB-TEX-NYC-WATER-METAL-BC",
+      "reference": "NOB-TEX-NYC-WATER-METAL-BC",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-METAL",
+      "toId": "NOB-TEX-NYC-WATER-METAL-N",
+      "reference": "NOB-TEX-NYC-WATER-METAL-N",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-METAL",
+      "toId": "NOB-TEX-NYC-WATER-METAL-R",
+      "reference": "NOB-TEX-NYC-WATER-METAL-R",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MAT-NYC-WATER-METAL",
+      "toId": "NOB-TEX-NYC-WATER-METAL-M",
+      "reference": "NOB-TEX-NYC-WATER-METAL-M",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MESH-NYC-WATER-TANK-HERO",
+      "toId": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "reference": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MESH-NYC-WATER-TANK-HERO",
+      "toId": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "reference": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "relationType": "DEPENDS_ON",
+      "status": "RESOLVED"
+    },
+    {
+      "fromId": "NOB-MESH-NYC-WATER-TANK-HERO",
+      "toId": "NOB-MAT-NYC-WATER-METAL",
+      "reference": "NOB-MAT-NYC-WATER-METAL",
       "relationType": "DEPENDS_ON",
       "status": "RESOLVED"
     }

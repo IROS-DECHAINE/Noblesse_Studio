@@ -23,6 +23,7 @@ import {
   YAxis,
 } from 'recharts'
 import { publicAsset } from '../lib/desktopApi.js'
+import NewsRadarDialog from './NewsRadarDialog.jsx'
 
 const zeroHours = Array.from({ length: 24 }, (_, index) => ({
   timestamp: new Date(Date.now() - (23 - index) * 60 * 60 * 1000).toISOString(),
@@ -99,6 +100,7 @@ function Sparkline({ points, color }) {
 
 export default function DashboardHome({ fortniteStats, refreshing = false, onNavigate, onRefresh }) {
   const [favoriteProjects, setFavoriteProjects] = useState(readFavoriteProjects)
+  const [radarOpen, setRadarOpen] = useState(false)
   const audienceData = buildAudienceData(fortniteStats)
   const hasPublicData = Boolean(fortniteStats.hourlyPeakCCU?.some((entry) => entry.available))
   const updatedAt = fortniteStats.updatedAt ? formatHour(fortniteStats.updatedAt) : '—'
@@ -325,9 +327,10 @@ export default function DashboardHome({ fortniteStats, refreshing = false, onNav
             <strong>Steamworks</strong><span>Joueurs et registre financier</span>
             <footer><b>AppID + clé finance</b><button type="button" onClick={() => onNavigate('finance')}>Finances <ArrowRight size={11} /></button></footer>
           </div>
-          <div><strong>Radar gaming</strong><span>Liste X et flux officiels</span><footer><b>Optionnel · coût borné</b></footer></div>
+          <div><strong>Radar gaming</strong><span>Unreal, Roblox, Epic · X optionnel</span><footer><b>3 sources officielles · gratuit</b><button type="button" onClick={() => setRadarOpen(true)}>Ouvrir <ArrowRight size={11} /></button></footer></div>
         </div>
       </section>
+      {radarOpen ? <NewsRadarDialog onClose={() => setRadarOpen(false)} /> : null}
     </section>
   )
 }

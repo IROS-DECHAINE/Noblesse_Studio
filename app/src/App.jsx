@@ -1,10 +1,12 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { PanelLeftOpen } from 'lucide-react'
 import ModulePlaceholder from './components/ModulePlaceholder.jsx'
+import SkinBackdrop from './components/SkinBackdrop.jsx'
 import StudioSidebar from './components/StudioSidebar.jsx'
 import { buildSurfaceCatalog } from './lib/catalog.js'
 import { studioApi } from './lib/desktopApi.js'
 import { loadStudioLayout, saveStudioLayout } from './lib/layoutPreferences.js'
+import { getSkinDefinition, loadSkinPreferences, saveSkinPreferences } from './lib/skinPreferences.js'
 
 const CalendarView = lazy(() => import('./components/CalendarView.jsx'))
 const CoffreView = lazy(() => import('./components/CoffreView.jsx'))
@@ -13,6 +15,7 @@ const DocumentsView = lazy(() => import('./components/DocumentsView.jsx'))
 const FinanceView = lazy(() => import('./components/FinanceView.jsx'))
 const ProjectsView = lazy(() => import('./components/ProjectsView.jsx'))
 const RecoveryView = lazy(() => import('./components/RecoveryView.jsx'))
+const SkinsView = lazy(() => import('./components/SkinsView.jsx'))
 
 const moduleTitles = {
   fortnite: 'Fortnite',
@@ -27,6 +30,7 @@ const projectCanReceive = (project, capability = '') => Boolean(
 
 export default function App() {
   const [section, setSection] = useState('home')
+  const [skinPreferences, setSkinPreferences] = useState(() => loadSkinPreferences())
   const [assets, setAssets] = useState([])
   const [projects, setProjects] = useState([])
   const [projectLaunchProfiles, setProjectLaunchProfiles] = useState([])
@@ -74,6 +78,20 @@ export default function App() {
     const saveTimer = window.setTimeout(() => saveStudioLayout(layout), 180)
     return () => window.clearTimeout(saveTimer)
   }, [layout])
+
+  useEffect(() => {
+    saveSkinPreferences(skinPreferences)
+  }, [skinPreferences])
+
+  const selectSkin = useCallback((skinId) => {
+    const skin = getSkinDefinition(skinId)
+    setSkinPreferences((current) => ({ ...current, skinId: skin.id }))
+    setToast(`${skin.name} activé.`)
+  }, [])
+
+  const selectSkinMotion = useCallback((motion) => {
+    setSkinPreferences((current) => ({ ...current, motion }))
+  }, [])
 
   const selectVaultFamily = useCallback((family) => {
     setVaultFamily(family)
@@ -243,7 +261,7 @@ export default function App() {
       return
     }
     if (!surface.platforms.includes(destination.platform)) {
-      setToast(`Choisis un projet ${surface.platforms.join(' / ')} compatible avec cette matière.`)
+      setToast(`Choisis un projet ${surface.platforms.join(' / ')} compatible avec cet élément.`)
       return
     }
     setInstalling(true)
@@ -307,7 +325,10 @@ export default function App() {
     <div
       className={`studio-shell${layout.sidebarCollapsed ? ' is-sidebar-collapsed' : ''}`}
       style={{ '--studio-sidebar-width': `${layout.sidebarWidth}px` }}
+      data-skin={skinPreferences.skinId}
+      data-skin-motion={skinPreferences.motion}
     >
+      <SkinBackdrop key={skinPreferences.skinId} skinId={skinPreferences.skinId} motion={skinPreferences.motion} />
       <StudioSidebar
         section={section}
         connected={connected}
@@ -375,6 +396,14 @@ export default function App() {
         {section === 'finance' && <FinanceView />}
         {section === 'calendar' && (
           <CalendarView openItemId={calendarOpenItemId} onOpenItemHandled={() => setCalendarOpenItemId(null)} />
+        )}
+        {section === 'skins' && (
+          <SkinsView
+            skinId={skinPreferences.skinId}
+            motion={skinPreferences.motion}
+            onSkin={selectSkin}
+            onMotion={selectSkinMotion}
+          />
         )}
         {section === 'settings' && (
           <RecoveryView />

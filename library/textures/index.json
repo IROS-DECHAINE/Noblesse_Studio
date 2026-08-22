@@ -1,9 +1,259 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T23:32:39.219Z",
+  "generatedAt": "2026-08-22T03:58:27.545Z",
   "category": "textures",
-  "count": 119,
+  "count": 129,
   "items": [
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-BC",
+      "name": "T_NBL_NYC_Water_Metal_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "dfa042d2f1a0dd69139dccd3ea587adb7e46e2af8fb9d4f7219aba0976a512c2",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_BaseColor_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-M",
+      "name": "T_NBL_NYC_Water_Metal_M",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "abb4b6847fa4e4ab3db2ba48093ec1aca443ee7403edeabce6915df1f948634a",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_Metallic_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-N",
+      "name": "T_NBL_NYC_Water_Metal_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "2672e0fc81a25bfa02207a2204a6bda7f944900c26fb1255bb9825366ec7abcb",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_Normal_OpenGL_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-METAL-R",
+      "name": "T_NBL_NYC_Water_Metal_R",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "bf09b3b4c06bccf12db3da35b4182ad9edf5fcb062b57fb107a2a1d6e1cb0ef6",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_Roughness_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-ROOF-WOOD-BC",
+      "name": "T_NBL_NYC_Water_RoofWood_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "898116fc3e976824cc50c67466ac2d9b6605abb567783c1246ff01b507638c8d",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/RoofWood_BaseColor_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-ROOF-WOOD-N",
+      "name": "T_NBL_NYC_Water_RoofWood_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "1fbbccdd6815d5f25aa147ce8b4a92342fffd5e3850dc807a974d5e1e94dfb2f",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/RoofWood_Normal_OpenGL_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-ROOF-WOOD-R",
+      "name": "T_NBL_NYC_Water_RoofWood_R",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "9883273c166f6924f3c5b9446871fa588674d10fc1871166d34690a8034ad4f5",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/RoofWood_Roughness_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-TANK-WOOD-BC",
+      "name": "T_NBL_NYC_Water_TankWood_BC",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "7e24f0bd0c718cb01f92f7d6ea40623ca7179d9f6a54ebac94ac309cdaac853e",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/TankWood_BaseColor_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-TANK-WOOD-N",
+      "name": "T_NBL_NYC_Water_TankWood_N",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "782e003866f01c0bf8408cd4a08596d6a0a22b890a0e7d9646b534db933ea6de",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/TankWood_Normal_OpenGL_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-TEX-NYC-WATER-TANK-WOOD-R",
+      "name": "T_NBL_NYC_Water_TankWood_R",
+      "category": "textures",
+      "type": "Texture2D",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "22f60a54bdc40e1be5937d3a3a18df613bf08c0d829516e4a743562e3a2c4efe",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/TankWood_Roughness_4K.png",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [],
+      "tags": [
+        "Texture2D",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
     {
       "id": "PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-BC",
       "name": "T_PB_BaseClassic_ArtDeco_C_BC",

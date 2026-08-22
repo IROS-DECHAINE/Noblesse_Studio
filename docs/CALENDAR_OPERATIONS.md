@@ -7,7 +7,10 @@
 - récurrence quotidienne, hebdomadaire, mensuelle ou annuelle ;
 - jusqu’à cinq rappels ordinateur par élément ;
 - stockage persistant, import sans perte de l’ancien planning et commandes CLI/IA ;
-- rattrapage des rappels après suspension ou redémarrage lorsque l’application repart.
+- rattrapage des rappels après suspension ou redémarrage lorsque l’application repart ;
+- fiche rapide au clic avec l’horaire exact et les dates concrètes de chaque rappel ;
+- suppression confirmée depuis la fiche rapide, avec retrait automatique de la copie Google quand le compte est connecté ;
+- copie optionnelle vers l’agenda Google principal pour les notifications téléphone et iPad.
 
 ## Limites honnêtes
 
@@ -19,9 +22,27 @@ Une notification ordinateur nécessite que Noblesse Studio tourne, même caché 
 2. Cliquer **Nouvel événement**, ou double-cliquer une heure du planning.
 3. Choisir le type, le projet, les horaires et autant de rappels que nécessaire.
 4. Cliquer **Activer les rappels** une seule fois et vérifier la notification test.
-5. Cliquer un bloc ou une ligne d’agenda pour le modifier.
+5. Cliquer un bloc ou une ligne d’agenda pour lire sa fiche rapide, puis **Modifier** ou **Supprimer**. La suppression demande toujours une confirmation et précise lorsqu’elle concerne toute une série récurrente.
 
 Raccourcis : `Ctrl+N` crée un élément, `T` revient à aujourd’hui, `Échap` ferme l’éditeur.
+
+## Rappels ordinateur
+
+Le bouton **Activer les rappels** active aussi le fonctionnement en arrière-plan puis affiche immédiatement une notification test. Si le test échoue, l’activation est annulée afin de ne pas afficher un faux état « actif ».
+
+La fiche rapide d’un événement affiche la date et l’heure auxquelles chaque rappel doit réellement partir. L’icône Noblesse Studio reste dans la zone système tant que les rappels en arrière-plan sont actifs. Fermer la fenêtre la masque ; **Quitter Noblesse Studio** depuis l’icône système arrête les rappels locaux.
+
+## Google Calendar — téléphone et iPad
+
+1. Dans Google Cloud, activer **Google Calendar API**.
+2. Configurer l’écran de consentement OAuth puis créer un client **Application de bureau**.
+3. Télécharger son JSON.
+4. Dans **Calendrier → Google Calendar**, choisir ce JSON puis cliquer **Connecter mon compte Google**.
+5. Autoriser les notifications de Google Calendar sur le téléphone et l’iPad.
+
+La synchronisation initiale copie les éléments existants. Les changements suivants sont envoyés automatiquement ; **Synchroniser maintenant** relance les éléments en attente. Supprimer un élément dans Noblesse Studio retire aussi sa copie Google ; si Google est temporairement indisponible, cette suppression reste en attente. Noblesse Studio ne connaît jamais le mot de passe Google et chiffre localement les jetons avec Windows.
+
+Cette version est volontairement à sens unique : modifier un événement dans Google ne modifie pas Noblesse Studio. La déconnexion conserve les copies déjà présentes dans Google. Voir [la décision Google Calendar](DECISION_GOOGLE_CALENDAR_SYNC_2026-08-22.md).
 
 ## Sauvegarde et migration
 

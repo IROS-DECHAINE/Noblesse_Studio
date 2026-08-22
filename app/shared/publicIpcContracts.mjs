@@ -40,6 +40,7 @@ export const publicAssetSchemaV1 = {
     preview_asset: publicString(500),
     preview_url: { type: 'string', maxLength: 500, pattern: '^noblesse-vault://preview/' },
     audio_url: { type: 'string', maxLength: 500, pattern: '^noblesse-vault://audio/' },
+    model_preview_url: { type: 'string', maxLength: 500, pattern: '^noblesse-vault://model/' },
     status: requiredPublicString(80),
     pack_version: publicString(80),
     source_project: publicString(240),
@@ -54,13 +55,25 @@ export const publicAssetSchemaV1 = {
     install_mode: publicString(80),
     group_label: publicString(240),
     label: publicString(240),
+    description: publicString(1_000),
     category: publicString(160),
+    asset_group: publicString(160),
+    module_id: publicString(160),
+    module_label: publicString(240),
+    catalog_visibility: publicString(80),
     dependencies: publicString(4_000),
     original_format: publicString(20),
     conversion_profile: publicString(80),
     platforms: { type: 'array', maxItems: 16, items: publicString(80) },
     order: { type: 'number', minimum: -1_000_000, maximum: 1_000_000 },
     technical_maps: { type: 'number', minimum: 0, maximum: 100_000 },
+    module_order: { type: 'number', minimum: 0, maximum: 10_000 },
+    mesh_object_count: { type: 'number', minimum: 1, maximum: 10_000_000 },
+    vertex_count: { type: 'number', minimum: 1, maximum: 1_000_000_000 },
+    triangle_count: { type: 'number', minimum: 1, maximum: 1_000_000_000 },
+    bounds_x_m: { type: 'number', exclusiveMinimum: 0, maximum: 1_000_000 },
+    bounds_y_m: { type: 'number', exclusiveMinimum: 0, maximum: 1_000_000 },
+    bounds_z_m: { type: 'number', exclusiveMinimum: 0, maximum: 1_000_000 },
     duration_seconds: { type: 'number', minimum: 0, maximum: 21_600 },
     size_bytes: { type: 'number', minimum: 0, maximum: 536_870_912 },
     sample_rate: { type: 'number', minimum: 8_000, maximum: 384_000 },
@@ -218,6 +231,38 @@ export const projectFavoriteRequestSchemaV1 = {
   },
 }
 
+export const installAssetRequestSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/install-asset-request.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['assetId', 'projectId'],
+  properties: {
+    assetId: requiredPublicString(180),
+    projectId: requiredPublicString(180),
+  },
+}
+
+export const installAssetResponseSchemaV1 = {
+  $id: 'https://noblesse.studio/schemas/ipc/install-asset-response.v1.json',
+  type: 'object',
+  additionalProperties: false,
+  required: ['schemaVersion', 'accepted', 'mode', 'project'],
+  properties: {
+    schemaVersion: { const: PUBLIC_IPC_SCHEMA_VERSION },
+    accepted: { const: true },
+    mode: {
+      enum: [
+        'ALREADY_INSTALLED',
+        'INSTALLED',
+        'INSTALLED_AND_VALIDATED',
+        'INSTALLED_AND_VERIFIED',
+        'MANUAL_AUDIO_IMPORT_READY',
+      ],
+    },
+    project: requiredPublicString(240),
+  },
+}
+
 const vaultTrashTargetSchemaV1 = {
   type: 'object',
   additionalProperties: false,
@@ -322,6 +367,8 @@ const ajv = new Ajv2020({ allErrors: true, strict: true })
 const validateAssetsResponse = ajv.compile(assetsResponseSchemaV1)
 const validateProjectsResponse = ajv.compile(projectsResponseSchemaV1)
 const validateProjectFavoriteRequest = ajv.compile(projectFavoriteRequestSchemaV1)
+const validateInstallAssetRequest = ajv.compile(installAssetRequestSchemaV1)
+const validateInstallAssetResponse = ajv.compile(installAssetResponseSchemaV1)
 const validateSoundSelectionResponse = ajv.compile(soundSelectionResponseSchemaV1)
 const validateSoundImportRequest = ajv.compile(soundImportRequestSchemaV1)
 const validateSoundImportResponse = ajv.compile(soundImportResponseSchemaV1)
@@ -401,9 +448,13 @@ export const publicAssetFromInternal = (asset) => {
     'pack_id', 'provenance', 'notes', 'preview_asset', 'pack_version', 'source_project',
     'uefn_version', 'target_path', 'surface_group', 'source_family', 'variant_id',
     'variant_label', 'preview_kind', 'preview_color', 'install_mode', 'group_label',
-    'label', 'category', 'dependencies', 'original_format', 'conversion_profile',
+    'label', 'description', 'category', 'asset_group', 'module_id', 'module_label',
+    'catalog_visibility', 'dependencies', 'original_format', 'conversion_profile',
   ]) copyString(dto, asset, key)
-  for (const key of ['order', 'technical_maps', 'duration_seconds', 'size_bytes', 'sample_rate', 'channels', 'bit_depth']) copyNumber(dto, asset, key)
+  for (const key of [
+    'order', 'technical_maps', 'module_order', 'mesh_object_count', 'vertex_count', 'triangle_count',
+    'bounds_x_m', 'bounds_y_m', 'bounds_z_m', 'duration_seconds', 'size_bytes', 'sample_rate', 'channels', 'bit_depth',
+  ]) copyNumber(dto, asset, key)
   if (typeof asset?.animated === 'boolean') dto.animated = asset.animated
   if (typeof asset?.converted === 'boolean') dto.converted = asset.converted
   if (Array.isArray(asset?.platforms)) {
@@ -414,6 +465,9 @@ export const publicAssetFromInternal = (asset) => {
   }
   if (asset?.asset_type === 'SoundWave' && typeof asset?.source === 'string' && asset.source && dto.asset_id) {
     dto.audio_url = `noblesse-vault://audio/${encodeURIComponent(dto.asset_id)}`
+  }
+  if (asset?.asset_type === 'StaticMesh' && typeof asset?.model_preview_source === 'string' && asset.model_preview_source && dto.asset_id) {
+    dto.model_preview_url = `noblesse-vault://model/${encodeURIComponent(dto.asset_id)}`
   }
   return dto
 }
@@ -468,6 +522,18 @@ export const assertProjectFavoriteRequestV1 = (payload) => {
   return payload
 }
 
+export const assertInstallAssetRequestV1 = (payload) => assertValid(
+  validateInstallAssetRequest,
+  payload,
+  'Requête publique installation asset v1',
+)
+
+export const assertInstallAssetResponseV1 = (payload) => assertValid(
+  validateInstallAssetResponse,
+  payload,
+  'Réponse publique installation asset v1',
+)
+
 export const assertSoundSelectionResponseV1 = (payload) => assertValid(
   validateSoundSelectionResponse,
   payload,
@@ -512,6 +578,13 @@ export const serializeProjectsResponseV1 = (projects) => {
     diagnostics: { unregisteredCount: source.length - registered.length },
   })
 }
+
+export const serializeInstallAssetResponseV1 = (response) => assertInstallAssetResponseV1({
+  schemaVersion: PUBLIC_IPC_SCHEMA_VERSION,
+  accepted: true,
+  mode: response?.mode,
+  project: response?.project,
+})
 
 export const serializeSoundSelectionResponseV1 = (response) => assertSoundSelectionResponseV1(response)
 

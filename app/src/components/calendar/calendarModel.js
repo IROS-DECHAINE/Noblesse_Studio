@@ -140,6 +140,89 @@ export const formatTime = (value) => new Intl.DateTimeFormat('fr-FR', {
   hour: '2-digit', minute: '2-digit', hour12: false,
 }).format(new Date(value))
 
+const capitalize = (value) => value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : ''
+
+const civilDateLabel = (dateKey, options = {}) => capitalize(new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'UTC',
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  ...options,
+}).format(new Date(`${dateKey}T12:00:00.000Z`)))
+
+export const RECURRENCE_LABELS = Object.freeze({
+  none: 'Ne se répète pas',
+  daily: 'Tous les jours',
+  weekly: 'Toutes les semaines',
+  monthly: 'Tous les mois',
+  yearly: 'Tous les ans',
+})
+
+export const formatOccurrencePeriod = (occurrence) => {
+  const timeZone = occurrence?.time?.timeZone || CALENDAR_TIME_ZONE
+  if (occurrence?.time?.kind === 'allDay') {
+    const lastDate = addDaysKey(occurrence.time.endDateExclusive, -1)
+    if (lastDate === occurrence.time.startDate) {
+      return `${civilDateLabel(occurrence.time.startDate)} · Toute la journée`
+    }
+    return `Du ${civilDateLabel(occurrence.time.startDate, { year: undefined })} au ${civilDateLabel(lastDate)} · Toute la journée`
+  }
+
+  const start = new Date(occurrence?.time?.start)
+  const end = new Date(occurrence?.time?.end)
+  if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime())) return 'Horaire indisponible'
+  const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
+    timeZone,
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+  const timeFormatter = new Intl.DateTimeFormat('fr-FR', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+  const startWall = wallPartsFromDate(start, timeZone)
+  const endWall = wallPartsFromDate(end, timeZone)
+  if (startWall.dateKey === endWall.dateKey) {
+    return `${capitalize(dateFormatter.format(start))} · ${timeFormatter.format(start)}–${timeFormatter.format(end)}`
+  }
+  return `Du ${capitalize(dateFormatter.format(start))} à ${timeFormatter.format(start)} au ${capitalize(dateFormatter.format(end))} à ${timeFormatter.format(end)}`
+}
+
+export const reminderScheduleForOccurrence = (occurrence, now = new Date()) => {
+  const timeZone = occurrence?.time?.timeZone || CALENDAR_TIME_ZONE
+  const startMs = occurrence?.time?.kind === 'allDay'
+    ? dateFromZonedWallTime(occurrence.time.startDate, '00:00', timeZone).getTime()
+    : new Date(occurrence?.time?.start).getTime()
+  if (!Number.isFinite(startMs)) return []
+  const nowMs = now instanceof Date ? now.getTime() : new Date(now).getTime()
+  const formatter = new Intl.DateTimeFormat('fr-FR', {
+    timeZone,
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+  return (occurrence?.reminders || []).map((reminder) => {
+    const offsetMinutes = Number(reminder.offsetMinutes)
+    const scheduledAt = new Date(startMs - (offsetMinutes * 60_000))
+    return {
+      id: reminder.id,
+      offsetMinutes,
+      label: REMINDER_PRESETS.find((preset) => preset.value === offsetMinutes)?.label || `${offsetMinutes} minutes avant`,
+      scheduledAt: scheduledAt.toISOString(),
+      when: capitalize(formatter.format(scheduledAt)),
+      isPast: Number.isFinite(nowMs) && scheduledAt.getTime() < nowMs,
+    }
+  }).sort((left, right) => left.scheduledAt.localeCompare(right.scheduledAt))
+}
+
 const shiftDate = (date, frequency, amount) => {
   const next = new Date(date)
   if (frequency === 'daily') next.setDate(next.getDate() + amount)

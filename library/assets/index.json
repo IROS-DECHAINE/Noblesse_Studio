@@ -1,7 +1,38 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T23:32:39.219Z",
+  "generatedAt": "2026-08-22T03:58:27.545Z",
   "category": "assets",
-  "count": 0,
-  "items": []
+  "count": 1,
+  "items": [
+    {
+      "id": "NOB-MESH-NYC-WATER-TANK-HERO",
+      "name": "NYC Water Tank VFX",
+      "category": "assets",
+      "type": "StaticMesh",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "7d6e74468c9254dc11b3f0fcfebadd04474b53f98d03b4f4cea460fc222feac5",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/exports/NYC_Water_Tank_VFX.fbx",
+      "previewPath": "library/storage/packs/Noblesse_NYC_Water_Tank/source/previews/01_hero_three_quarter.png",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [
+        "NOB-MAT-NYC-WATER-TANK-WOOD",
+        "NOB-MAT-NYC-WATER-ROOF-WOOD",
+        "NOB-MAT-NYC-WATER-METAL"
+      ],
+      "tags": [
+        "StaticMesh",
+        "Architecture",
+        "NYC Water Tank VFX",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    }
+  ]
 }

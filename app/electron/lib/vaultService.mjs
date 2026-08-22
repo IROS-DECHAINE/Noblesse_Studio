@@ -20,6 +20,9 @@ const PREVIEW_MIME_TYPES = new Map([
 const AUDIO_MIME_TYPES = new Map([
   ['.wav', 'audio/wav'],
 ])
+const MODEL_MIME_TYPES = new Map([
+  ['.glb', 'model/gltf-binary'],
+])
 
 const exists = async (target) => {
   try {
@@ -337,6 +340,30 @@ export const resolveVaultAudioRequest = async (assetId) => {
   }
   const details = await stat(filePath)
   if (!details.isFile()) throw new Error('La source audio n’est pas un fichier')
+  return { filePath, mimeType, size: details.size }
+}
+
+export const resolveVaultModelRequest = async (assetId) => {
+  const value = String(assetId || '').trim()
+  if (!value || value.includes('\0') || value.includes('/') || value.includes('\\')) {
+    throw new Error('Identifiant de modèle invalide')
+  }
+  const asset = await loadVaultAsset(value)
+  if (asset.asset_type !== 'StaticMesh') throw new Error('Cet élément n’est pas un asset 3D du Vault')
+  const relativePath = String(asset.model_preview_source || '')
+  const mimeType = MODEL_MIME_TYPES.get(path.extname(relativePath).toLocaleLowerCase('en'))
+  if (!mimeType) throw new Error('Aperçu 3D absent ou non autorisé')
+  const lexicalPath = resolveVaultSource(relativePath)
+  const [rootPath, filePath] = await Promise.all([realpath(vaultRoot()), realpath(lexicalPath)])
+  const relation = path.relative(rootPath, filePath)
+  if (!relation || relation === '..' || relation.startsWith(`..${path.sep}`) || path.isAbsolute(relation)) {
+    throw new Error('Aperçu 3D hors du Coffre')
+  }
+  const details = await stat(filePath)
+  if (!details.isFile() || details.size < 1 || details.size > 268_435_456) throw new Error('Aperçu 3D invalide ou trop volumineux')
+  if (asset.model_preview_sha256 && await sha256(filePath) !== asset.model_preview_sha256) {
+    throw new Error('L’aperçu 3D ne correspond plus au manifeste')
+  }
   return { filePath, mimeType, size: details.size }
 }
 

@@ -212,6 +212,28 @@ const conformTextureForUefn = async (mcp, textureRef, size) => {
   }
 }
 
+const ensureManifestTextureSettings = async (mcp, textureRef, texture, { apply = false } = {}) => {
+  if (texture?.flipGreenChannel !== true) return null
+  const schema = await readPropertySchema(mcp, textureRef)
+  const available = propertyMap(schema)
+  const propertyName = available.get('bflipgreenchannel') || available.get('flipgreenchannel')
+  if (!propertyName) throw new Error(`UEFN ne permet pas de convertir la normale OpenGL ${texture.assetName}`)
+  if (apply) {
+    await setSupportedProperties(mcp, textureRef, { [propertyName]: true }, {
+      requiredKeys: [propertyName],
+      verifyKeys: [propertyName],
+      schema,
+    })
+  } else {
+    const actual = await readProperties(mcp, textureRef, [propertyName])
+    const actualName = propertyMap(actual).get(normalizedToken(propertyName))
+    if (!actualName || actual[actualName] !== true) {
+      throw new Error(`La normale existante ${texture.assetName} n’est pas convertie d’OpenGL vers DirectX`)
+    }
+  }
+  return { flipGreenChannel: true, normalConvention: texture.normalConvention || 'OPENGL_PLUS_Y' }
+}
+
 const openMountName = (contentBrowserPath) => contentBrowserPath.split('/').filter(Boolean)[0] || ''
 
 const assertOutputConnections = async (mcp, materialRef, outputs) => {
@@ -341,6 +363,7 @@ export const createUefnInstaller = ({
           }
         }
       }
+      await ensureManifestTextureSettings(mcp, refPath, texture)
     }
     const expressions = await validateMaterial(mcp, materialRef, recipe, targets.textures)
     return {
@@ -376,6 +399,8 @@ export const createUefnInstaller = ({
     }
     const adjustment = await conformTextureForUefn(mcp, refPath, size)
     if (adjustment) textureAdjustments.push({ assetName: texture.assetName, ...adjustment })
+    const manifestAdjustment = await ensureManifestTextureSettings(mcp, refPath, texture, { apply: true })
+    if (manifestAdjustment) textureAdjustments.push({ assetName: texture.assetName, ...manifestAdjustment })
     textureRefs.set(texture.assetName, refPath)
   }
 
@@ -470,6 +495,7 @@ export const installVaultAsset = createUefnInstaller()
 
 export const uefnInstallerInternals = {
   assertRecipe,
+  ensureManifestTextureSettings,
   hasPowerOfTwoDimensions,
   normalizeProperties,
   textureConformanceSettings,

@@ -63,14 +63,15 @@ const gatewayHandlerCount = [...main.matchAll(/studioIpc\.handle\(/gu)].length
 const handlerCount = directHandlerCount + gatewayHandlerCount
 const senderCheckCount = [...main.matchAll(/requireStudioSender\(event\)/gu)].length
 if (!directHandlerCount || directHandlerCount !== senderCheckCount) fail('chaque handler IPC direct doit avoir exactement un contrôle d’émetteur.')
-if (gatewayHandlerCount !== 9) fail('les réponses assets, projets, import audio et corbeille doivent passer par la passerelle IPC publique.')
-for (const channel of ['noblesse:assets', 'noblesse:projects', 'noblesse:project-favorite', 'noblesse:sounds:choose-files', 'noblesse:sounds:import-batch', 'noblesse:vault-trash:plan', 'noblesse:vault-trash:apply', 'noblesse:vault-trash:list', 'noblesse:vault-trash:restore']) {
+if (gatewayHandlerCount !== 10) fail('les réponses assets, projets, installation, import audio et corbeille doivent passer par la passerelle IPC publique.')
+for (const channel of ['noblesse:assets', 'noblesse:projects', 'noblesse:project-favorite', 'noblesse:install-asset', 'noblesse:sounds:choose-files', 'noblesse:sounds:import-batch', 'noblesse:vault-trash:plan', 'noblesse:vault-trash:apply', 'noblesse:vault-trash:list', 'noblesse:vault-trash:restore']) {
   requireText(main, new RegExp(`studioIpc\\.handle\\('${channel}'`, 'u'), `${channel} doit passer par la passerelle IPC publique.`)
 }
-forbidText(main, /ipcMain\.handle\('noblesse:(?:assets|projects|project-favorite|vault-trash)/u, 'un canal public assets/projets/corbeille contourne la passerelle IPC.')
+forbidText(main, /ipcMain\.handle\('noblesse:(?:assets|projects|project-favorite|install-asset|vault-trash)/u, 'un canal public assets/projets/installation/corbeille contourne la passerelle IPC.')
 requireText(ipcGateway, /authorizeSender\(event\)[^]*assertRequest\(request\)[^]*handler\(request, event\)[^]*serializeResponse\(response\)/u, 'la passerelle IPC doit autoriser, valider, exécuter puis sérialiser dans cet ordre.')
 requireText(publicIpcContracts, /additionalProperties:\s*false/u, 'les DTO IPC publics doivent être fermés par défaut.')
 requireText(publicIpcContracts, /serializeAssetsResponseV1[^]*serializeProjectsResponseV1/u, 'les réponses assets et projets doivent avoir des sérialiseurs publics dédiés.')
+requireText(publicIpcContracts, /installAssetRequestSchemaV1[^]*serializeInstallAssetResponseV1/u, 'l’installation doit avoir une requête fermée et une réponse publique sérialisée par allowlist.')
 requireText(publicIpcContracts, /soundImportRequestSchemaV1[^]*serializeSoundImportResponseV1/u, 'l’import audio doit avoir des DTO IPC fermés et dédiés.')
 requireText(publicIpcContracts, /vaultTrashPlanRequestSchemaV1[^]*vaultTrashRestoreResponseSchemaV1/u, 'la corbeille doit avoir des DTO IPC fermés pour le plan, la confirmation, la liste et la restauration.')
 requireText(publicIpcContracts, /Windows drive path[^]*UNC path[^]*Windows device path[^]*file URL/u, 'le garde-fou IPC doit refuser les formes de chemins privés connues.')

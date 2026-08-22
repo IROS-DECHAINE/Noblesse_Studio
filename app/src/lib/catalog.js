@@ -1,4 +1,4 @@
-import { publicAsset, vaultAudio, vaultPreview } from './desktopApi.js'
+import { publicAsset, vaultAudio, vaultModel, vaultPreview } from './desktopApi.js'
 
 export const categoryFor = (asset) => {
   if (asset.asset_type === 'Material') return 'Matériaux'
@@ -107,7 +107,7 @@ export const coffreFamilies = Object.freeze([
 ])
 
 const coffreSubcategories = Object.freeze({
-  Assets: Object.freeze(['Tout', 'Objets', 'Décors', 'Architecture', 'Végétation']),
+  Assets: Object.freeze(['Tout', 'Objets', 'Architecture', 'Modules', 'Décors', 'Végétation']),
   Matières: Object.freeze(['Tout', 'Matières animées', 'Sols', 'Murs', 'Routes', 'Bois', 'Métaux', 'Pierres', 'Tissus']),
   VFX: Object.freeze(['Tout', 'Animés', 'Énergie', 'Hologrammes', 'Nature']),
   Sons: Object.freeze(['Tout', 'Effets', 'Ambiances', 'Musiques', 'Voix']),
@@ -120,9 +120,11 @@ const assetCategories = new Set(['Asset', 'Assets', 'Mesh', 'Meshes', 'Objet', '
 const soundCategories = new Set(['Audio', 'Son', 'Sons', 'Sound', 'Sounds'])
 const soundAssetTypes = new Set(['SoundWave', 'Audio', 'AudioClip'])
 const materialAssetTypes = new Set(['Material', 'MaterialRecipe', 'Texture2D', 'UnrealMaterialInstance'])
+const staticMeshAssetTypes = new Set(['StaticMesh'])
 
 export const familyForSurface = (surface = {}) => {
   const assetTypes = (surface.assets || []).map((asset) => asset.asset_type)
+  if (assetTypes.some((assetType) => staticMeshAssetTypes.has(assetType))) return 'Assets'
   if (assetTypes.some((assetType) => materialAssetTypes.has(assetType))) return 'Matières'
   if (assetTypes.some((assetType) => soundAssetTypes.has(assetType))) return 'Sons'
   if (soundCategories.has(surface.category)) return 'Sons'
@@ -133,6 +135,7 @@ export const familyForSurface = (surface = {}) => {
 
 const surfaceSearchText = (surface = {}) => [
   surface.name,
+  surface.description,
   surface.family,
   surface.category,
   surface.sourcePack,
@@ -167,6 +170,7 @@ const matchesSubcategory = (surface, family, subcategory) => {
     if (subcategory === 'Objets') return /\b(objet|object|prop)\b/i.test(text)
     if (subcategory === 'Décors') return /\b(décor|decor|environment|set)\b/i.test(text)
     if (subcategory === 'Architecture') return /\b(architecture|building|modular|structure)\b/i.test(text)
+    if (subcategory === 'Modules') return /\b(module|modular|pièce|piece)\b/i.test(text) || (surface.variantOptions?.length || 0) > 1
     if (subcategory === 'Végétation') return /\b(végétation|vegetation|foliage|plant|tree)\b/i.test(text)
   }
 
@@ -187,11 +191,13 @@ export const buildSurfaceCatalog = (assets = []) => {
   const recipes = uniqueAssets.filter((asset) => asset.asset_type === 'MaterialRecipe')
   const nativeUnrealMaterials = uniqueAssets.filter((asset) => asset.asset_type === 'UnrealMaterialInstance')
   const soundAssets = uniqueAssets.filter((asset) => soundAssetTypes.has(asset.asset_type))
+  const staticMeshAssets = uniqueAssets.filter((asset) => staticMeshAssetTypes.has(asset.asset_type))
   // MaterialReference entries are audit/provenance records. They deliberately
   // stay in the vault index, but are not user-facing assets: they have no
   // portable recipe and no trustworthy preview. Showing them in the Coffre
   // produced the broken "Parent Base" cards that could not be installed.
   const surfaceAssets = [...recipes, ...nativeUnrealMaterials]
+    .filter((asset) => asset.catalog_visibility !== 'dependency')
   const baseMaster = masters.find((asset) => asset.display_name === 'M_PB_BaseClassic_Master_V01')
   const darkMaster = masters.find((asset) => asset.display_name === 'M_PB_DarkMeteor_Master_V01')
   const grouped = new Map()
@@ -343,7 +349,62 @@ export const buildSurfaceCatalog = (assets = []) => {
     assets: [asset],
   }))
 
-  return [...soundSurfaces, ...legacySurfaces.filter((surface) => !coveredFamilies.has(surface.family)), ...recipeSurfaces]
+  const groupedMeshes = new Map()
+  staticMeshAssets.forEach((asset) => {
+    const groupId = asset.asset_group || asset.asset_id
+    if (!groupedMeshes.has(groupId)) groupedMeshes.set(groupId, [])
+    groupedMeshes.get(groupId).push(asset)
+  })
+  const meshSurfaces = [...groupedMeshes.entries()].map(([groupId, groupAssets]) => {
+    const ordered = [...groupAssets].sort((left, right) => Number(left.module_order || left.order || 0) - Number(right.module_order || right.order || 0))
+    const asset = ordered[0]
+    const variantOptions = ordered.map((module) => ({
+      assetId: module.asset_id,
+      installAssetId: module.asset_id,
+      id: module.module_id || module.asset_id,
+      label: module.module_label || module.label || module.display_name,
+      preview: vaultPreview(module),
+      modelUrl: vaultModel(module),
+      displayName: module.display_name,
+      triangleCount: Number(module.triangle_count) || 0,
+      vertexCount: Number(module.vertex_count) || 0,
+      meshObjectCount: Number(module.mesh_object_count) || 0,
+      boundsMeters: {
+        x: Number(module.bounds_x_m) || 0,
+        y: Number(module.bounds_y_m) || 0,
+        z: Number(module.bounds_z_m) || 0,
+      },
+    }))
+    return {
+      id: `asset-${groupId.toLocaleLowerCase('fr').replace(/[^a-z0-9]+/g, '-')}`,
+      family: groupId,
+      kind: 'asset',
+      name: asset.group_label || asset.label || formatAssetName(asset.display_name),
+      description: asset.description || '',
+      category: asset.category || 'Objets',
+      order: Number(asset.order) || 0,
+      animated: false,
+      variants: variantOptions.map((variant) => variant.label),
+      variantOptions,
+      technicalMaps: 0,
+      preview: variantOptions[0]?.preview || '',
+      previewKind: 'rendered_asset',
+      previewColor: '#15283a',
+      sourcePack: asset.pack_id,
+      sourceProject: asset.source_project,
+      provenance: asset.provenance,
+      status: ordered.every((item) => item.status === 'READY') ? 'READY' : asset.status,
+      platforms: asset.platforms || ['UEFN'],
+      installAssetId: asset.asset_id,
+      installMode: 'UEFN_STATIC_MESH',
+      installCapability: 'staticMesh',
+      packVersion: asset.pack_version,
+      installable: ordered.every((item) => ['VALIDATED', 'READY', 'READY_IN_APP'].includes(item.status)),
+      assets: ordered,
+    }
+  })
+
+  return [...meshSurfaces, ...soundSurfaces, ...legacySurfaces.filter((surface) => !coveredFamilies.has(surface.family)), ...recipeSurfaces]
     .sort((left, right) => left.order - right.order || left.name.localeCompare(right.name, 'fr'))
 }
 

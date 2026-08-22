@@ -1,5 +1,45 @@
 # Notes de version
 
+## 1.0.16 — Calendrier synchronisé, Radar officiel et skins dynamiques
+
+- bouton **Supprimer** directement visible dans la fiche rapide de chaque événement ou tâche ;
+- confirmation distincte avant toute suppression, avec avertissement explicite pour une série récurrente ;
+- suppression locale immédiate et retrait de la copie Google Calendar lorsque le compte est connecté ;
+- suppression Google conservée en attente si le réseau est momentanément indisponible, puis retentée à la prochaine synchronisation.
+- connexion Google Calendar optionnelle par OAuth 2 + PKCE, secrets et jeton durable chiffrés localement, Noblesse Studio restant l’autorité ;
+- Radar gaming ouvert à la demande depuis trois sources officielles bornées, avec cache local, repli hors ligne et connecteur X volontairement désactivé ;
+- sept skins 4K locaux avec ambiance fluide WebGL, intensité réglable, persistance versionnée et respect de la réduction des animations ;
+- preuves visuelles des skins conservées sous `docs/quality/skins/` et architecture du Radar consignée dans une décision réversible.
+- requête et réponse d’installation du Coffre fermées par contrat IPC : seuls le mode et le projet public reviennent à l’interface, jamais les chemins des reçus ou projets.
+
+## 1.0.15 — Caméra Assets fluide et libre
+
+- accélération progressive, freinage amorti et inertie légère indépendants du nombre d’images par seconde ;
+- suppression du recadrage automatique permanent qui ramenait l’asset au centre après un déplacement ;
+- cadrage initial terminé en 120 ms, puis caméra entièrement laissée sous le contrôle de l’utilisateur ;
+- appuis courts lissés sur plusieurs images au lieu d’un saut, déplacement continu pour les touches maintenues ;
+- zoom molette encore affiné et double-clic de recentrage désormais capable d’arrêter aussi toute inertie résiduelle.
+
+## 1.0.14 — Navigation libre dans les assets 3D
+
+- déplacement de la caméra dans le prévisualisateur Assets avec les touches AZERTY `ZQSD` ;
+- montée et descente avec `E` et `A`, sans déplacer ni modifier l’asset du Vault ;
+- mode précision avec `Maj`, cinq fois plus lent pour les ajustements fins ;
+- appuis courts garantis même entre deux images du moteur 3D, et déplacement continu lorsque la touche reste enfoncée ;
+- zoom molette ralenti et centré sous le curseur, rotation souris et double-clic de recentrage conservés ;
+- le clavier n’est capturé qu’après un clic dans l’aperçu et est libéré dès que celui-ci perd le focus.
+
+## 1.0.13 — Premier asset 3D modulaire géré
+
+- première carte **Assets** : NYC Water Tank VFX, publiée depuis un snapshot de 31 fichiers dont le hash d’ensemble est vérifié avant toute copie ;
+- architecture groupe + modules : un module **Complet** aujourd’hui, plusieurs pièces sélectionnables sous une même carte pour les futurs packs modulaires ;
+- pack natif préservé dans le Vault avec FBX canonique, OBJ et Blender de provenance, cinq rendus de preuve, manifeste de fichiers et aperçu GLB reconstructible ;
+- prévisualisateur 3D local chargé à la demande, rotation, zoom, recentrage, rendu source de secours et fonctionnement vérifié en fenêtre moyenne ;
+- trois recettes PBR techniques cachées de la galerie, dix textures 4K et conversion explicite des normales OpenGL vers la convention Unreal ;
+- adaptateur StaticMesh UEFN borné : dépendances installées, import combiné, triangles, dimensions, slots, matériaux et état sauvegardé relus avant succès ;
+- aucun chemin privé du pack, FBX, GLB ou projet n’est transmis au renderer ;
+- validation visuelle et mémoire dans un vrai projet UEFN encore requise avant promotion du pack au statut `READY`.
+
 ## 1.0.12 — Barre audio précise et durée toujours visible
 
 - lecteur audio dédié dans le prévisualisateur du Coffre, indépendant de l’affichage variable des contrôles Windows ;

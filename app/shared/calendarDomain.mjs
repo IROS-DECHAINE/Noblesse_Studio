@@ -506,6 +506,7 @@ export const collectDueReminderDeliveries = (items, { from, to, deliveredIds = [
         scheduledAt,
         occurrenceStart: new Date(occurrence.startMs).toISOString(),
         occurrenceEnd: new Date(occurrence.endMs).toISOString(),
+        timeZone: occurrence.time.timeZone,
         title: occurrence.title,
         projectId: occurrence.projectId,
         projectLabel: occurrence.projectLabel,

@@ -14,6 +14,18 @@ export default function SurfaceCard({ surface, selected, onSelect }) {
       </button>
     )
   }
+  if (surface.kind === 'asset') {
+    return (
+      <button className={`surface-card asset-card ${selected ? 'is-selected' : ''}`} type="button" onClick={() => onSelect(surface)}>
+        <span className="asset-card-visual" aria-hidden="true">
+          {surface.preview ? <img src={surface.preview} alt="" /> : <i />}
+          <em>{surface.variants.length} {surface.variants.length > 1 ? 'modules' : 'module'}</em>
+        </span>
+        <strong>{surface.name}</strong>
+        <small>{surface.category} · {surface.variants.join(' · ')}</small>
+      </button>
+    )
+  }
   return (
     <button className={`surface-card ${selected ? 'is-selected' : ''}`} type="button" onClick={() => onSelect(surface)}>
       {surface.animated && <span className="animated-mark"><Waves size={14} /> Animée</span>}

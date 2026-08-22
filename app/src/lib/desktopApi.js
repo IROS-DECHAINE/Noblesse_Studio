@@ -122,6 +122,13 @@ export const vaultAudio = (asset) => {
   return globalThis.window?.noblesseDesktop ? asset.audio_url : ''
 }
 
+export const vaultModel = (asset) => {
+  if (!asset?.model_preview_url && !asset?.model_preview_source) return ''
+  if (globalThis.window?.noblesseDesktop) return asset.model_preview_url || ''
+  if (!asset.asset_id || !asset.model_preview_source) return ''
+  return `${baseUrl}api/vault-model?assetId=${encodeURIComponent(asset.asset_id)}`
+}
+
 export const unwrapPublicItemsV1 = (payload, label) => {
   if (!payload
     || payload.schemaVersion !== 1
@@ -253,7 +260,41 @@ export const studioApi = {
   calendarImportLegacy: (items) => window.noblesseDesktop?.calendarImportLegacy?.(items) ?? calendarWebRepository.importLegacy(items),
   calendarUpdateSettings: (patch) => window.noblesseDesktop?.calendarUpdateSettings?.(patch) ?? calendarWebRepository.updateSettings(patch),
   calendarTestNotification: () => window.noblesseDesktop?.calendarTestNotification?.() ?? calendarWebRepository.testNotification(),
+  googleCalendarStatus: () => window.noblesseDesktop?.googleCalendarStatus?.() ?? Promise.resolve({
+    schemaVersion: 1,
+    available: false,
+    configured: false,
+    connected: false,
+    accountEmail: '',
+    calendarName: 'Agenda principal',
+    direction: 'NOBLESSE_TO_GOOGLE',
+    lastSyncAt: null,
+    lastError: '',
+    pendingCount: 0,
+  }),
+  googleCalendarChooseCredentials: () => window.noblesseDesktop?.googleCalendarChooseCredentials?.()
+    ?? Promise.reject(new Error('La connexion Google Calendar est disponible dans l’application desktop.')),
+  googleCalendarConnect: () => window.noblesseDesktop?.googleCalendarConnect?.()
+    ?? Promise.reject(new Error('La connexion Google Calendar est disponible dans l’application desktop.')),
+  googleCalendarDisconnect: () => window.noblesseDesktop?.googleCalendarDisconnect?.()
+    ?? Promise.reject(new Error('La connexion Google Calendar est disponible dans l’application desktop.')),
+  googleCalendarSync: () => window.noblesseDesktop?.googleCalendarSync?.()
+    ?? Promise.reject(new Error('La synchronisation Google Calendar est disponible dans l’application desktop.')),
+  newsRadarSnapshot: (force = false) => window.noblesseDesktop?.newsRadarSnapshot?.(force) ?? Promise.resolve({
+    schemaVersion: 1,
+    available: false,
+    refreshedAt: null,
+    stale: true,
+    items: [],
+    sources: [
+      { id: 'unreal', label: 'Unreal Engine', topic: 'unreal', homeUrl: 'https://www.unrealengine.com/news', ok: false, error: '' },
+      { id: 'roblox', label: 'Roblox DevForum', topic: 'roblox', homeUrl: 'https://devforum.roblox.com/c/updates/announcements/36', ok: false, error: '' },
+      { id: 'epic-status', label: 'État Epic Games', topic: 'epic-status', homeUrl: 'https://status.epicgames.com', ok: false, error: '' },
+    ],
+    error: '',
+  }),
   onCalendarUpdated: (callback) => window.noblesseDesktop?.onCalendarUpdated?.(callback) || calendarWebRepository.onUpdated(callback),
+  onGoogleCalendarChanged: (callback) => window.noblesseDesktop?.onGoogleCalendarChanged?.(callback) || (() => {}),
   onNavigate: (callback) => window.noblesseDesktop?.onNavigate?.(callback) || (() => {}),
   onDocumentsUpdated: (callback) => window.noblesseDesktop?.onDocumentsUpdated?.(callback) || (() => {}),
   onOperationsUpdated: (callback) => window.noblesseDesktop?.onOperationsUpdated?.(callback) || (() => {}),

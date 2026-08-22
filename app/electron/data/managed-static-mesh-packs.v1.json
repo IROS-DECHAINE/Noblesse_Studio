@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "packs": [
+    {
+      "key": "nyc-water-tank-v2",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "packVersion": "2.0.0",
+      "displayName": "NYC Water Tank VFX",
+      "category": "Architecture",
+      "description": "Château d’eau new-yorkais héroïque, patiné et prêt pour une scène urbaine.",
+      "expectedSourceAggregateSha256": "679bd16e37613e243c79db9bf099e75a7e6baaaab359e59252aff976268b64bc",
+      "sourceBlend": "NYC_Water_Tank_VFX.blend",
+      "heroPreview": "previews/01_hero_three_quarter.png",
+      "gallery": [
+        "previews/01_hero_three_quarter.png",
+        "previews/02_front_elevation.png",
+        "previews/03_tank_close_detail.png",
+        "previews/04_structure_detail.png",
+        "previews/05_weathering_macro.png"
+      ],
+      "provenanceFile": "PROVENANCE.md",
+      "modules": [
+        {
+          "assetId": "NOB-MESH-NYC-WATER-TANK-HERO",
+          "moduleId": "complete",
+          "moduleLabel": "Complet",
+          "displayName": "NYC Water Tank VFX",
+          "source": "exports/NYC_Water_Tank_VFX.fbx",
+          "unrealAssetName": "SM_NBL_NYC_Water_Tank_Hero",
+          "meshObjectCount": 412,
+          "vertexCount": 69892,
+          "triangleCount": 137480,
+          "boundsMeters": { "x": 4.5977, "y": 4.57, "z": 5.98 },
+          "materialBindings": [
+            { "pattern": "^MAT_TankWood_", "materialRecipeId": "NOB-MAT-NYC-WATER-TANK-WOOD" },
+            { "pattern": "^MAT_RoofWood_", "materialRecipeId": "NOB-MAT-NYC-WATER-ROOF-WOOD" },
+            { "pattern": "^MAT_Metal_", "materialRecipeId": "NOB-MAT-NYC-WATER-METAL" }
+          ]
+        }
+      ],
+      "materialSets": [
+        {
+          "assetId": "NOB-MAT-NYC-WATER-TANK-WOOD",
+          "assetName": "M_NBL_NYC_Water_TankWood",
+          "label": "Bois de cuve",
+          "baseColor": "textures/TankWood_BaseColor_4K.png",
+          "normal": "textures/TankWood_Normal_OpenGL_4K.png",
+          "roughness": "textures/TankWood_Roughness_4K.png"
+        },
+        {
+          "assetId": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+          "assetName": "M_NBL_NYC_Water_RoofWood",
+          "label": "Bois du toit",
+          "baseColor": "textures/RoofWood_BaseColor_4K.png",
+          "normal": "textures/RoofWood_Normal_OpenGL_4K.png",
+          "roughness": "textures/RoofWood_Roughness_4K.png"
+        },
+        {
+          "assetId": "NOB-MAT-NYC-WATER-METAL",
+          "assetName": "M_NBL_NYC_Water_Metal",
+          "label": "Métal patiné",
+          "baseColor": "textures/Metal_BaseColor_4K.png",
+          "normal": "textures/Metal_Normal_OpenGL_4K.png",
+          "roughness": "textures/Metal_Roughness_4K.png",
+          "metallic": "textures/Metal_Metallic_4K.png"
+        }
+      ]
+    }
+  ]
+}

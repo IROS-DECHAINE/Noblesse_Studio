@@ -1,0 +1,965 @@
+.studio-shell {
+  --skin-panel: rgba(10, 11, 13, .82);
+  --skin-panel-strong: rgba(11, 12, 14, .93);
+  --skin-sidebar: rgba(6, 7, 9, .95);
+  --skin-active: rgba(54, 86, 134, .24);
+  --skin-border: rgba(198, 156, 91, .38);
+  --skin-border-soft: rgba(198, 156, 91, .18);
+  --skin-shadow: rgba(0, 0, 0, .42);
+  --skin-backdrop-opacity: .62;
+  --skin-fluid-opacity: .86;
+  position: relative;
+  isolation: isolate;
+  color: var(--ink);
+  background: var(--navy-0);
+}
+
+.studio-shell[data-skin='atelier-nocturne'] {
+  --ink: #f4f2ee;
+  --muted: #9d9b98;
+  --muted-2: #716e69;
+  --navy-0: #060708;
+  --navy-1: #090a0c;
+  --navy-2: #101114;
+  --navy-3: #15171a;
+  --line: rgba(197, 157, 96, .38);
+  --line-soft: rgba(197, 157, 96, .17);
+  --blue: #4f88f7;
+  --blue-soft: #8bb3ff;
+  --gold: #d5aa67;
+  --gold-light: #f0cf95;
+  --skin-panel: rgba(11, 12, 14, .84);
+  --skin-panel-strong: rgba(13, 14, 16, .94);
+  --skin-sidebar: rgba(7, 8, 10, .96);
+  --skin-active: rgba(40, 70, 116, .28);
+  --skin-border: rgba(199, 160, 99, .42);
+  --skin-border-soft: rgba(199, 160, 99, .19);
+  --skin-backdrop-opacity: .6;
+  --skin-fluid-opacity: .82;
+}
+
+.studio-shell[data-skin='jade-imperiale'] {
+  --ink: #f2f6f2;
+  --muted: #94a69e;
+  --muted-2: #637c71;
+  --navy-0: #020a08;
+  --navy-1: #04100d;
+  --navy-2: #081712;
+  --navy-3: #0d211a;
+  --line: rgba(191, 160, 91, .42);
+  --line-soft: rgba(121, 168, 135, .2);
+  --blue: #45bd91;
+  --blue-soft: #80e0bd;
+  --gold: #d0a64d;
+  --gold-light: #efd28c;
+  --green: #70dfa6;
+  --skin-panel: rgba(3, 18, 14, .82);
+  --skin-panel-strong: rgba(4, 22, 17, .93);
+  --skin-sidebar: rgba(2, 12, 10, .95);
+  --skin-active: rgba(40, 116, 87, .28);
+  --skin-border: rgba(188, 154, 79, .43);
+  --skin-border-soft: rgba(89, 145, 111, .22);
+  --skin-backdrop-opacity: .72;
+  --skin-fluid-opacity: .88;
+}
+
+.studio-shell[data-skin='obsidienne-royale'] {
+  --ink: #f2f5fb;
+  --muted: #96a4b9;
+  --muted-2: #61728c;
+  --navy-0: #02050b;
+  --navy-1: #050914;
+  --navy-2: #081122;
+  --navy-3: #0c1830;
+  --line: rgba(80, 121, 178, .46);
+  --line-soft: rgba(64, 96, 143, .24);
+  --blue: #4b88ff;
+  --blue-soft: #8eb5ff;
+  --gold: #d8aa55;
+  --gold-light: #f1ce84;
+  --skin-panel: rgba(4, 9, 19, .83);
+  --skin-panel-strong: rgba(5, 11, 23, .94);
+  --skin-sidebar: rgba(3, 7, 15, .96);
+  --skin-active: rgba(47, 99, 189, .3);
+  --skin-border: rgba(81, 124, 187, .47);
+  --skin-border-soft: rgba(60, 91, 139, .24);
+  --skin-backdrop-opacity: .7;
+  --skin-fluid-opacity: .84;
+}
+
+.studio-shell[data-skin='aurore-liquide'] {
+  --ink: #f3f8ff;
+  --muted: #95a9c2;
+  --muted-2: #5e7694;
+  --navy-0: #020714;
+  --navy-1: #040c1c;
+  --navy-2: #07142b;
+  --navy-3: #0a1c3c;
+  --line: rgba(76, 136, 210, .48);
+  --line-soft: rgba(62, 111, 177, .24);
+  --blue: #3d8cff;
+  --blue-soft: #82c7ff;
+  --gold: #d3a34d;
+  --gold-light: #efd084;
+  --skin-panel: rgba(3, 10, 24, .8);
+  --skin-panel-strong: rgba(4, 12, 28, .93);
+  --skin-sidebar: rgba(3, 9, 21, .94);
+  --skin-active: rgba(47, 113, 218, .3);
+  --skin-border: rgba(82, 143, 221, .48);
+  --skin-border-soft: rgba(60, 112, 182, .24);
+  --skin-backdrop-opacity: .74;
+  --skin-fluid-opacity: .96;
+}
+
+.studio-shell[data-skin='titane-fume'] {
+  --ink: #f2f5f8;
+  --muted: #9ba6b3;
+  --muted-2: #697686;
+  --navy-0: #070a0e;
+  --navy-1: #0a0f15;
+  --navy-2: #101720;
+  --navy-3: #151f2a;
+  --line: rgba(151, 169, 191, .38);
+  --line-soft: rgba(128, 150, 177, .2);
+  --blue: #5a8fdc;
+  --blue-soft: #a2c5f6;
+  --gold: #c9a361;
+  --gold-light: #e9cf9f;
+  --skin-panel: rgba(9, 13, 18, .82);
+  --skin-panel-strong: rgba(11, 16, 22, .93);
+  --skin-sidebar: rgba(7, 11, 16, .95);
+  --skin-active: rgba(73, 111, 160, .27);
+  --skin-border: rgba(145, 165, 190, .4);
+  --skin-border-soft: rgba(119, 143, 171, .21);
+  --skin-backdrop-opacity: .68;
+  --skin-fluid-opacity: .72;
+}
+
+.studio-shell[data-skin='velours-grenat'] {
+  --ink: #f8f1ef;
+  --muted: #b19a9f;
+  --muted-2: #80666d;
+  --navy-0: #0b0305;
+  --navy-1: #110509;
+  --navy-2: #1a080e;
+  --navy-3: #250d15;
+  --line: rgba(196, 123, 112, .43);
+  --line-soft: rgba(153, 79, 91, .22);
+  --blue: #c84d6a;
+  --blue-soft: #ef9aac;
+  --gold: #d2a15d;
+  --gold-light: #f0cf98;
+  --green: #7cda9e;
+  --skin-panel: rgba(20, 5, 10, .83);
+  --skin-panel-strong: rgba(25, 7, 12, .94);
+  --skin-sidebar: rgba(13, 3, 7, .96);
+  --skin-active: rgba(157, 39, 68, .29);
+  --skin-border: rgba(199, 145, 88, .44);
+  --skin-border-soft: rgba(160, 81, 91, .23);
+  --skin-backdrop-opacity: .72;
+  --skin-fluid-opacity: .82;
+}
+
+.studio-shell[data-skin='amethyste-astrale'] {
+  --ink: #f5f2fb;
+  --muted: #aaa0bd;
+  --muted-2: #73678e;
+  --navy-0: #05030c;
+  --navy-1: #090512;
+  --navy-2: #10091f;
+  --navy-3: #17102b;
+  --line: rgba(121, 92, 197, .47);
+  --line-soft: rgba(97, 76, 158, .25);
+  --blue: #835fff;
+  --blue-soft: #c0a8ff;
+  --gold: #c99c62;
+  --gold-light: #ebc997;
+  --green: #71d7a4;
+  --skin-panel: rgba(9, 5, 20, .83);
+  --skin-panel-strong: rgba(12, 7, 26, .94);
+  --skin-sidebar: rgba(7, 4, 15, .96);
+  --skin-active: rgba(103, 58, 216, .3);
+  --skin-border: rgba(128, 99, 202, .48);
+  --skin-border-soft: rgba(95, 77, 151, .25);
+  --skin-backdrop-opacity: .7;
+  --skin-fluid-opacity: .88;
+}
+
+.skin-backdrop {
+  position: fixed;
+  z-index: -2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--navy-0);
+  animation: skin-backdrop-reveal .7s ease both;
+}
+
+.skin-backdrop-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.skin-backdrop-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.skin-backdrop-layer-base {
+  opacity: var(--skin-backdrop-opacity);
+}
+
+.skin-fluid-canvas {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: var(--skin-fluid-opacity);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.skin-backdrop-veil {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: rgba(2, 5, 8, .33);
+}
+
+.studio-shell[data-skin-motion='calm'] .skin-fluid-canvas { opacity: calc(var(--skin-fluid-opacity) * .62); }
+.studio-shell[data-skin-motion='off'] .skin-fluid-canvas { display: none; }
+
+.studio-sidebar,
+.studio-main {
+  position: relative;
+  z-index: 1;
+}
+
+.studio-main { background: transparent; }
+.studio-main::before,
+.studio-main::after { display: none; }
+
+.studio-sidebar {
+  border-right-color: var(--skin-border-soft);
+  background: var(--skin-sidebar);
+  box-shadow: 16px 0 48px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(22px) saturate(1.08);
+}
+
+.studio-brand,
+.sidebar-footer { border-color: var(--skin-border-soft); }
+
+.studio-navigation button {
+  transition: color .18s ease, background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.studio-navigation button:hover {
+  color: var(--ink);
+  background: var(--skin-active);
+  transform: translateX(2px);
+}
+
+.studio-navigation button.is-active {
+  border-color: var(--skin-border);
+  color: var(--ink);
+  background: var(--skin-active);
+  box-shadow: inset 0 0 0 1px var(--skin-border-soft), 0 8px 24px rgba(0, 0, 0, .16);
+}
+
+.studio-navigation button.is-active::before {
+  background: var(--blue);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--blue) 62%, transparent);
+}
+
+.studio-shell[data-skin='atelier-nocturne'] .dashboard-home .pulse-header h1 {
+  color: var(--gold-light);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 520;
+  letter-spacing: .065em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .08), 0 8px 30px rgba(194, 145, 75, .14);
+}
+
+.pulse-kpi,
+.audience-panel,
+.online-projects,
+.studio-data-sources,
+.surface-card,
+.coffre-search,
+.coffre-inspector,
+.projects-card,
+.project-card,
+.roadmap-panel,
+.finance-summary-card,
+.finance-chart-panel,
+.finance-ledger,
+.calendar-month,
+.calendar-day-panel,
+.calendar-upcoming,
+.document-project-card,
+.document-editor,
+.recovery-panel {
+  border-color: var(--skin-border);
+  background: var(--skin-panel);
+  box-shadow: 0 18px 52px var(--skin-shadow);
+  backdrop-filter: blur(18px) saturate(1.08);
+  transition: border-color .28s ease, background-color .28s ease, box-shadow .28s ease;
+}
+
+.online-projects > header,
+.project-data-row,
+.studio-data-sources > header,
+.studio-source-list > div {
+  border-color: var(--skin-border-soft);
+}
+
+.chart-empty-note,
+.pulse-refresh,
+.studio-sidebar-collapse,
+.studio-sidebar-restore {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.skin-gallery button,
+.skin-motion-options button { font: inherit; }
+
+.skins-view {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  overflow: auto;
+  padding: 46px clamp(28px, 4vw, 70px) 58px;
+  scrollbar-gutter: stable;
+}
+
+.skins-view > * {
+  width: min(1260px, 100%);
+  margin-inline: auto;
+}
+
+.skins-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.skins-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.skins-header h1 {
+  margin: 0;
+  font-size: clamp(36px, 4vw, 54px);
+  line-height: 1;
+  font-weight: 630;
+  letter-spacing: -.035em;
+}
+
+.skins-header p {
+  max-width: 660px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.skins-live-state {
+  display: grid;
+  min-width: 240px;
+  gap: 7px;
+  padding: 15px 18px;
+  border: 1px solid var(--skin-border);
+  border-radius: 10px;
+  background: var(--skin-panel-strong);
+  box-shadow: 0 16px 40px var(--skin-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.skins-live-state span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.skins-live-state strong { font-size: 16px; font-weight: 620; }
+
+.skin-motion-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 88px;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--skin-border);
+  border-radius: 11px;
+  background: var(--skin-panel);
+  box-shadow: 0 18px 46px var(--skin-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.skin-motion-copy { display: flex; min-width: 0; align-items: center; gap: 14px; }
+.skin-motion-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--skin-border);
+  border-radius: 50%;
+  color: var(--blue-soft);
+  background: var(--skin-active);
+}
+.skin-motion-copy h2 { margin: 0; font-size: 15px; font-weight: 620; }
+.skin-motion-copy p { margin: 6px 0 0; color: var(--muted); font-size: 11px; }
+
+.skin-motion-options {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid var(--skin-border-soft);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, .24);
+}
+
+.skin-motion-options button {
+  min-width: 82px;
+  height: 35px;
+  padding: 0 13px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 650;
+  transition: color .18s ease, background-color .18s ease, border-color .18s ease;
+}
+
+.skin-motion-options button:hover { color: var(--ink); }
+.skin-motion-options button.is-active {
+  border-color: var(--skin-border);
+  color: var(--ink);
+  background: var(--skin-active);
+}
+
+.skin-motion-options button:focus-visible,
+.skin-choice:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: 3px;
+}
+
+.skin-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.skin-choice {
+  display: grid;
+  grid-template-columns: minmax(210px, 44%) minmax(0, 1fr);
+  min-height: 190px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--skin-border-soft);
+  border-radius: 12px;
+  color: var(--ink);
+  background: var(--skin-panel);
+  box-shadow: 0 18px 46px var(--skin-shadow);
+  cursor: pointer;
+  text-align: left;
+  backdrop-filter: blur(18px);
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.skin-choice:hover {
+  border-color: var(--skin-preview-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 58px var(--skin-shadow);
+}
+
+.skin-choice.is-active {
+  border-color: var(--skin-preview-accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--skin-preview-accent) 42%, transparent), 0 24px 62px var(--skin-shadow);
+}
+
+.skin-choice-visual {
+  position: relative;
+  display: block;
+  min-height: 190px;
+  overflow: hidden;
+  border-right: 1px solid var(--skin-border-soft);
+  background: var(--navy-0);
+}
+
+.skin-choice-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.2, .8, .2, 1), filter .3s ease;
+}
+
+.skin-choice:hover .skin-choice-visual img { transform: scale(1.045); filter: saturate(1.08); }
+
+.skin-choice-resolution,
+.skin-choice-check {
+  position: absolute;
+  top: 12px;
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  color: #f8fafc;
+  background: rgba(3, 7, 12, .76);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .25);
+  font-size: 9px;
+  font-weight: 750;
+  backdrop-filter: blur(12px);
+}
+
+.skin-choice-resolution { left: 12px; letter-spacing: .08em; }
+.skin-choice-check { right: 12px; display: inline-flex; align-items: center; gap: 5px; color: #dff9ea; }
+
+.skin-choice-copy {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  gap: 8px;
+  padding: 24px;
+}
+
+.skin-choice-copy small {
+  color: var(--skin-preview-accent);
+  font-size: 9px;
+  font-weight: 740;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.skin-choice-copy strong { font-size: 19px; font-weight: 620; letter-spacing: -.015em; }
+.skin-choice-copy > span { color: var(--muted); font-size: 11px; line-height: 1.55; }
+
+.skins-footer-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* Cross-module skin contract -------------------------------------------------
+   Every working surface consumes the same material tokens. Specific selectors
+   intentionally outrank lazy-loaded module styles. */
+
+.studio-shell[data-skin] .premium-panel,
+.studio-shell[data-skin] .workspace-summary,
+.studio-shell[data-skin] .planner-item,
+.studio-shell[data-skin] .recovery-health-grid article,
+.studio-shell[data-skin] .recovery-panel,
+.studio-shell[data-skin] .recovery-latest,
+.studio-shell[data-skin] .operation-row,
+.studio-shell[data-skin] .vault-trash-list > div:not(.recovery-empty) {
+  border-color: var(--skin-border);
+  background: var(--skin-panel);
+  box-shadow: 0 18px 52px var(--skin-shadow);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.studio-shell[data-skin] .workspace-summary,
+.studio-shell[data-skin] .planner-item,
+.studio-shell[data-skin] .recovery-latest,
+.studio-shell[data-skin] .operation-row,
+.studio-shell[data-skin] .vault-trash-list > div:not(.recovery-empty) {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+  box-shadow: none;
+}
+
+.studio-shell[data-skin] .primary-action,
+.studio-shell[data-skin] .install-surface,
+.studio-shell[data-skin] .finance-primary-button,
+.studio-shell[data-skin] .finance-submit,
+.studio-shell[data-skin] .documents-modal-actions .is-primary,
+.studio-shell[data-skin] .calendar-view-switch button.is-active,
+.studio-shell[data-skin] .calendar-kind-tabs button.is-active {
+  border-color: color-mix(in srgb, var(--blue) 72%, white 28%);
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--blue) 24%, transparent);
+}
+
+.studio-shell[data-skin] .secondary-action,
+.studio-shell[data-skin] .recovery-secondary,
+.studio-shell[data-skin] .recovery-actions button,
+.studio-shell[data-skin] .operation-row button,
+.studio-shell[data-skin] .vault-trash-list button {
+  border-color: var(--skin-border-soft);
+  color: var(--ink);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .segmented-control,
+.studio-shell[data-skin] .planner-form input,
+.studio-shell[data-skin] .planner-form select {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .segmented-control button.is-active { background: var(--skin-active); }
+.studio-shell[data-skin] .studio-toast { border-color: var(--skin-border); background: var(--skin-panel-strong); }
+
+/* Coffre: catalogue, visual modules, inspector and dialogs */
+
+.studio-shell[data-skin] .coffre-heading {
+  border-bottom: 1px solid var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .coffre-family-nav button,
+.studio-shell[data-skin] .platform-filter button,
+.studio-shell[data-skin] .usage-filter button,
+.studio-shell[data-skin] .coffre-search {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel);
+  box-shadow: 0 14px 34px var(--skin-shadow);
+}
+
+.studio-shell[data-skin] .coffre-family-nav button:hover,
+.studio-shell[data-skin] .platform-filter button:hover,
+.studio-shell[data-skin] .usage-filter button:hover { border-color: var(--skin-border); background: var(--skin-panel-strong); }
+
+.studio-shell[data-skin] .coffre-family-nav button.is-active,
+.studio-shell[data-skin] .usage-filter button.is-active,
+.studio-shell[data-skin] .platform-filter button.is-active {
+  border-color: var(--blue);
+  color: var(--ink);
+  background: var(--skin-active);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blue) 25%, transparent), 0 16px 36px var(--skin-shadow);
+}
+
+.studio-shell[data-skin] .coffre-family-nav button > i,
+.studio-shell[data-skin] .coffre-family-nav b,
+.studio-shell[data-skin] .usage-filter button small {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .coffre-family-nav button.is-active > i,
+.studio-shell[data-skin] .coffre-family-nav button.is-active b,
+.studio-shell[data-skin] .usage-filter button.is-active small {
+  border-color: color-mix(in srgb, var(--blue) 65%, transparent);
+  color: var(--blue-soft);
+  background: var(--skin-active);
+}
+
+.studio-shell[data-skin] .surface-card,
+.studio-shell[data-skin] .surface-inspector {
+  border-color: var(--skin-border);
+  background: var(--skin-panel);
+  box-shadow: 0 20px 56px var(--skin-shadow);
+  backdrop-filter: blur(20px) saturate(1.08);
+}
+
+.studio-shell[data-skin] .surface-card:hover,
+.studio-shell[data-skin] .surface-card.is-selected { border-color: var(--blue); }
+
+.studio-shell[data-skin] .preview-toolbar > div,
+.studio-shell[data-skin] .material-variants button,
+.studio-shell[data-skin] .sound-player-navigation button,
+.studio-shell[data-skin] .sound-transport,
+.studio-shell[data-skin] .project-destination-trigger,
+.studio-shell[data-skin] .project-destination-menu,
+.studio-shell[data-skin] .destination-project-row,
+.studio-shell[data-skin] .sound-batch-file-row,
+.studio-shell[data-skin] .sound-batch-progress,
+.studio-shell[data-skin] .sound-category-field button,
+.studio-shell[data-skin] .sound-form-field input {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .preview-toolbar button.is-active,
+.studio-shell[data-skin] .material-variants button.is-active,
+.studio-shell[data-skin] .sound-player-navigation button.is-active,
+.studio-shell[data-skin] .sound-category-field button.is-active,
+.studio-shell[data-skin] .destination-project-row.is-selected {
+  border-color: var(--blue);
+  color: var(--ink);
+  background: var(--skin-active);
+}
+
+.studio-shell[data-skin] .material-preview-3d,
+.studio-shell[data-skin] .asset-preview-3d,
+.studio-shell[data-skin] .material-preview-poster,
+.studio-shell[data-skin] .material-rendered-preview,
+.studio-shell[data-skin] .sound-preview-stage,
+.studio-shell[data-skin] .asset-card-visual {
+  border-color: var(--skin-border);
+  background: var(--skin-panel-strong);
+  box-shadow: inset 0 0 64px rgba(0, 0, 0, .38), 0 18px 42px var(--skin-shadow);
+}
+
+.studio-shell[data-skin] .preview-help,
+.studio-shell[data-skin] .preview-live,
+.studio-shell[data-skin] .preview-fidelity,
+.studio-shell[data-skin] .material-preview-source-label,
+.studio-shell[data-skin] .asset-card-visual em {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .sound-import-dialog,
+.studio-shell[data-skin] .vault-trash-dialog {
+  border-color: var(--skin-border);
+  background: var(--skin-panel-strong);
+  box-shadow: 0 36px 90px rgba(0, 0, 0, .66);
+}
+
+.studio-shell[data-skin] .sound-file-picker,
+.studio-shell[data-skin] .vault-trash-review > div,
+.studio-shell[data-skin] .vault-trash-dialog > footer button {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel);
+}
+
+.studio-shell[data-skin] .technical-details,
+.studio-shell[data-skin] .surface-facts { border-color: var(--skin-border-soft); }
+
+.studio-shell[data-skin] .project-launch-status,
+.studio-shell[data-skin] .project-rail-navigation > button,
+.studio-shell[data-skin] .roadmap-bubble {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .project-card.is-selected { border-color: var(--blue); }
+.studio-shell[data-skin] .project-launch-action { background: var(--blue); }
+.studio-shell[data-skin] .roadmap-progress-track { background: var(--skin-border-soft); }
+.studio-shell[data-skin] .roadmap-step.is-current .roadmap-bubble { border-color: var(--blue); background: var(--skin-active); }
+
+/* Documents: project rail, browser, viewer, history and every dialog */
+
+.studio-shell[data-skin] .documents-page {
+  --documents-panel: var(--skin-panel);
+  --documents-panel-strong: var(--skin-panel-strong);
+  --documents-hover: var(--skin-active);
+}
+
+.studio-shell[data-skin] .document-project-card,
+.studio-shell[data-skin] .document-project-card__label,
+.studio-shell[data-skin] .document-list-panel,
+.studio-shell[data-skin] .document-viewer-panel,
+.studio-shell[data-skin] .document-viewer-toolbar,
+.studio-shell[data-skin] .document-history,
+.studio-shell[data-skin] .document-history > header,
+.studio-shell[data-skin] .document-viewer-stage:not(.is-pdf):not(.is-markdown),
+.studio-shell[data-skin] .documents-modal,
+.studio-shell[data-skin] .documents-selection-list {
+  border-color: var(--skin-border);
+  background: var(--skin-panel);
+  box-shadow: 0 18px 48px var(--skin-shadow);
+}
+
+.studio-shell[data-skin] .document-project-card__label,
+.studio-shell[data-skin] .document-viewer-toolbar,
+.studio-shell[data-skin] .document-history,
+.studio-shell[data-skin] .document-history > header,
+.studio-shell[data-skin] .documents-selection-list {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+  box-shadow: none;
+}
+
+.studio-shell[data-skin] .document-project-card:hover,
+.studio-shell[data-skin] .document-project-card.is-selected { border-color: var(--blue); }
+
+.studio-shell[data-skin] .document-list-row:hover { background: var(--skin-active); }
+.studio-shell[data-skin] .document-list-row.is-selected { background: var(--skin-active); }
+
+.studio-shell[data-skin] .document-viewer-action,
+.studio-shell[data-skin] .document-history-list li > button,
+.studio-shell[data-skin] .documents-form-field input,
+.studio-shell[data-skin] .documents-form-field select,
+.studio-shell[data-skin] .documents-form-input,
+.studio-shell[data-skin] .documents-form-select,
+.studio-shell[data-skin] .documents-dropzone,
+.studio-shell[data-skin] .documents-dropzone button,
+.studio-shell[data-skin] .documents-dropzone .documents-file-picker,
+.studio-shell[data-skin] .documents-modal-actions button {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .documents-dropzone { border-color: var(--blue); }
+.studio-shell[data-skin] .documents-modal-header svg,
+.studio-shell[data-skin] .documents-dropzone > svg { color: var(--blue-soft); }
+
+/* Finance: KPIs, chart, ledger, expense form and confirmation */
+
+.studio-shell[data-skin] .finance-kpi,
+.studio-shell[data-skin] .finance-chart-panel,
+.studio-shell[data-skin] .finance-recent-panel,
+.studio-shell[data-skin] .finance-expense-panel,
+.studio-shell[data-skin] .finance-bank-panel {
+  border-color: var(--skin-border);
+  background: var(--skin-panel);
+  box-shadow: 0 18px 50px var(--skin-shadow);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.studio-shell[data-skin] .finance-range-control,
+.studio-shell[data-skin] .finance-chart-tooltip,
+.studio-shell[data-skin] .finance-type-tag,
+.studio-shell[data-skin] .finance-field input,
+.studio-shell[data-skin] .finance-field select,
+.studio-shell[data-skin] .finance-field textarea,
+.studio-shell[data-skin] .finance-input-shell,
+.studio-shell[data-skin] .finance-confirmation,
+.studio-shell[data-skin] .finance-confirmation-actions button,
+.studio-shell[data-skin] .finance-bank-icon,
+.studio-shell[data-skin] .finance-bank-panel > button {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .finance-range-control button:hover,
+.studio-shell[data-skin] .finance-range-control button.is-active { background: var(--skin-active); }
+
+.studio-shell[data-skin] .finance-kpi-icon { border-color: var(--blue); color: var(--blue-soft); background: var(--skin-active); }
+.studio-shell[data-skin] .finance-confirmation { border-color: var(--blue); }
+.studio-shell[data-skin] .finance-confirmation-actions button:last-child { border-color: var(--blue); background: var(--blue); }
+
+/* Calendar: every view, editor, form and settings dialog */
+
+.studio-shell[data-skin] .calendar-page {
+  --calendar-blue: var(--blue);
+  --calendar-gold: var(--gold);
+}
+
+.studio-shell[data-skin] .calendar-period-controls > button,
+.studio-shell[data-skin] .calendar-notification-toggle,
+.studio-shell[data-skin] .calendar-google-toggle,
+.studio-shell[data-skin] .calendar-view-switch,
+.studio-shell[data-skin] .calendar-month-shell,
+.studio-shell[data-skin] .calendar-week-shell,
+.studio-shell[data-skin] .calendar-day-panel,
+.studio-shell[data-skin] .calendar-agenda,
+.studio-shell[data-skin] .calendar-editor,
+.studio-shell[data-skin] .calendar-event-detail,
+.studio-shell[data-skin] .calendar-reminder-settings,
+.studio-shell[data-skin] .google-calendar-settings {
+  border-color: var(--skin-border);
+  background: var(--skin-panel);
+  box-shadow: 0 18px 52px var(--skin-shadow);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.studio-shell[data-skin] .calendar-month-weekdays,
+.studio-shell[data-skin] .calendar-month-help,
+.studio-shell[data-skin] .calendar-editor-header,
+.studio-shell[data-skin] .calendar-event-detail-actions,
+.studio-shell[data-skin] .calendar-reminder-settings > footer,
+.studio-shell[data-skin] .google-calendar-settings > footer {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .calendar-month-cell,
+.studio-shell[data-skin] .calendar-month-cell.is-outside { background: color-mix(in srgb, var(--skin-panel) 72%, transparent); }
+.studio-shell[data-skin] .calendar-month-cell:hover,
+.studio-shell[data-skin] .calendar-month-cell.is-selected,
+.studio-shell[data-skin] .calendar-day-button:hover,
+.studio-shell[data-skin] .calendar-day-button.is-selected,
+.studio-shell[data-skin] .calendar-agenda-open:hover { background: var(--skin-active); }
+
+.studio-shell[data-skin] .calendar-month-cell.is-today .calendar-month-date,
+.studio-shell[data-skin] .calendar-toggle-row input:checked + i { background: var(--blue); }
+
+.studio-shell[data-skin] .calendar-field input,
+.studio-shell[data-skin] .calendar-field select,
+.studio-shell[data-skin] .calendar-field textarea,
+.studio-shell[data-skin] .calendar-field-icon > div,
+.studio-shell[data-skin] .calendar-reminder-row > span,
+.studio-shell[data-skin] .calendar-event-detail-notes,
+.studio-shell[data-skin] .calendar-event-detail-reminders,
+.studio-shell[data-skin] .calendar-reminder-explanation,
+.studio-shell[data-skin] .google-calendar-onboarding,
+.studio-shell[data-skin] .google-calendar-ready,
+.studio-shell[data-skin] .google-calendar-connected,
+.studio-shell[data-skin] .google-calendar-connected dl > div {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .calendar-event-detail-reminders > header button,
+.studio-shell[data-skin] .calendar-agenda > header > span,
+.studio-shell[data-skin] .calendar-day-mode {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-active);
+}
+
+/* News modal and auxiliary overlays inherit the active skin as well. */
+
+.studio-shell[data-skin] .news-radar-dialog,
+.studio-shell[data-skin] .news-radar-intro,
+.studio-shell[data-skin] .news-radar-topics button,
+.studio-shell[data-skin] .news-radar-source-state button,
+.studio-shell[data-skin] .news-radar-item,
+.studio-shell[data-skin] .news-radar-x-lane {
+  border-color: var(--skin-border-soft);
+  background: var(--skin-panel-strong);
+}
+
+.studio-shell[data-skin] .news-radar-dialog { border-color: var(--skin-border); box-shadow: 0 28px 85px rgba(0, 0, 0, .64); }
+.studio-shell[data-skin] .news-radar-topics button.is-selected,
+.studio-shell[data-skin] .news-radar-item:hover { border-color: var(--blue); background: var(--skin-active); }
+
+@keyframes skin-backdrop-reveal {
+  from { opacity: 0; transform: scale(1.015); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 1080px) {
+  .skins-header { align-items: flex-start; }
+  .skin-gallery { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .skins-view { padding: 30px 20px 46px; }
+  .skins-header, .skin-motion-panel { align-items: stretch; flex-direction: column; }
+  .skins-live-state { min-width: 0; }
+  .skin-motion-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .skin-motion-options button { min-width: 0; }
+  .skin-choice { grid-template-columns: 1fr; }
+  .skin-choice-visual { min-height: 180px; border-right: 0; border-bottom: 1px solid var(--skin-border-soft); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skin-backdrop,
+  .skin-backdrop-layer img { animation: none !important; }
+  .skin-choice,
+  .skin-choice-visual img,
+  .studio-navigation button { transition-duration: .01ms !important; }
+}

@@ -1,12 +1,12 @@
 # Bibliothèque Noblesse Studio
 
-Point d’entrée humain et IA de la bibliothèque locale. Généré le 2026-08-21T23:32:39.219Z.
+Point d’entrée humain et IA de la bibliothèque locale. Généré le 2026-08-22T03:58:27.545Z.
 
 | Domaine | Nombre | Index lisible | Index machine |
 |---|---:|---|---|
-| Assets | 0 | [assets/INDEX.md](assets/INDEX.md) | [assets/index.json](assets/index.json) |
-| Textures | 119 | [textures/INDEX.md](textures/INDEX.md) | [textures/index.json](textures/index.json) |
-| Matériaux | 235 | [materials/INDEX.md](materials/INDEX.md) | [materials/index.json](materials/index.json) |
+| Assets | 1 | [assets/INDEX.md](assets/INDEX.md) | [assets/index.json](assets/index.json) |
+| Textures | 129 | [textures/INDEX.md](textures/INDEX.md) | [textures/index.json](textures/index.json) |
+| Matériaux | 238 | [materials/INDEX.md](materials/INDEX.md) | [materials/index.json](materials/index.json) |
 | Sons | 25 | [sounds/INDEX.md](sounds/INDEX.md) | [sounds/index.json](sounds/index.json) |
 | Documents | 17 | [documents/INDEX.md](documents/INDEX.md) | [documents/index.json](documents/index.json) |
 

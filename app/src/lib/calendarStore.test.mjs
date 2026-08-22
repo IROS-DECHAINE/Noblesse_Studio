@@ -62,6 +62,24 @@ test('persiste atomiquement, recharge et rend les rappels idempotents', async (t
   assert.equal((await readdir(rootDir)).some((name) => name.endsWith('.tmp')), false)
 })
 
+test('supprime un élément local et renvoie la version supprimée au synchroniseur', async (t) => {
+  const rootDir = await temporaryRoot(t)
+  const store = createCalendarStore({
+    rootDir,
+    now: () => new Date('2026-08-22T12:00:00.000Z'),
+    randomUUID: ids(),
+  })
+  const created = await store.createItem(input({ title: 'Événement à supprimer' }))
+  const itemId = created.item.id
+
+  const deleted = await store.deleteItem(itemId)
+  assert.equal(deleted.item.id, itemId)
+  assert.equal(deleted.item.title, 'Événement à supprimer')
+  assert.equal(deleted.snapshot.items.length, 0)
+  assert.equal(deleted.snapshot.revision, 2)
+  await assert.rejects(() => store.deleteItem(itemId), /introuvable/i)
+})
+
 test('migre planning v1 une seule fois', async (t) => {
   const rootDir = await temporaryRoot(t)
   const store = createCalendarStore({

@@ -1,8 +1,8 @@
 # Index Matériaux
 
-Généré automatiquement le 2026-08-21T23:32:39.219Z. Ne pas modifier ce fichier à la main.
+Généré automatiquement le 2026-08-22T03:58:27.545Z. Ne pas modifier ce fichier à la main.
 
-Total : **235**
+Total : **238**
 
 | ID permanent | Nom | Type | Version | Statut | Mode | Emplacement |
 |---|---|---|---:|---|---|---|
@@ -38,6 +38,9 @@ Total : **235**
 | NOB-MAT-BASE-TRAVERTINE-F-V01 | M_NBL_BaseClassic_Travertine_F_V01 | MaterialRecipe | 0.2.0 | READY_IN_APP | MANAGED | library/storage/packs/PrimeBot_Surface_Core/recipes.json#NOB-MAT-BASE-TRAVERTINE-F-V01 |
 | NOB-MAT-BASE-TRAVERTINE-W-V01 | M_NBL_BaseClassic_Travertine_W_V01 | MaterialRecipe | 0.2.0 | READY_IN_APP | MANAGED | library/storage/packs/PrimeBot_Surface_Core/recipes.json#NOB-MAT-BASE-TRAVERTINE-W-V01 |
 | NOB-MAT-DARK-MATTER-PREMIUM-V01 | M_NBL_DarkMatterPremium_Master_v01 | MaterialRecipe | 1.0.0 | READY_IN_APP | MANAGED | library/storage/packs/Noblesse_Dark_Matter_Premium/recipes.json#NOB-MAT-DARK-MATTER-PREMIUM-V01 |
+| NOB-MAT-NYC-WATER-METAL | M_NBL_NYC_Water_Metal | MaterialRecipe | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/recipes.json#NOB-MAT-NYC-WATER-METAL |
+| NOB-MAT-NYC-WATER-ROOF-WOOD | M_NBL_NYC_Water_RoofWood | MaterialRecipe | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/recipes.json#NOB-MAT-NYC-WATER-ROOF-WOOD |
+| NOB-MAT-NYC-WATER-TANK-WOOD | M_NBL_NYC_Water_TankWood | MaterialRecipe | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/recipes.json#NOB-MAT-NYC-WATER-TANK-WOOD |
 | PBR-SURF-MAT-BASECLASSIC-MASTER-001 | M_PB_BaseClassic_Master_V01 | Material | 0.1.0 | TRANSFERRED | REFERENCE | Référence externe — provenance conservée |
 | PBR-SURF-MAT-DARKMETEOR-MASTER-001 | M_PB_DarkMeteor_Master_V01 | Material | 0.1.0 | TRANSFERRED | REFERENCE | Référence externe — provenance conservée |
 | NOB-REF-BOTDEX-HOLOGRAM-V01 | M_VFX_BDX_Hologram | MaterialReference | 0.1.0 | BLOCKED | REFERENCE | Référence externe — provenance conservée |

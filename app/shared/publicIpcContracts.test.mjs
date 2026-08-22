@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { readVaultCatalog } from '../electron/lib/vaultService.mjs'
 import {
   assertAssetsResponseV1,
+  assertInstallAssetRequestV1,
   assertProjectFavoriteRequestV1,
   assertSoundImportRequestV1,
   assertVaultTrashApplyRequestV1,
@@ -16,6 +17,7 @@ import {
   assertVaultTrashRestoreRequestV1,
   assertVaultTrashRestoreResponseV1,
   serializeAssetsResponseV1,
+  serializeInstallAssetResponseV1,
   serializeProjectsResponseV1,
   serializeSoundImportResponseV1,
   serializeSoundSelectionResponseV1,
@@ -78,6 +80,35 @@ test('builds asset DTOs by allowlist and resolves previews through asset IDs', (
   })
 })
 
+test('publishes bounded modular mesh metadata and a model URL without leaking its Vault path', () => {
+  const response = serializeAssetsResponseV1([{
+    asset_id: 'NOB-MESH-WATER-TANK',
+    asset_type: 'StaticMesh',
+    display_name: 'Water Tank',
+    status: 'VALIDATED',
+    asset_group: 'Noblesse_Water_Tank',
+    module_id: 'complete',
+    module_label: 'Complet',
+    model_preview_source: 'packs/Noblesse_Water_Tank/previews/model/tank.glb',
+    source: 'packs/Noblesse_Water_Tank/source/tank.fbx',
+    triangle_count: 137480,
+    bounds_z_m: 5.98,
+  }])
+  assert.deepEqual(response.items[0], {
+    asset_id: 'NOB-MESH-WATER-TANK',
+    asset_type: 'StaticMesh',
+    display_name: 'Water Tank',
+    status: 'VALIDATED',
+    asset_group: 'Noblesse_Water_Tank',
+    module_id: 'complete',
+    module_label: 'Complet',
+    triangle_count: 137480,
+    bounds_z_m: 5.98,
+    model_preview_url: 'noblesse-vault://model/NOB-MESH-WATER-TANK',
+  })
+  assertNoPrivateKeys(response)
+})
+
 test('keeps audio selection paths privileged and closes the sound import DTOs', () => {
   const selection = serializeSoundSelectionResponseV1({
     schemaVersion: 1,
@@ -113,6 +144,39 @@ test('keeps audio selection paths privileged and closes the sound import DTOs', 
   assert.equal(response.jobId, 'job-00000000-0000-4000-8000-000000000002')
   assert.equal(response.total, 2)
   assertNoPrivateKeys(response)
+})
+
+test('closes install requests and strips every privileged receipt path from the response', () => {
+  assert.deepEqual(assertInstallAssetRequestV1({
+    assetId: 'NOB-MESH-WATER-TANK',
+    projectId: 'uefn:primebot',
+  }), {
+    assetId: 'NOB-MESH-WATER-TANK',
+    projectId: 'uefn:primebot',
+  })
+  assert.throws(() => assertInstallAssetRequestV1({
+    assetId: 'NOB-MESH-WATER-TANK',
+    projectId: 'uefn:primebot',
+    destinationPath: 'D:\\Private\\PrimeBot.uefnproject',
+  }), /additional properties/)
+
+  const response = serializeInstallAssetResponseV1({
+    accepted: true,
+    mode: 'INSTALLED',
+    project: 'PrimeBot',
+    targetPath: '/PrimeBot/NoblesseStudio/Meshes/SM_Tank.SM_Tank',
+    receiptPath: 'D:\\Private\\receipts\\install.json',
+    projectPath: 'D:\\Private\\PrimeBot.uefnproject',
+    migrationReceiptPath: 'D:\\Private\\migration.json',
+  })
+  assert.deepEqual(response, {
+    schemaVersion: 1,
+    accepted: true,
+    mode: 'INSTALLED',
+    project: 'PrimeBot',
+  })
+  assertNoPrivateKeys(response)
+  assert.throws(() => serializeInstallAssetResponseV1({ mode: 'UNBOUNDED_MODE', project: 'PrimeBot' }), /invalide/)
 })
 
 test('closes every vault trash DTO and never exposes preserved source paths', () => {

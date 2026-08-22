@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T23:32:39.219Z",
+  "generatedAt": "2026-08-22T03:58:27.545Z",
   "category": "materials",
-  "count": 235,
+  "count": 238,
   "items": [
     {
       "id": "NOB-REF-SLOT-HOLO-V01",
@@ -863,6 +863,94 @@
         "MaterialRecipe",
         "VFX",
         "Noblesse_Dark_Matter_Premium"
+      ]
+    },
+    {
+      "id": "NOB-MAT-NYC-WATER-METAL",
+      "name": "M_NBL_NYC_Water_Metal",
+      "category": "materials",
+      "type": "MaterialRecipe",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/recipes.json#NOB-MAT-NYC-WATER-METAL",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [
+        "NOB-TEX-NYC-WATER-METAL-BC",
+        "NOB-TEX-NYC-WATER-METAL-N",
+        "NOB-TEX-NYC-WATER-METAL-R",
+        "NOB-TEX-NYC-WATER-METAL-M"
+      ],
+      "tags": [
+        "MaterialRecipe",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "name": "M_NBL_NYC_Water_RoofWood",
+      "category": "materials",
+      "type": "MaterialRecipe",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/recipes.json#NOB-MAT-NYC-WATER-ROOF-WOOD",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [
+        "NOB-TEX-NYC-WATER-ROOF-WOOD-BC",
+        "NOB-TEX-NYC-WATER-ROOF-WOOD-N",
+        "NOB-TEX-NYC-WATER-ROOF-WOOD-R"
+      ],
+      "tags": [
+        "MaterialRecipe",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
+      ]
+    },
+    {
+      "id": "NOB-MAT-NYC-WATER-TANK-WOOD",
+      "name": "M_NBL_NYC_Water_TankWood",
+      "category": "materials",
+      "type": "MaterialRecipe",
+      "version": "2.0.0",
+      "status": "VALIDATED",
+      "packId": "Noblesse_NYC_Water_Tank",
+      "hash": "",
+      "storageMode": "MANAGED",
+      "storagePath": "library/storage/packs/Noblesse_NYC_Water_Tank/recipes.json#NOB-MAT-NYC-WATER-TANK-WOOD",
+      "previewPath": "",
+      "sourceOrigin": "NOBLESSE_STUDIO_APP",
+      "licenseEvidence": "packs/Noblesse_NYC_Water_Tank/source/PROVENANCE.md",
+      "platforms": [
+        "UEFN",
+        "Unreal"
+      ],
+      "dependencies": [
+        "NOB-TEX-NYC-WATER-TANK-WOOD-BC",
+        "NOB-TEX-NYC-WATER-TANK-WOOD-N",
+        "NOB-TEX-NYC-WATER-TANK-WOOD-R"
+      ],
+      "tags": [
+        "MaterialRecipe",
+        "Dépendance",
+        "Noblesse_NYC_Water_Tank"
       ]
     },
     {

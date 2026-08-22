@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { createReadStream } from 'node:fs'
 import { createFortnitePrimebotFetcher } from './electron/lib/fortniteData.mjs'
-import { loadMaterialPreviewDescriptor, resolveVaultPreviewSource } from './electron/lib/vaultService.mjs'
+import { loadMaterialPreviewDescriptor, resolveVaultModelRequest, resolveVaultPreviewSource } from './electron/lib/vaultService.mjs'
 
 export function localUefnBridge() {
   const getFortnitePrimebot = createFortnitePrimebotFetcher()
@@ -78,6 +78,28 @@ export function localUefnBridge() {
     }
   }
 
+  const vaultModelFile = async (req, res) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'Méthode non autorisée' })
+    try {
+      const assetId = new URL(req.url || '/', 'http://noblesse.local').searchParams.get('assetId') || ''
+      const { filePath, mimeType, size } = await resolveVaultModelRequest(assetId)
+      res.statusCode = 200
+      res.setHeader('Content-Type', mimeType)
+      res.setHeader('Content-Length', String(size))
+      res.setHeader('Cache-Control', 'no-store')
+      res.setHeader('X-Content-Type-Options', 'nosniff')
+      if (req.method === 'HEAD') return res.end()
+      const stream = createReadStream(filePath)
+      stream.on('error', () => {
+        if (!res.headersSent) json(res, 404, { error: 'Aperçu 3D indisponible' })
+        else res.destroy()
+      })
+      return stream.pipe(res)
+    } catch {
+      return json(res, 404, { error: 'Aperçu 3D indisponible' })
+    }
+  }
+
   const installPlan = (req, res) => {
     let body = ''
     req.on('data', (chunk) => {
@@ -114,6 +136,7 @@ export function localUefnBridge() {
       server.middlewares.use('/api/fortnite-primebot', fortnitePrimebot)
       server.middlewares.use('/api/material-preview', materialPreview)
       server.middlewares.use('/api/vault-preview', vaultPreviewFile)
+      server.middlewares.use('/api/vault-model', vaultModelFile)
       server.middlewares.use('/api/install-plan', installPlan)
     },
     configurePreviewServer(server) {
@@ -121,6 +144,7 @@ export function localUefnBridge() {
       server.middlewares.use('/api/fortnite-primebot', fortnitePrimebot)
       server.middlewares.use('/api/material-preview', materialPreview)
       server.middlewares.use('/api/vault-preview', vaultPreviewFile)
+      server.middlewares.use('/api/vault-model', vaultModelFile)
       server.middlewares.use('/api/install-plan', installPlan)
     },
   }

@@ -4,7 +4,7 @@ import { findProjectConnection, loadProjectConnectionRegistry } from './projectC
 import { UefnMcpClient } from './uefnMcpClient.mjs'
 import { discoverOpenUefnProjects } from './uefnOpenProjectDiscovery.mjs'
 import { createUefnPortOwnershipVerifier } from './uefnProcessInspector.mjs'
-import { MATERIAL_RECIPE_REQUIREMENTS, SOUND_HANDOFF_REQUIREMENTS, summarizeTransferCapabilities } from './uefnTransferContract.mjs'
+import { MATERIAL_RECIPE_REQUIREMENTS, SOUND_HANDOFF_REQUIREMENTS, STATIC_MESH_REQUIREMENTS, summarizeTransferCapabilities } from './uefnTransferContract.mjs'
 import { listUefnProjects } from './vaultService.mjs'
 
 const FAVORITES_SCHEMA_VERSION = 1
@@ -99,6 +99,10 @@ const createDefaultProbe = ({ timeoutMs = 700, verifyPortOwner = createUefnPortO
       if (capabilities.soundHandoff) {
         const missingTools = await client.missingTools(SOUND_HANDOFF_REQUIREMENTS)
         capabilities.soundHandoff = missingTools.length === 0
+      }
+      if (capabilities.staticMesh) {
+        const missingTools = await client.missingTools(STATIC_MESH_REQUIREMENTS)
+        capabilities.staticMesh = missingTools.length === 0
       }
       return {
         id: projectId(mount),
@@ -216,6 +220,7 @@ export const createUefnSessionService = ({
       // proves routing identity. Both must match before an asset can be transferred.
       const toolsetReady = session.capabilities?.materialRecipe === true
         || session.capabilities?.soundHandoff === true
+        || session.capabilities?.staticMesh === true
       const portMismatch = !portMatchesAssignment
         ? { code: 'PORT_MISMATCH', expectedPort: assignedPort, actualPort: session.port }
         : null

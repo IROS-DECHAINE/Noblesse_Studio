@@ -53,6 +53,7 @@ const createFakeMcp = ({ existing = new Set(), loseTextureBinding = false } = {}
       PowerOfTwoMode: { type: 'string', enum: ['None', 'StretchToPowerOfTwo'] },
       MipGenSettings: { type: 'string', enum: ['TMGS_NoMipmaps', 'TMGS_FromTextureGroup'] },
       NeverStream: { type: 'boolean' },
+      bFlipGreenChannel: { type: 'boolean' },
     }],
     [expressionRef, { Texture: { type: 'object' } }],
   ])
@@ -210,4 +211,21 @@ test('refuses a success receipt when UEFN loses the texture reference', async ()
 test('recognizes only dimensions that are powers of two', () => {
   assert.equal(uefnInstallerInternals.hasPowerOfTwoDimensions({ x: 1024, y: 2048 }), true)
   assert.equal(uefnInstallerInternals.hasPowerOfTwoDimensions({ x: 1254, y: 1254 }), false)
+})
+
+test('applies and reads back the OpenGL normal green-channel conversion', async () => {
+  const mcp = createFakeMcp()
+  const result = await uefnInstallerInternals.ensureManifestTextureSettings(mcp, textureRef, {
+    assetName: textureName,
+    flipGreenChannel: true,
+    normalConvention: 'OPENGL_PLUS_Y',
+  }, { apply: true })
+  assert.deepEqual(result, { flipGreenChannel: true, normalConvention: 'OPENGL_PLUS_Y' })
+  const write = mcp.calls.find((call) => call.tool === 'set_properties'
+    && JSON.parse(call.args.values).bFlipGreenChannel === true)
+  assert.ok(write)
+  await uefnInstallerInternals.ensureManifestTextureSettings(mcp, textureRef, {
+    assetName: textureName,
+    flipGreenChannel: true,
+  })
 })

@@ -37,6 +37,7 @@ export const studioDatabaseFile = () => path.join(studioDataRoot(), 'database', 
 export const studioBackupsRoot = () => configuredPath('NOBLESSE_BACKUP_ROOT') || path.join(studioDataRoot(), 'backups', 'repository-v1')
 export const studioOperationsRoot = () => path.join(studioStateRoot(), 'operations')
 export const studioInstallHandoffsRoot = () => path.join(studioStateRoot(), 'install-handoffs')
+export const studioIntegrationsRoot = () => path.join(studioStateRoot(), 'integrations')
 
 export const studioLibraryRoot = () => configuredPath('NOBLESSE_LIBRARY_ROOT') || path.join(studioAppRoot(), 'library')
 export const studioVaultRoot = () => configuredPath('NOBLESSE_VAULT_ROOT') || path.join(studioLibraryRoot(), 'storage')
@@ -61,6 +62,7 @@ export const describeStudioPaths = () => ({
   backupsRoot: studioBackupsRoot(),
   operationsRoot: studioOperationsRoot(),
   installHandoffsRoot: studioInstallHandoffsRoot(),
+  integrationsRoot: studioIntegrationsRoot(),
   libraryRoot: studioLibraryRoot(),
   vaultRoot: studioVaultRoot(),
   documentsRoot: studioDocumentsRoot(),

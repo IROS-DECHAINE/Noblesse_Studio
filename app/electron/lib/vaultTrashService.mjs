@@ -40,6 +40,7 @@ const countsFor = (assets) => ({
   materialRecipeCount: assets.filter((asset) => asset.asset_type === 'MaterialRecipe').length,
   materialReferenceCount: assets.filter((asset) => asset.asset_type === 'MaterialReference').length,
   unrealMaterialInstanceCount: assets.filter((asset) => asset.asset_type === 'UnrealMaterialInstance').length,
+  staticMeshCount: assets.filter((asset) => asset.asset_type === 'StaticMesh').length,
   textureCount: assets.filter((asset) => asset.asset_type === 'Texture2D').length,
   soundCount: assets.filter((asset) => ['SoundWave', 'Audio', 'AudioClip'].includes(asset.asset_type)).length,
 })

@@ -1,19 +1,23 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, net, Notification, powerMonitor, protocol, shell, Tray } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, net, Notification, powerMonitor, protocol, safeStorage, shell, Tray } from 'electron'
 import { existsSync, mkdirSync, watch } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createDocumentLibrary } from './lib/documentLibrary.mjs'
 import { createCalendarReminderScheduler } from './lib/calendarReminderScheduler.mjs'
+import { formatCalendarNotificationBody, reconcileCalendarRuntime } from './lib/calendarRuntime.mjs'
 import { createCalendarStore } from './lib/calendarStore.mjs'
 import { createBackupService } from './lib/backupService.mjs'
 import { createDocumentImportService } from './lib/documentImportService.mjs'
 import { createFinanceService, financeIpcChannels } from './lib/financeService.mjs'
 import { createFortnitePrimebotFetcher } from './lib/fortniteData.mjs'
+import { createGoogleCalendarSyncService } from './lib/googleCalendarSyncService.mjs'
+import { createNewsRadarService } from './lib/newsRadarService.mjs'
 import { shouldQuitForLocalUpdate } from './lib/localUpdateLifecycle.mjs'
 import { createProjectLaunchService } from './lib/projectLaunchService.mjs'
 import { createSoundBatchImportService } from './lib/soundBatchImportService.mjs'
 import { createSoundLibraryService } from './lib/soundLibraryService.mjs'
 import { installVaultAsset } from './lib/uefnInstaller.mjs'
+import { installUefnStaticMesh } from './lib/uefnStaticMeshInstaller.mjs'
 import { prepareUefnSoundHandoff } from './lib/uefnSoundHandoff.mjs'
 import { installUnrealNativeAsset } from './lib/unrealNativeInstaller.mjs'
 import { createUefnSessionService } from './lib/uefnSessionService.mjs'
@@ -21,9 +25,10 @@ import { createVaultTrashService } from './lib/vaultTrashService.mjs'
 import { buildWindowsTaskbarDetails, windowsAppId } from './lib/windowsTaskbarIdentity.mjs'
 import { createOperationJobStore } from './lib/operationJobStore.mjs'
 import { createStudioIpcGateway } from './lib/studioIpcGateway.mjs'
-import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultAudioRequest, resolveVaultPreviewRequest, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
+import { listUnrealProjects, loadMaterialPreviewDescriptor, loadVaultAsset, readVaultCatalog, resolveVaultAudioRequest, resolveVaultModelRequest, resolveVaultPreviewRequest, validateVaultIntegrity, vaultRoot } from './lib/vaultService.mjs'
 import {
   assertProjectFavoriteRequestV1,
+  assertInstallAssetRequestV1,
   assertSoundImportRequestV1,
   assertVaultTrashApplyRequestV1,
   assertVaultTrashItemV1,
@@ -33,6 +38,7 @@ import {
   assertVaultTrashRestoreRequestV1,
   assertVaultTrashRestoreResponseV1,
   serializeAssetsResponseV1,
+  serializeInstallAssetResponseV1,
   serializeProjectsResponseV1,
   serializeSoundImportResponseV1,
   serializeSoundSelectionResponseV1,
@@ -42,6 +48,7 @@ import {
   studioBackupsRoot,
   studioDocumentsRoot,
   studioFfmpegExecutable,
+  studioIntegrationsRoot,
   studioOperationsRoot,
   studioRuntimeRoot,
   studioStateRoot,
@@ -79,6 +86,8 @@ let backupService = null
 let financeService = null
 let calendarStore = null
 let calendarScheduler = null
+let googleCalendarService = null
+let newsRadarService = null
 let calendarInboxTimer = null
 let calendarTray = null
 let calendarRunsInBackground = false
@@ -186,6 +195,11 @@ const requireCalendarStore = () => {
   return calendarStore
 }
 
+const requireGoogleCalendarService = () => {
+  if (!googleCalendarService) throw new Error('La connexion Google Calendar est indisponible.')
+  return googleCalendarService
+}
+
 const calendarRoot = () => process.env.NOBLESSE_CALENDAR_ROOT
   ? path.resolve(process.env.NOBLESSE_CALENDAR_ROOT)
   : path.join(studioStateRoot(), 'calendar')
@@ -193,6 +207,34 @@ const calendarRoot = () => process.env.NOBLESSE_CALENDAR_ROOT
 const notifyCalendarUpdated = (payload = {}) => {
   for (const targetWindow of BrowserWindow.getAllWindows()) {
     if (!targetWindow.isDestroyed()) targetWindow.webContents.send('noblesse:calendar-updated', payload)
+  }
+}
+
+const notifyGoogleCalendarChanged = (status) => {
+  for (const targetWindow of BrowserWindow.getAllWindows()) {
+    if (!targetWindow.isDestroyed()) targetWindow.webContents.send('noblesse:google-calendar-changed', status)
+  }
+}
+
+const syncGoogleCalendarItem = async (result) => {
+  if (!googleCalendarService || !result?.item) return result
+  try {
+    const googleCalendar = await googleCalendarService.syncItem(result.item)
+    notifyGoogleCalendarChanged(googleCalendar.publicStatus)
+    return { ...result, googleCalendar }
+  } catch (error) {
+    console.error('[Noblesse Google Calendar] Élément conservé localement, synchronisation différée', error)
+    const publicStatus = await googleCalendarService.status().catch(() => null)
+    if (publicStatus) notifyGoogleCalendarChanged(publicStatus)
+    return {
+      ...result,
+      googleCalendar: {
+        status: 'PENDING',
+        itemId: result.item.id,
+        error: 'Élément enregistré localement · Google Calendar sera réessayé plus tard.',
+        publicStatus,
+      },
+    }
   }
 }
 
@@ -231,14 +273,14 @@ const ensureCalendarTray = () => {
 }
 
 const updateCalendarRuntime = (settings = {}) => {
-  calendarRunsInBackground = Boolean(settings.desktopNotificationsEnabled && settings.runInBackground)
-  if (settings.desktopNotificationsEnabled) calendarScheduler?.start()
-  else calendarScheduler?.stop()
-  if (calendarRunsInBackground && !ensureCalendarTray()) calendarRunsInBackground = false
-  else if (calendarTray) {
-    calendarTray.destroy()
-    calendarTray = null
-  }
+  const runtime = reconcileCalendarRuntime({
+    settings,
+    scheduler: calendarScheduler,
+    tray: calendarTray,
+    createTray: ensureCalendarTray,
+  })
+  calendarRunsInBackground = runtime.runsInBackground
+  calendarTray = runtime.tray
 }
 
 const showCalendarNotification = async (reminder) => {
@@ -248,7 +290,7 @@ const showCalendarNotification = async (reminder) => {
   const notificationIcon = loadApplicationIcon()
   const notification = new Notification({
     title: reminder.title || 'Rappel Noblesse Studio',
-    body: [reminder.projectLabel, reminder.location].filter(Boolean).join(' • ') || 'Un élément du calendrier commence bientôt.',
+    body: formatCalendarNotificationBody(reminder),
     ...(notificationIcon ? { icon: notificationIcon } : {}),
     silent: false,
   })
@@ -359,6 +401,8 @@ const handleVaultProtocol = async (request) => {
       ? await resolveVaultPreviewRequest(token)
       : url.hostname === 'audio'
         ? await resolveVaultAudioRequest(token)
+        : url.hostname === 'model'
+          ? await resolveVaultModelRequest(token)
         : null
     if (!resolved) return new Response('Introuvable', { status: 404 })
     const { filePath, mimeType } = resolved
@@ -547,18 +591,21 @@ ipcMain.handle('noblesse:project-launch', (event, request) => {
   requireStudioSender(event)
   return requireProjectLaunchService().launch({ profileId: request?.profileId })
 })
-ipcMain.handle('noblesse:install-asset', async (event, request) => {
-  requireStudioSender(event)
+studioIpc.handle('noblesse:install-asset', async (request) => {
   const asset = await loadVaultAsset(request?.assetId)
   if (asset.asset_type === 'SoundWave') {
-    const { handoffFile, ...result } = await prepareUefnSoundHandoff(request, {
+    const result = await prepareUefnSoundHandoff(request, {
       sessionService: requireUefnSessionService(),
     })
-    shell.showItemInFolder(handoffFile)
+    shell.showItemInFolder(result.handoffFile)
     return result
   }
+  if (asset.asset_type === 'StaticMesh') return installUefnStaticMesh(request, { sessionService: requireUefnSessionService() })
   if (asset.install_mode === 'UNREAL_NATIVE_BUNDLE') return installUnrealNativeAsset(request)
   return installVaultAsset(request, { sessionService: requireUefnSessionService() })
+}, {
+  assertRequest: assertInstallAssetRequestV1,
+  serializeResponse: serializeInstallAssetResponseV1,
 })
 ipcMain.handle('noblesse:documents:list', (event, filters) => {
   requireStudioSender(event)
@@ -700,31 +747,50 @@ ipcMain.handle(financeIpcChannels.applyTransaction, async (event, confirmation) 
 ipcMain.handle('noblesse:calendar:snapshot', async (event) => {
   requireStudioSender(event)
   const drained = await requireCalendarStore().drainInbox()
-  if (drained.processed.length) notifyCalendarUpdated({ revision: drained.snapshot.revision, source: 'inbox' })
+  if (drained.processed.length) {
+    notifyCalendarUpdated({ revision: drained.snapshot.revision, source: 'inbox' })
+    const googleCalendar = await googleCalendarService?.syncAll(drained.snapshot.items)
+    if (googleCalendar) notifyGoogleCalendarChanged(googleCalendar.publicStatus)
+  }
   return drained.snapshot
 })
 ipcMain.handle('noblesse:calendar:create', async (event, request) => {
   requireStudioSender(event)
   const result = await requireCalendarStore().createItem(request)
   notifyCalendarUpdated({ revision: result.snapshot.revision, source: 'human' })
-  return result
+  return syncGoogleCalendarItem(result)
 })
 ipcMain.handle('noblesse:calendar:update', async (event, request) => {
   requireStudioSender(event)
   const result = await requireCalendarStore().updateItem(request?.id, request?.patch)
   notifyCalendarUpdated({ revision: result.snapshot.revision, source: 'human' })
-  return result
+  return syncGoogleCalendarItem(result)
 })
 ipcMain.handle('noblesse:calendar:delete', async (event, request) => {
   requireStudioSender(event)
   const result = await requireCalendarStore().deleteItem(request?.id)
   notifyCalendarUpdated({ revision: result.snapshot.revision, source: 'human' })
-  return result
+  const googleCalendar = await googleCalendarService?.deleteItem(result.item.id).catch(async (error) => {
+    console.error('[Noblesse Google Calendar] Suppression locale conservée, synchronisation différée', error)
+    return {
+      status: 'PENDING_DELETE',
+      itemId: result.item.id,
+      error: 'Suppression enregistrée localement · Google Calendar sera réessayé plus tard.',
+      publicStatus: await googleCalendarService.status().catch(() => null),
+    }
+  })
+  if (googleCalendar) notifyGoogleCalendarChanged(googleCalendar.publicStatus)
+  return { ...result, ...(googleCalendar ? { googleCalendar } : {}) }
 })
 ipcMain.handle('noblesse:calendar:import-legacy', async (event, request) => {
   requireStudioSender(event)
   const result = await requireCalendarStore().importLegacy(request?.items)
-  if (result.status !== 'ALREADY_IMPORTED') notifyCalendarUpdated({ revision: result.snapshot.revision, source: 'migration' })
+  if (result.status !== 'ALREADY_IMPORTED') {
+    notifyCalendarUpdated({ revision: result.snapshot.revision, source: 'migration' })
+    const googleCalendar = await googleCalendarService?.syncAll(result.snapshot.items)
+    if (googleCalendar) notifyGoogleCalendarChanged(googleCalendar.publicStatus)
+    return { ...result, ...(googleCalendar ? { googleCalendar } : {}) }
+  }
   return result
 })
 ipcMain.handle('noblesse:calendar:update-settings', async (event, patch) => {
@@ -745,6 +811,50 @@ ipcMain.handle('noblesse:calendar:test-notification', async (event) => {
   return { supported: true, shown: true }
 })
 
+ipcMain.handle('noblesse:google-calendar:status', async (event) => {
+  requireStudioSender(event)
+  return requireGoogleCalendarService().status()
+})
+ipcMain.handle('noblesse:google-calendar:choose-credentials', async (event) => {
+  requireStudioSender(event)
+  const selection = await dialog.showOpenDialog({
+    title: 'Choisir le client OAuth Google Calendar',
+    properties: ['openFile'],
+    filters: [{ name: 'Identifiants OAuth Google', extensions: ['json'] }],
+  })
+  if (selection.canceled || !selection.filePaths[0]) return { ...(await requireGoogleCalendarService().status()), cancelled: true }
+  const status = await requireGoogleCalendarService().configureCredentialsFile(selection.filePaths[0])
+  notifyGoogleCalendarChanged(status)
+  return status
+})
+ipcMain.handle('noblesse:google-calendar:connect', async (event) => {
+  requireStudioSender(event)
+  const status = await requireGoogleCalendarService().connect()
+  const snapshot = await requireCalendarStore().getSnapshot()
+  const sync = await requireGoogleCalendarService().syncAll(snapshot.items)
+  notifyGoogleCalendarChanged(sync.publicStatus)
+  return sync.publicStatus || status
+})
+ipcMain.handle('noblesse:google-calendar:disconnect', async (event) => {
+  requireStudioSender(event)
+  const status = await requireGoogleCalendarService().disconnect()
+  notifyGoogleCalendarChanged(status)
+  return status
+})
+ipcMain.handle('noblesse:google-calendar:sync', async (event) => {
+  requireStudioSender(event)
+  const snapshot = await requireCalendarStore().getSnapshot()
+  const result = await requireGoogleCalendarService().syncAll(snapshot.items)
+  notifyGoogleCalendarChanged(result.publicStatus)
+  return result
+})
+
+ipcMain.handle('noblesse:news-radar:snapshot', async (event, request) => {
+  requireStudioSender(event)
+  if (!newsRadarService) throw new Error('Le Radar gaming est indisponible.')
+  return newsRadarService.snapshot({ force: request?.force === true })
+})
+
 if (!hasSingleInstanceLock) app.quit()
 
 if (hasSingleInstanceLock) app.whenReady().then(async () => {
@@ -757,6 +867,28 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
     executableOverride: studioUefnEditorExecutable(),
     settingsBackupDirectory: path.join(studioBackupsRoot(), 'uefn-editor-settings'),
   })
+  googleCalendarService = createGoogleCalendarSyncService({
+    rootDir: studioIntegrationsRoot(),
+    encryptionAvailable: safeStorage.isEncryptionAvailable(),
+    encryptString: (value) => safeStorage.encryptString(value),
+    decryptString: (value) => safeStorage.decryptString(value),
+    fetchImpl: (url, init) => net.fetch(url, init),
+    openExternal: (url) => shell.openExternal(url),
+  })
+  try {
+    await googleCalendarService.initialize()
+  } catch (error) {
+    console.error('[Noblesse Google Calendar] Initialisation impossible', error)
+  }
+  newsRadarService = createNewsRadarService({
+    rootDir: studioIntegrationsRoot(),
+    fetchImpl: (url, init) => net.fetch(url, init),
+  })
+  try {
+    await newsRadarService.initialize()
+  } catch (error) {
+    console.error('[Noblesse Radar] Initialisation impossible', error)
+  }
   calendarStore = createCalendarStore({ rootDir: calendarRoot() })
   try {
     const initializedCalendar = await calendarStore.init()
@@ -767,6 +899,15 @@ if (hasSingleInstanceLock) app.whenReady().then(async () => {
       onError: (error) => console.error('[Noblesse Calendar] Scheduler indisponible', error),
     })
     updateCalendarRuntime(initializedCalendar.snapshot.settings)
+    try {
+      if ((await googleCalendarService.status()).connected) {
+        googleCalendarService.syncAll(initializedCalendar.snapshot.items)
+          .then((result) => notifyGoogleCalendarChanged(result.publicStatus))
+          .catch((error) => console.error('[Noblesse Google Calendar] Synchronisation de reprise impossible', error))
+      }
+    } catch (error) {
+      console.error('[Noblesse Google Calendar] État de reprise indisponible', error)
+    }
     calendarInboxTimer = setInterval(async () => {
       try {
         const drained = await calendarStore.drainInbox()

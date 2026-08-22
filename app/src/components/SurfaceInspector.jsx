@@ -1,6 +1,7 @@
 import { CheckCircle2, ChevronDown, Circle, Layers3, LoaderCircle, ShieldCheck, Square, Trash2 } from 'lucide-react'
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { studioApi } from '../lib/desktopApi.js'
+import AssetInspector from './AssetInspector.jsx'
 import { usePreviewDescriptor } from './material-preview/usePreviewDescriptor.js'
 import SoundInspector from './SoundInspector.jsx'
 import VaultInstallControl from './VaultInstallControl.jsx'
@@ -30,7 +31,7 @@ export default function SurfaceInspector({
   const activeAssetId = activeVariant?.assetId || surface?.installAssetId || ''
   const descriptorState = usePreviewDescriptor({
     assetId: activeAssetId,
-    enabled: Boolean(activeAssetId),
+    enabled: Boolean(activeAssetId) && surface?.kind !== 'asset',
     loadDescriptor: studioApi.materialPreview,
   })
   const technicalChannels = descriptorState?.descriptor?.channels || []
@@ -47,6 +48,7 @@ export default function SurfaceInspector({
 
   if (!surface) return <aside className="surface-inspector is-empty">Aucun élément dans cette sélection.</aside>
   if (surface.kind === 'sound') return <SoundInspector surface={surface} sounds={soundSurfaces} projects={projects} selectedProjectId={selectedProjectId} installing={installing} onProject={onProject} onProjectFavorite={onProjectFavorite} onInstall={onInstall} onSelect={onSelect} onTrash={onTrash} trashBusy={trashBusy} />
+  if (surface.kind === 'asset') return <AssetInspector surface={surface} projects={projects} selectedProjectId={selectedProjectId} installing={installing} onProject={onProject} onProjectFavorite={onProjectFavorite} onInstall={onInstall} onTrash={onTrash} trashBusy={trashBusy} />
   const technicalMapCount = Number(activeVariant?.technicalMaps) || technicalChannels.length
 
   return (

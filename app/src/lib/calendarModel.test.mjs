@@ -6,10 +6,12 @@ import {
   createDefaultForm,
   dateFromZonedWallTime,
   expandItemsForRange,
+  formatOccurrencePeriod,
   formFromItem,
   itemInputFromForm,
   layoutAllDayBars,
   monthGridDateKeys,
+  reminderScheduleForOccurrence,
   startOfWeekKey,
   timedLayoutForDay,
   validateForm,
@@ -102,4 +104,35 @@ test('une récurrence hebdomadaire garde 09:00 lors du passage à l’heure d’
   const occurrences = expandItemsForRange([source], '2026-03-23', '2026-04-07')
   assert.equal(occurrences[1].time.start, '2026-03-30T07:00:00.000Z')
   assert.equal(formFromItem(occurrences[1]).startTime, '09:00')
+})
+
+test('la fiche détail rend visibles les dates concrètes de chaque rappel', () => {
+  const occurrence = {
+    id: 'release',
+    itemId: 'release',
+    kind: 'event',
+    title: 'Sortie du jeu',
+    time: {
+      kind: 'timed',
+      start: '2026-08-31T16:00:00.000Z',
+      end: '2026-08-31T17:00:00.000Z',
+      timeZone: 'Europe/Paris',
+    },
+    reminders: [
+      { id: 'two-days', channel: 'desktop', offsetMinutes: 2880 },
+      { id: 'one-day', channel: 'desktop', offsetMinutes: 1440 },
+      { id: 'start', channel: 'desktop', offsetMinutes: 0 },
+    ],
+  }
+  const schedule = reminderScheduleForOccurrence(occurrence, new Date('2026-08-22T00:00:00.000Z'))
+  assert.equal(schedule.length, 3)
+  assert.deepEqual(schedule.map((entry) => entry.scheduledAt), [
+    '2026-08-29T16:00:00.000Z',
+    '2026-08-30T16:00:00.000Z',
+    '2026-08-31T16:00:00.000Z',
+  ])
+  assert.match(schedule[0].when, /29 août/)
+  assert.match(schedule[0].when, /18:00/)
+  assert.match(formatOccurrencePeriod(occurrence), /31 août 2026/)
+  assert.match(formatOccurrencePeriod(occurrence), /18:00–19:00/)
 })

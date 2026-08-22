@@ -1,11 +1,21 @@
 # Index Textures
 
-Généré automatiquement le 2026-08-21T23:32:39.219Z. Ne pas modifier ce fichier à la main.
+Généré automatiquement le 2026-08-22T03:58:27.545Z. Ne pas modifier ce fichier à la main.
 
-Total : **119**
+Total : **129**
 
 | ID permanent | Nom | Type | Version | Statut | Mode | Emplacement |
 |---|---|---|---:|---|---|---|
+| NOB-TEX-NYC-WATER-METAL-BC | T_NBL_NYC_Water_Metal_BC | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_BaseColor_4K.png |
+| NOB-TEX-NYC-WATER-METAL-M | T_NBL_NYC_Water_Metal_M | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_Metallic_4K.png |
+| NOB-TEX-NYC-WATER-METAL-N | T_NBL_NYC_Water_Metal_N | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_Normal_OpenGL_4K.png |
+| NOB-TEX-NYC-WATER-METAL-R | T_NBL_NYC_Water_Metal_R | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/Metal_Roughness_4K.png |
+| NOB-TEX-NYC-WATER-ROOF-WOOD-BC | T_NBL_NYC_Water_RoofWood_BC | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/RoofWood_BaseColor_4K.png |
+| NOB-TEX-NYC-WATER-ROOF-WOOD-N | T_NBL_NYC_Water_RoofWood_N | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/RoofWood_Normal_OpenGL_4K.png |
+| NOB-TEX-NYC-WATER-ROOF-WOOD-R | T_NBL_NYC_Water_RoofWood_R | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/RoofWood_Roughness_4K.png |
+| NOB-TEX-NYC-WATER-TANK-WOOD-BC | T_NBL_NYC_Water_TankWood_BC | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/TankWood_BaseColor_4K.png |
+| NOB-TEX-NYC-WATER-TANK-WOOD-N | T_NBL_NYC_Water_TankWood_N | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/TankWood_Normal_OpenGL_4K.png |
+| NOB-TEX-NYC-WATER-TANK-WOOD-R | T_NBL_NYC_Water_TankWood_R | Texture2D | 2.0.0 | VALIDATED | MANAGED | library/storage/packs/Noblesse_NYC_Water_Tank/source/textures/TankWood_Roughness_4K.png |
 | PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-BC | T_PB_BaseClassic_ArtDeco_C_BC | Texture2D | 0.1.0 | TRANSFERRED | MANAGED | library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_BC.png |
 | PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-N | T_PB_BaseClassic_ArtDeco_C_N | Texture2D | 0.1.0 | TRANSFERRED | MANAGED | library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_N.png |
 | PBR-SURF-TEX-T-PB-BASECLASSIC-ARTDECO-C-ORM | T_PB_BaseClassic_ArtDeco_C_ORM | Texture2D | 0.1.0 | TRANSFERRED | MANAGED | library/storage/packs/PrimeBot_Surface_Core/sources/ArtDeco/PB_BaseClassic_ArtDeco_C_ORM.png |

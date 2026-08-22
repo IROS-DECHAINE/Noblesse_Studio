@@ -36,6 +36,9 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 | Notes de version | `docs/RELEASE_NOTES.md` |
 | Décision des imports audio | `docs/DECISION_MANAGED_AUDIO_IMPORT_2026-08-22.md` |
 | Décision de la corbeille récupérable | `docs/DECISION_RECOVERABLE_LIBRARY_TRASH_2026-08-22.md` |
+| Décision des packs 3D modulaires | `docs/DECISION_MANAGED_STATIC_MESH_PACKS_2026-08-22.md` |
+| Guide du calendrier et des rappels | `docs/CALENDAR_OPERATIONS.md` |
+| Décision Google Calendar | `docs/DECISION_GOOGLE_CALENDAR_SYNC_2026-08-22.md` |
 | État de la migration | `docs/MIGRATION_2026-08-21.md` |
 
 ## Ce qui fait autorité
@@ -47,6 +50,8 @@ Si vous ne savez pas où chercher, commencez toujours par ce fichier, puis ouvre
 5. SQLite est un index rapide et reconstructible; elle n’est jamais l’unique copie d’un original.
 
 Chaque asset, texture, matériau et document doit avoir un ID permanent. Un déplacement de fichier ne change jamais cet ID.
+
+Dans **Coffre > Assets**, une carte représente un groupe stable et chaque pièce installable possède son propre ID de module. Le premier pack, **NYC Water Tank VFX**, contient un module **Complet** ; une future base en plusieurs morceaux conservera une seule carte avec plusieurs modules sélectionnables. Le Vault préserve le pack natif et ses hashes. Le FBX est la source UEFN canonique de ce premier pack, l’OBJ reste une solution d’échange et le GLB reconstructible sert au prévisualisateur local.
 
 Dans **Coffre > Sons**, le bouton **Ajouter des sons** accepte jusqu’à 200 WAV ou MP3 à la fois. Les titres sont proposés depuis les noms de fichiers et restent modifiables. Un WAV valide est conservé sans réencodage ; un MP3 est converti par le processus principal en WAV PCM 24 bits / 48 kHz. Le lot est persistant, annulable entre deux fichiers et reprenable sans rejouer les succès. Le lecteur permet précédent, suivant et boucle. Aucun chemin privé n’est transmis à l’interface.
 

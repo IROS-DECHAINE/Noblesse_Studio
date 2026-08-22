@@ -60,7 +60,9 @@ La position d’un fichier ne doit jamais devenir son identité. Les appels mét
 
 Les projets UEFN sont ouverts depuis des profils approuvés dans le registre Electron. Le renderer transmet uniquement un ID permanent ; il ne choisit jamais un chemin, un exécutable ou des arguments. Le processus principal vérifie le descripteur, l’installation Epic, l’absence de doublon et la disponibilité du port. Il prépare ensuite atomiquement les clés UEFN `LastProjectFileName`, `bStartupWithLastProject` et Model Context Protocol, avec sauvegarde adressée par contenu, avant de lancer l’éditeur. Les demandes concurrentes sont sérialisées.
 
-Le Coffre expose une zone d’installation commune, mais chaque type déclare une capacité précise (`material`, `sound`, `staticMesh`, `vfx`). Un projet n’est sélectionnable que si son adaptateur réel annonce cette capacité. Les matières utilisent l’installateur de recette vérifié. Les sons UEFN utilisent un handoff borné : validation du Vault, copie WAV reconstructible au nom unique, création du dossier Audio et navigation du Content Browser, puis import final humain tant que le connecteur Epic ne fournit pas d’importeur `SoundWave`. Aucun adaptateur ne peut réutiliser aveuglément les règles d’un autre type.
+Le Coffre expose une zone d’installation commune, mais chaque type déclare une capacité précise (`material`, `sound`, `staticMesh`, `vfx`). Un projet n’est sélectionnable que si son adaptateur réel annonce cette capacité. Les matières utilisent l’installateur de recette vérifié. Les sons UEFN utilisent un handoff borné : validation du Vault, copie WAV reconstructible au nom unique, création du dossier Audio et navigation du Content Browser, puis import final humain tant que le connecteur Epic ne fournit pas d’importeur `SoundWave`. Aucun adaptateur ne peut réutiliser aveuglément les règles d’un autre type. La réponse IPC d’installation est un DTO fermé : elle confirme uniquement le mode et le projet public, sans reçu, chemin local ou preuve interne.
+
+Les assets 3D suivent le contrat groupe + modules. Chaque module `StaticMesh` pointe vers une source canonique manifestée et partage un `asset_group` avec ses éventuelles autres pièces. L’adaptateur UEFN installe d’abord les recettes PBR dépendantes, importe le mesh sans matériaux implicites, remappe chaque slot par règle déclarée, puis relit triangles, bounds, matériaux et état sauvegardé. Les normales OpenGL déclarées sont converties par la propriété Unreal vérifiée. Un aperçu GLB hashé est servi à la demande par `noblesse-vault://model/<assetId>` ; il est reconstructible et ne remplace jamais le FBX ou le pack natif. Voir [la décision des packs 3D modulaires](DECISION_MANAGED_STATIC_MESH_PACKS_2026-08-22.md).
 
 Une session n’est « prête » que lorsque son identité MCP, son port attribué et les outils de transfert requis sont tous vérifiés. Unreal et Roblox auront des adaptateurs distincts. Voir [la décision du lanceur](DECISION_PROJECT_LAUNCHER_2026-08-21.md).
 
@@ -123,6 +125,14 @@ Une panne d’index ou de cache ne doit donc jamais détruire un original.
 Une importation de documents est enregistrée dans `data/state/operations/` avant de commencer. Chaque fichier possède son propre état, son nombre de tentatives et son résultat. Une fermeture inattendue transforme une tâche en `INTERRUPTED`; elle peut être reprise depuis **Réglages** sans dupliquer les fichiers déjà importés.
 
 Les chemins locaux privés restent dans le processus principal. Le renderer ne reçoit que des IDs, des libellés et des états publics.
+
+## Calendrier, Google et Radar gaming
+
+Le calendrier canonique reste local sous `data/state/calendar/`. Son ordonnanceur affiche les rappels Windows et maintient une icône système lorsque le fonctionnement en arrière-plan est actif. Les décisions de démarrage et d’arrêt du scheduler et de l’icône sont regroupées dans un runtime testable ; l’interface ne prétend « actif » qu’après une notification test réussie.
+
+Google Calendar est un adaptateur sortant optionnel. Le processus principal chiffre client OAuth et jeton durable avec `safeStorage`, réalise OAuth 2 + PKCE sur une boucle locale temporaire, puis projette les événements dans l’agenda principal. Le renderer ne voit que l’état public de connexion. Noblesse Studio demeure l’autorité et une panne Google laisse la mutation locale valide avec une synchronisation en attente. Voir [la décision Google Calendar](DECISION_GOOGLE_CALENDAR_SYNC_2026-08-22.md).
+
+Le Radar gaming ne monte aucun fil permanent sur l’accueil. Il ouvre un panneau à la demande, agrège au plus un petit nombre d’entrées depuis les flux officiels Unreal Engine, Roblox DevForum et Epic Games Status, puis conserve un cache reconstructible dans `data/state/integrations/`. Les liens externes sont filtrés par HTTPS et liste de domaines. Le connecteur X reste désactivé tant qu’un compte développeur et un budget d’API n’ont pas été explicitement approuvés. Voir [la décision Radar gaming](DECISION_NEWS_RADAR_2026-08-22.md).
 
 ## Versions documentaires
 
