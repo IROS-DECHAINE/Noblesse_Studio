@@ -32,7 +32,7 @@ export default function MonthGrid({
   occurrences,
   selectedDate,
   onSelectDate,
-  onCreateOnDate,
+  onOpenDate,
   onEditOccurrence,
 }) {
   const todayKey = localDateKey()
@@ -89,7 +89,7 @@ export default function MonthGrid({
                       role="gridcell"
                       aria-selected={isSelected}
                       key={day}
-                      onDoubleClick={() => onCreateOnDate(day)}
+                      onClick={() => onOpenDate(day)}
                     >
                       <div className="calendar-month-date-row">
                         <button
@@ -98,7 +98,7 @@ export default function MonthGrid({
                           data-calendar-date={day}
                           tabIndex={isSelected ? 0 : -1}
                           aria-label={`${dayOccurrences.length ? `${dayOccurrences.length} élément${dayOccurrences.length > 1 ? 's' : ''}, ` : ''}${day}`}
-                          onClick={() => onSelectDate(day)}
+                          onClick={(event) => { event.stopPropagation(); onOpenDate(day) }}
                           onKeyDown={(event) => moveSelection(event, day)}
                         >
                           {Number(day.slice(-2))}
@@ -112,7 +112,7 @@ export default function MonthGrid({
                             type="button"
                             key={occurrence.occurrenceId}
                             title={`${timeLabel(occurrence)} — ${occurrence.title}`}
-                            onClick={() => onEditOccurrence(occurrence)}
+                            onClick={(event) => { event.stopPropagation(); onEditOccurrence(occurrence) }}
                             onDoubleClick={(event) => event.stopPropagation()}
                           >
                             <Clock3 size={9} aria-hidden="true" />
@@ -122,7 +122,7 @@ export default function MonthGrid({
                           </button>
                         ))}
                         {hiddenCount ? (
-                          <button className="calendar-month-more" type="button" onClick={() => onSelectDate(day)} onDoubleClick={(event) => event.stopPropagation()}>
+                          <button className="calendar-month-more" type="button" onClick={(event) => { event.stopPropagation(); onOpenDate(day) }}>
                             + {hiddenCount} autre{hiddenCount > 1 ? 's' : ''}
                           </button>
                         ) : null}
@@ -153,7 +153,7 @@ export default function MonthGrid({
           )
         })}
       </div>
-      <p className="calendar-month-help">Clique sur un jour pour ouvrir son planning détaillé. Double-clique pour ajouter un événement.</p>
+      <p className="calendar-month-help">Clique sur une case pour voir tous les rendez-vous de la journée. Tu pourras aussi en ajouter un depuis cette fenêtre.</p>
     </section>
   )
 }

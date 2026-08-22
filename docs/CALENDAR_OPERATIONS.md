@@ -9,6 +9,7 @@
 - stockage persistant, import sans perte de l’ancien planning et commandes CLI/IA ;
 - rattrapage des rappels après suspension ou redémarrage lorsque l’application repart ;
 - fiche rapide au clic avec l’horaire exact et les dates concrètes de chaque rappel ;
+- fenêtre de journée au clic sur une case, avec tous les rendez-vous regroupés et leurs titres, descriptions, lieux, projets et nombres de rappels ;
 - suppression confirmée depuis la fiche rapide, avec retrait automatique de la copie Google quand le compte est connecté ;
 - copie optionnelle vers l’agenda Google principal pour les notifications téléphone et iPad.
 
@@ -18,11 +19,11 @@ Une notification ordinateur nécessite que Noblesse Studio tourne, même caché 
 
 ## Utilisation
 
-1. Ouvrir **Calendrier** puis choisir un jour dans la barre lundi–dimanche.
-2. Cliquer **Nouvel événement**, ou double-cliquer une heure du planning.
+1. Ouvrir **Calendrier** puis cliquer une case du mois ou un jour de la semaine pour afficher tous les rendez-vous de cette journée.
+2. Ouvrir un rendez-vous de la liste pour lire sa fiche complète, ou cliquer **Ajouter un rendez-vous**. Il reste aussi possible de cliquer **Nouvel événement** ou de double-cliquer une heure du planning.
 3. Choisir le type, le projet, les horaires et autant de rappels que nécessaire.
 4. Cliquer **Activer les rappels** une seule fois et vérifier la notification test.
-5. Cliquer un bloc ou une ligne d’agenda pour lire sa fiche rapide, puis **Modifier** ou **Supprimer**. La suppression demande toujours une confirmation et précise lorsqu’elle concerne toute une série récurrente.
+5. La fiche affiche clairement le titre, la description, le type, le projet, le lieu, l’état Google Calendar et chaque rappel concret, puis permet de **Modifier** ou **Supprimer**. La suppression demande toujours une confirmation et précise lorsqu’elle concerne toute une série récurrente.
 
 Raccourcis : `Ctrl+N` crée un élément, `T` revient à aujourd’hui, `Échap` ferme l’éditeur.
 

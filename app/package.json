@@ -1,7 +1,7 @@
 {
   "name": "noblesse-studio",
   "private": true,
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Application locale Noblesse Studio pour piloter les projets, les documents, les finances, le planning et la bibliothèque d’assets.",
   "author": "Noblesse Studio",
   "packageManager": "pnpm@10.32.1",

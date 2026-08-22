@@ -387,9 +387,11 @@ button { color: inherit; }
 .asset-preview-3d.is-ready .asset-preview-poster { opacity: 0; }
 .asset-preview-3d.is-poster-only { cursor: default; }
 .material-preview-3d canvas { position: relative; z-index: 1; display: block; width: 100% !important; height: 100% !important; }
-.material-preview-source-overlay { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; pointer-events: none; transition: opacity .16s ease; }
-.material-preview-source-overlay.is-foreground { z-index: 3; background: radial-gradient(circle at 50% 38%, rgba(20,42,62,.98), rgba(6,16,26,.99) 72%); }
-.material-preview-source-overlay.is-background { z-index: 0; opacity: 0; }
+.material-preview-source-overlay { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; opacity: 1; background: radial-gradient(circle at 50% 38%, rgba(20,42,62,.98), rgba(6,16,26,.99) 72%); pointer-events: none; transition: opacity .26s cubic-bezier(.22, 1, .36, 1); will-change: opacity; }
+.material-preview-source-overlay.is-foreground { opacity: 1; }
+.material-preview-source-overlay.is-background { z-index: 3; opacity: 0; }
+.material-preview-switch-shade { position: absolute; inset: 0; z-index: 4; opacity: 0; background: #03080d; pointer-events: none; animation: material-preview-switch-shade .22s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes material-preview-switch-shade { from { opacity: .92; } to { opacity: 0; } }
 .material-preview-source-frame { position: relative; display: block; width: min(520px, 78%); max-width: 82%; overflow: hidden; background-position: center; background-size: cover; box-shadow: 0 20px 34px rgba(0,0,0,.48); }
 .material-preview-source-overlay.is-sphere .material-preview-source-frame { border-radius: 50% !important; }
 .material-preview-source-overlay.is-plane .material-preview-source-frame { width: 258px; max-width: 84%; border-radius: 8px !important; }
@@ -422,7 +424,7 @@ button { color: inherit; }
 .asset-install-note { margin: 14px 0 2px; padding: 11px 12px; border-left: 2px solid #3c739f; color: #8ca1b3; background: rgba(19,55,82,.22); font-size: 9px; line-height: 1.55; }
 .material-variants > span { display: block; margin-bottom: 8px; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
 .material-variants > div { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
-.material-variants button { display: grid; flex: 0 0 70px; gap: 5px; padding: 6px; border: 1px solid var(--line); border-radius: 7px; color: #9ba8b5; background: rgba(7,18,29,.84); cursor: pointer; }
+.material-variants button { display: grid; flex: 0 0 70px; gap: 5px; padding: 6px; border: 1px solid var(--line); border-radius: 7px; color: #9ba8b5; background: rgba(7,18,29,.84); cursor: pointer; transition: border-color .16s ease, color .16s ease, background-color .16s ease, box-shadow .16s ease; }
 .material-variants button.is-active { border-color: var(--blue); color: white; box-shadow: 0 0 0 1px rgba(47,115,246,.18); }
 .material-variants button i { display: block; width: 100%; aspect-ratio: 1.35; border-radius: 4px; background-position: center; background-size: cover; }
 .material-variants button b { overflow: hidden; font-size: 9px; font-weight: 580; text-overflow: ellipsis; white-space: nowrap; }
@@ -796,6 +798,9 @@ button { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .studio-main::before { animation: none; }
+  .material-preview-source-overlay { animation: none; transition: none; }
+  .material-preview-switch-shade { animation: none; }
+  .material-variants button { transition: none; }
   .project-cards { scroll-behavior: auto; }
   .project-card, .roadmap-bubble, .roadmap-progress-track > span { transition: none; }
   .project-card:hover, .roadmap-step:hover .roadmap-bubble { transform: none; }

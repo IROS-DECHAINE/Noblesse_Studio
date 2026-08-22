@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  DEFAULT_SIDEBAR_MATERIAL,
   DEFAULT_SKIN_ID,
   DEFAULT_SKIN_MOTION,
   SKINS,
@@ -31,14 +32,28 @@ test('skin preferences reject unknown persisted values', () => {
   assert.deepEqual(normalizeSkinPreferences({ skinId: 'unknown', motion: 'fast' }), {
     skinId: DEFAULT_SKIN_ID,
     motion: DEFAULT_SKIN_MOTION,
+    sidebarMaterial: DEFAULT_SIDEBAR_MATERIAL,
   })
   assert.equal(getSkinDefinition('unknown').id, DEFAULT_SKIN_ID)
 })
 
 test('skin preferences survive a storage round trip', () => {
   const storage = createStorage()
-  saveSkinPreferences({ skinId: 'jade-imperiale', motion: 'calm' }, storage)
-  assert.deepEqual(loadSkinPreferences(storage), { skinId: 'jade-imperiale', motion: 'calm' })
+  saveSkinPreferences({ skinId: 'jade-imperiale', motion: 'calm', sidebarMaterial: 'skin' }, storage)
+  assert.deepEqual(loadSkinPreferences(storage), {
+    skinId: 'jade-imperiale',
+    motion: 'calm',
+    sidebarMaterial: 'skin',
+  })
+})
+
+test('legacy skin preferences adopt Mirror Glass without losing the selected skin', () => {
+  const storage = createStorage(JSON.stringify({ skinId: 'aurore-liquide', motion: 'calm' }))
+  assert.deepEqual(loadSkinPreferences(storage), {
+    skinId: 'aurore-liquide',
+    motion: 'calm',
+    sidebarMaterial: DEFAULT_SIDEBAR_MATERIAL,
+  })
 })
 
 test('malformed storage falls back without throwing', () => {
@@ -46,5 +61,6 @@ test('malformed storage falls back without throwing', () => {
   assert.deepEqual(loadSkinPreferences(storage), {
     skinId: DEFAULT_SKIN_ID,
     motion: DEFAULT_SKIN_MOTION,
+    sidebarMaterial: DEFAULT_SIDEBAR_MATERIAL,
   })
 })

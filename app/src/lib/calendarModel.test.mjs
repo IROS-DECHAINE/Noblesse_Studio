@@ -5,6 +5,7 @@ import {
   addMonthsKey,
   createDefaultForm,
   dateFromZonedWallTime,
+  expandItemsForDay,
   expandItemsForRange,
   formatOccurrencePeriod,
   formFromItem,
@@ -65,6 +66,32 @@ test('une récurrence hebdomadaire est projetée sans dupliquer la source', () =
   const occurrences = expandItemsForRange([source], '2026-08-17', '2026-09-07')
   assert.equal(occurrences.length, 3)
   assert.equal(new Set(occurrences.map((entry) => entry.occurrenceId)).size, 3)
+})
+
+test('la fenêtre d’une journée regroupe les rendez-vous simples, récurrents et sur plusieurs jours', () => {
+  const makeAllDay = (id, startDate, endDateExclusive, extra = {}) => ({
+    id,
+    kind: 'event',
+    title: id,
+    projectId: 'noblesse-studio',
+    status: 'open',
+    notes: extra.notes || '',
+    time: { kind: 'allDay', startDate, endDateExclusive, timeZone: 'Europe/Paris' },
+    recurrence: extra.recurrence || { frequency: 'none', interval: 1 },
+    reminders: extra.reminders || [],
+  })
+  const occurrences = expandItemsForDay([
+    makeAllDay('sur-plusieurs-jours', '2026-08-20', '2026-08-24', { notes: 'Description visible.' }),
+    makeAllDay('hebdomadaire', '2026-08-15', '2026-08-16', {
+      recurrence: { frequency: 'weekly', interval: 1, until: '2026-09-30' },
+      reminders: [{ id: 'one-day', channel: 'desktop', offsetMinutes: 1440 }],
+    }),
+    makeAllDay('demain', '2026-08-23', '2026-08-24'),
+  ], '2026-08-22')
+
+  assert.deepEqual(occurrences.map((entry) => entry.itemId).sort(), ['hebdomadaire', 'sur-plusieurs-jours'])
+  assert.equal(occurrences.find((entry) => entry.itemId === 'sur-plusieurs-jours').notes, 'Description visible.')
+  assert.equal(occurrences.find((entry) => entry.itemId === 'hebdomadaire').reminders.length, 1)
 })
 
 test('les rendez-vous simultanés occupent des colonnes distinctes', () => {

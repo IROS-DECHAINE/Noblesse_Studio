@@ -1,5 +1,17 @@
 # Notes de version
 
+## 1.0.17 — Journées lisibles, Mirror Glass et aperçus fluides
+
+- clic sur toute case du mois ou tout jour de la semaine pour ouvrir un résumé simple de la journée ;
+- tous les rendez-vous du jour regroupés dans l’ordre, y compris les séries récurrentes et les périodes sur plusieurs jours ;
+- titre, description, horaire, type, projet, lieu et nombre de rappels visibles directement dans la liste ;
+- fiche détaillée réorganisée autour des informations utiles, avec description toujours présente et état de connexion Google Calendar explicite ;
+- trois rappels et leurs heures concrètes conservés, ainsi que la modification, la suppression confirmée et la synchronisation Google existantes ;
+- parcours validé visuellement en fenêtre normale et compacte, avec test automatisé du regroupement journalier.
+- matière de navigation **Mirror Glass** configurable, persistante et adaptée automatiquement aux palettes des skins ;
+- choix des variantes de matière conservé pendant les rafraîchissements du Vault, sans retour intempestif au premier choix ;
+- caméra 3D préservée entre les variantes et transition courte par un voile sombre, sans flash blanc.
+
 ## 1.0.16 — Calendrier synchronisé, Radar officiel et skins dynamiques
 
 - bouton **Supprimer** directement visible dans la fiche rapide de chaque événement ou tâche ;

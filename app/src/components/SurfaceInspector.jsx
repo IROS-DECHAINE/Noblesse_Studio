@@ -1,6 +1,7 @@
 import { CheckCircle2, ChevronDown, Circle, Layers3, LoaderCircle, ShieldCheck, Square, Trash2 } from 'lucide-react'
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { studioApi } from '../lib/desktopApi.js'
+import { describeMaterialVariantSelection, reconcileMaterialVariantId } from '../lib/materialVariantSelection.js'
 import AssetInspector from './AssetInspector.jsx'
 import { usePreviewDescriptor } from './material-preview/usePreviewDescriptor.js'
 import SoundInspector from './SoundInspector.jsx'
@@ -23,7 +24,17 @@ export default function SurfaceInspector({
 }) {
   const [shape, setShape] = useState('sphere')
   const [variantId, setVariantId] = useState('Standard')
-  useEffect(() => setVariantId(surface?.variantOptions?.[0]?.id || 'Standard'), [surface?.id, surface?.variantOptions])
+  const previousSurfaceIdRef = useRef(null)
+  const variantSelection = describeMaterialVariantSelection(surface)
+  useEffect(() => {
+    const previousSurfaceId = previousSurfaceIdRef.current
+    previousSurfaceIdRef.current = variantSelection.surfaceId
+    setVariantId((currentVariantId) => reconcileMaterialVariantId({
+      currentVariantId,
+      previousSurfaceId,
+      selection: variantSelection,
+    }))
+  }, [variantSelection.key])
   const activeVariant = useMemo(
     () => surface?.variantOptions?.find((variant) => variant.id === variantId) || surface?.variantOptions?.[0],
     [surface?.variantOptions, variantId],

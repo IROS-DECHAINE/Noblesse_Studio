@@ -7,7 +7,7 @@ const RailIcon = ({ kind }) => kind === 'milestone' || kind === 'deadline'
   ? <Flag size={12} aria-hidden="true" />
   : <CalendarRange size={12} aria-hidden="true" />
 
-export default function WeekStrip({ days, occurrences, selectedDate, onSelectDate, onEditOccurrence }) {
+export default function WeekStrip({ days, occurrences, selectedDate, onSelectDate, onOpenDate, onEditOccurrence }) {
   const { bars, laneCount } = layoutAllDayBars(occurrences, days)
   const todayKey = localDateKey()
 
@@ -42,7 +42,7 @@ export default function WeekStrip({ days, occurrences, selectedDate, onSelectDat
               tabIndex={isSelected ? 0 : -1}
               aria-pressed={isSelected}
               aria-label={`${formatAgendaDay(day)}${count ? `, ${count} élément${count > 1 ? 's' : ''}` : ', aucun élément'}`}
-              onClick={() => onSelectDate(day)}
+              onClick={() => onOpenDate(day)}
               onKeyDown={(event) => onDayKeyDown(event, index)}
             >
               <span>{weekday}</span>

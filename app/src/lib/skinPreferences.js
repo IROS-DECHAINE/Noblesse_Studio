@@ -1,5 +1,6 @@
 export const DEFAULT_SKIN_ID = 'atelier-nocturne'
 export const DEFAULT_SKIN_MOTION = 'immersive'
+export const DEFAULT_SIDEBAR_MATERIAL = 'mirror-glass'
 
 export const SKINS = Object.freeze([
   {
@@ -73,10 +74,24 @@ export const SKIN_MOTION_OPTIONS = Object.freeze([
   { id: 'off', label: 'Fixe', description: 'Texture statique, sans animation.' },
 ])
 
+export const SIDEBAR_MATERIAL_OPTIONS = Object.freeze([
+  {
+    id: 'skin',
+    label: 'Matière du skin',
+    description: 'Même colonne flottante, habillée par le skin actif.',
+  },
+  {
+    id: 'mirror-glass',
+    label: 'Mirror Glass',
+    description: 'Verre miroir adaptatif traversé par les reflets du skin.',
+  },
+])
+
 export const SKIN_STORAGE_KEY = 'noblesse-studio:skin-preferences:v1'
 
 const skinIds = new Set(SKINS.map((skin) => skin.id))
 const motionIds = new Set(SKIN_MOTION_OPTIONS.map((option) => option.id))
+const sidebarMaterialIds = new Set(SIDEBAR_MATERIAL_OPTIONS.map((option) => option.id))
 
 export const getSkinDefinition = (skinId) => (
   SKINS.find((skin) => skin.id === skinId) || SKINS.find((skin) => skin.id === DEFAULT_SKIN_ID)
@@ -85,6 +100,9 @@ export const getSkinDefinition = (skinId) => (
 export const normalizeSkinPreferences = (value) => ({
   skinId: skinIds.has(value?.skinId) ? value.skinId : DEFAULT_SKIN_ID,
   motion: motionIds.has(value?.motion) ? value.motion : DEFAULT_SKIN_MOTION,
+  sidebarMaterial: sidebarMaterialIds.has(value?.sidebarMaterial)
+    ? value.sidebarMaterial
+    : DEFAULT_SIDEBAR_MATERIAL,
 })
 
 const resolveStorage = (storage) => {

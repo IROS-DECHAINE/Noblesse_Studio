@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BellOff, BellRing, CalendarDays, CalendarSync, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { studioApi } from '../lib/desktopApi.js'
+import DayAgendaDialog from './calendar/DayAgendaDialog.jsx'
 import DayTimeline from './calendar/DayTimeline.jsx'
 import EventDetails from './calendar/EventDetails.jsx'
 import EventEditor from './calendar/EventEditor.jsx'
@@ -13,6 +14,7 @@ import {
   addDaysKey,
   addMonthsKey,
   createDefaultForm,
+  expandItemsForDay,
   expandItemsForRange,
   formFromItem,
   formatMonthLabel,
@@ -52,6 +54,7 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
   const [snapshot, setSnapshot] = useState(EMPTY_SNAPSHOT)
   const [selectedDate, setSelectedDate] = useState(localDateKey)
   const [viewMode, setViewMode] = useState('month')
+  const [dayAgendaDate, setDayAgendaDate] = useState(null)
   const [details, setDetails] = useState(null)
   const [editor, setEditor] = useState(null)
   const [reminderSettingsOpen, setReminderSettingsOpen] = useState(false)
@@ -142,7 +145,7 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (editor || details || reminderSettingsOpen || googleSettingsOpen || /INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName || '')) return
+      if (editor || details || dayAgendaDate || reminderSettingsOpen || googleSettingsOpen || /INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName || '')) return
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'n') {
         event.preventDefault()
         setEditor({ mode: 'create', form: createDefaultForm(selectedDate), key: `create-${Date.now()}` })
@@ -154,7 +157,7 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [details, editor, googleSettingsOpen, reminderSettingsOpen, selectedDate])
+  }, [dayAgendaDate, details, editor, googleSettingsOpen, reminderSettingsOpen, selectedDate])
 
   const weekDays = useMemo(() => weekDateKeys(selectedDate), [selectedDate])
   const monthDays = useMemo(() => monthGridDateKeys(selectedDate), [selectedDate])
@@ -172,6 +175,11 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
     () => expandItemsForRange(snapshot.items, selectedDate, addDaysKey(selectedDate, 21)),
     [snapshot.items, selectedDate],
   )
+  const dayAgendaOccurrences = useMemo(
+    () => dayAgendaDate ? expandItemsForDay(snapshot.items, dayAgendaDate) : [],
+    [dayAgendaDate, snapshot.items],
+  )
+  const closeDayAgenda = useCallback(() => setDayAgendaDate(null), [])
 
   const applyResult = async (result, message) => {
     const next = extractSnapshot(result)
@@ -189,6 +197,7 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
 
   const openCreate = (minutes = 9 * 60) => {
     setError('')
+    setDayAgendaDate(null)
     setDetails(null)
     setEditor({ mode: 'create', form: createDefaultForm(selectedDate, minutes), key: `create-${Date.now()}` })
   }
@@ -196,13 +205,22 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
   const openCreateOnDate = (dateKey) => {
     setSelectedDate(dateKey)
     setError('')
+    setDayAgendaDate(null)
     setDetails(null)
     setEditor({ mode: 'create', form: createDefaultForm(dateKey), key: `create-${Date.now()}` })
+  }
+
+  const openDayAgenda = (dateKey) => {
+    setSelectedDate(dateKey)
+    setError('')
+    setDetails(null)
+    setDayAgendaDate(dateKey)
   }
 
   const openDetails = (occurrence) => {
     const item = snapshot.items.find((entry) => entry.id === occurrence.itemId) || occurrence
     setError('')
+    setDayAgendaDate(null)
     setDetails({ ...item, ...occurrence, itemId: item.id })
   }
 
@@ -316,6 +334,7 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
   }
 
   const openReminderSettings = () => {
+    setDayAgendaDate(null)
     setDetails(null)
     setGoogleSettingsOpen(false)
     setReminderSettingsOpen(true)
@@ -341,6 +360,7 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
   }
 
   const openGoogleSettings = () => {
+    setDayAgendaDate(null)
     setDetails(null)
     setReminderSettingsOpen(false)
     setGoogleError('')
@@ -409,11 +429,11 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
               occurrences={monthOccurrences}
               selectedDate={selectedDate}
               onSelectDate={setSelectedDate}
-              onCreateOnDate={openCreateOnDate}
+              onOpenDate={openDayAgenda}
               onEditOccurrence={openDetails}
             />
           ) : (
-            <WeekStrip days={weekDays} occurrences={weekOccurrences} selectedDate={selectedDate} onSelectDate={setSelectedDate} onEditOccurrence={openDetails} />
+            <WeekStrip days={weekDays} occurrences={weekOccurrences} selectedDate={selectedDate} onSelectDate={setSelectedDate} onOpenDate={openDayAgenda} onEditOccurrence={openDetails} />
           )}
           <div className="calendar-workspace">
             <DayTimeline dateKey={selectedDate} occurrences={visibleOccurrences} onCreateAt={openCreate} onEditOccurrence={openDetails} />
@@ -421,6 +441,17 @@ export default function CalendarView({ openItemId = null, onOpenItemHandled = ()
           </div>
         </>
       )}
+
+      {dayAgendaDate ? (
+        <DayAgendaDialog
+          dateKey={dayAgendaDate}
+          occurrences={dayAgendaOccurrences}
+          googleCalendarConnected={googleStatus.connected}
+          onClose={closeDayAgenda}
+          onCreate={() => openCreateOnDate(dayAgendaDate)}
+          onOpenOccurrence={openDetails}
+        />
+      ) : null}
 
       {details ? (
         <EventDetails

@@ -121,3 +121,23 @@ test('fallbacks are silent, source-faithful, non-black and shape-aware', () => {
 test('a committed live frame fully hides the source poster behind the transparent Canvas', () => {
   assert.match(previewStyles, /\.material-preview-source-overlay\.is-background\s*\{[^}]*\bopacity:\s*0\b[^}]*\}/)
 })
+
+test('variant changes preserve the camera and fade through a dark veil above the next live frame', () => {
+  assert.match(previewSource, /const cameraResetToken = `\$\{surface\.id\}:\$\{shape\}`/)
+  assert.match(previewSource, /const renderResetToken = `\$\{surface\.id\}:\$\{surface\.assetId \|\| ''\}:\$\{shape\}`/)
+  assert.match(previewSource, /<StudioPreviewScene[\s\S]*?resetToken=\{cameraResetToken\}/)
+  assert.match(previewSource, /<PreviewErrorBoundary[\s\S]*?resetToken=\{renderResetToken\}/)
+  assert.doesNotMatch(openingTag(previewSource, 'SourcePreviewOverlay'), /\bkey\s*=/)
+  assert.match(previewSource, /<span\s+key=\{surface\.assetId \|\| surface\.id\}\s+className="material-preview-switch-shade"\s+aria-hidden="true"\s*\/>/)
+
+  assert.match(previewStyles, /\.material-preview-source-overlay\s*\{[^}]*\bz-index:\s*3\b[^}]*\btransition:\s*opacity\s+\.26s\b[^}]*\}/)
+  assert.match(previewStyles, /\.material-preview-source-overlay\.is-background\s*\{[^}]*\bz-index:\s*3\b[^}]*\bopacity:\s*0\b[^}]*\}/)
+  const shadeStyles = previewStyles.match(/\.material-preview-switch-shade\s*\{([^}]*)\}/)?.[1] || ''
+  assert.match(shadeStyles, /\bz-index:\s*4\b/)
+  assert.match(shadeStyles, /\bbackground:\s*#03080d\b/)
+  assert.match(shadeStyles, /\banimation:\s*material-preview-switch-shade\s+\.22s\b/)
+  assert.doesNotMatch(shadeStyles, /#fff(?:fff)?\b|rgb(?:a)?\(\s*255\s*[, ]\s*255\s*[, ]\s*255/i)
+  assert.match(previewStyles, /@keyframes\s+material-preview-switch-shade\s*\{\s*from\s*\{\s*opacity:\s*\.92\s*;\s*\}\s*to\s*\{\s*opacity:\s*0\s*;\s*\}\s*\}/)
+  assert.match(previewStyles, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.material-preview-source-overlay[^}]*animation:\s*none[^}]*transition:\s*none/)
+  assert.match(previewStyles, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.material-preview-switch-shade[^}]*animation:\s*none/)
+})

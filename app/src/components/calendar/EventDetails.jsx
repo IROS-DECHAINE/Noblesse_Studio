@@ -4,12 +4,13 @@ import {
   Bell,
   BellOff,
   CalendarClock,
+  CalendarSync,
   Check,
   CircleDot,
   Clock3,
+  FileText,
   Focus,
   Flag,
-  MapPin,
   Pencil,
   Repeat2,
   Trash2,
@@ -30,6 +31,14 @@ const KIND_ICONS = {
   deadline: Flag,
   focus: Focus,
   milestone: CircleDot,
+}
+
+const DETAIL_KICKERS = {
+  event: 'Fiche du rendez-vous',
+  task: 'Fiche de la tâche',
+  deadline: 'Fiche de la deadline',
+  focus: 'Fiche du bloc de travail',
+  milestone: 'Fiche du jalon',
 }
 
 const FOCUSABLE = 'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
@@ -98,7 +107,7 @@ export default function EventDetails({
         <header className="calendar-event-detail-header">
           <span className={`calendar-event-detail-kind calendar-project-${project.color}`}><KindIcon size={18} /></span>
           <div>
-            <span>{KIND_LABELS[occurrence.kind] || 'Événement'} · {project.label}</span>
+            <span>{DETAIL_KICKERS[occurrence.kind] || 'Fiche de l’événement'}</span>
             <h2 id={titleId}>{occurrence.title}</h2>
           </div>
           <button ref={closeRef} type="button" aria-label="Fermer le détail" onClick={onClose}><X size={19} /></button>
@@ -107,15 +116,28 @@ export default function EventDetails({
         <div className="calendar-event-detail-body">
           <div className="calendar-event-detail-period"><Clock3 size={16} /><strong>{formatOccurrencePeriod(occurrence)}</strong></div>
 
+          <section className="calendar-event-detail-overview" aria-label="Informations du rendez-vous">
+            <div><span>Type</span><strong>{KIND_LABELS[occurrence.kind] || 'Événement'}</strong></div>
+            <div><span>Projet</span><strong>{project.label}</strong></div>
+            <div><span>Lieu</span><strong>{occurrence.location || 'Non renseigné'}</strong></div>
+            <div>
+              <span>Google Calendar</span>
+              <strong className={googleCalendarConnected ? 'is-connected' : ''}><CalendarSync size={13} /> {googleCalendarConnected ? 'Connecté' : 'Non connecté'}</strong>
+            </div>
+          </section>
+
+          <section className="calendar-event-detail-description" aria-labelledby={`${titleId}-description`}>
+            <header><FileText size={15} /><h3 id={`${titleId}-description`}>Description</h3></header>
+            <p className={occurrence.notes ? '' : 'is-empty'}>{occurrence.notes || 'Aucune description ajoutée pour ce rendez-vous.'}</p>
+          </section>
+
           {recurrence !== 'none' ? (
             <div className="calendar-event-detail-row"><Repeat2 size={15} /><span>{RECURRENCE_LABELS[recurrence] || 'Récurrent'}{occurrence.recurrence?.until ? ` · jusqu’au ${occurrence.recurrence.until}` : ''}</span></div>
           ) : null}
-          {occurrence.location ? <div className="calendar-event-detail-row"><MapPin size={15} /><span>{occurrence.location}</span></div> : null}
-          {occurrence.notes ? <p className="calendar-event-detail-notes">{occurrence.notes}</p> : null}
 
           <section className="calendar-event-detail-reminders" aria-labelledby={`${titleId}-reminders`}>
             <header>
-              <div><Bell size={15} /><h3 id={`${titleId}-reminders`}>Rappels prévus</h3></div>
+              <div><Bell size={15} /><h3 id={`${titleId}-reminders`}>Rappels prévus</h3><span className="calendar-event-detail-reminder-count">{reminders.length}</span></div>
               <button type="button" onClick={onOpenReminderSettings}>{notificationsEnabled ? 'Tester' : 'Activer'}</button>
             </header>
             {reminders.length ? (

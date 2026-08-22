@@ -1,8 +1,8 @@
-import { Check, Gauge, Palette, ShieldCheck, Sparkles } from 'lucide-react'
+import { Check, Gauge, Gem, Palette, PanelLeft, ShieldCheck, Sparkles } from 'lucide-react'
 import { publicAsset } from '../lib/desktopApi.js'
-import { SKINS, SKIN_MOTION_OPTIONS, getSkinDefinition } from '../lib/skinPreferences.js'
+import { SIDEBAR_MATERIAL_OPTIONS, SKINS, SKIN_MOTION_OPTIONS, getSkinDefinition } from '../lib/skinPreferences.js'
 
-export default function SkinsView({ skinId, motion, onSkin, onMotion }) {
+export default function SkinsView({ skinId, motion, sidebarMaterial, onSkin, onMotion, onSidebarMaterial }) {
   const activeSkin = getSkinDefinition(skinId)
 
   return (
@@ -40,6 +40,39 @@ export default function SkinsView({ skinId, motion, onSkin, onMotion }) {
               {option.label}
             </button>
           ))}
+        </div>
+      </section>
+
+      <section className="sidebar-material-panel" aria-labelledby="sidebar-material-title">
+        <div className="sidebar-material-copy">
+          <span className="sidebar-material-icon"><PanelLeft size={20} /></span>
+          <div>
+            <span className="sidebar-material-kicker">Couche indépendante</span>
+            <h2 id="sidebar-material-title">Matière de la colonne</h2>
+            <p>Garde le même skin et change uniquement la colonne de navigation Noblesse Studio.</p>
+          </div>
+        </div>
+        <div className="sidebar-material-options" role="group" aria-label="Matière de la colonne Noblesse Studio">
+          {SIDEBAR_MATERIAL_OPTIONS.map((option) => {
+            const isActive = sidebarMaterial === option.id
+            const OptionIcon = option.id === 'mirror-glass' ? Gem : PanelLeft
+            return (
+              <button
+                key={option.id}
+                type="button"
+                className={isActive ? 'is-active' : ''}
+                aria-pressed={isActive}
+                onClick={() => onSidebarMaterial(option.id)}
+              >
+                <span className="sidebar-material-option-icon"><OptionIcon size={19} /></span>
+                <span className="sidebar-material-option-copy">
+                  <strong>{option.label}</strong>
+                  <small>{option.description}</small>
+                </span>
+                {isActive && <Check className="sidebar-material-option-check" size={17} />}
+              </button>
+            )
+          })}
         </div>
       </section>
 

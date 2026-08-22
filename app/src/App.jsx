@@ -6,7 +6,7 @@ import StudioSidebar from './components/StudioSidebar.jsx'
 import { buildSurfaceCatalog } from './lib/catalog.js'
 import { studioApi } from './lib/desktopApi.js'
 import { loadStudioLayout, saveStudioLayout } from './lib/layoutPreferences.js'
-import { getSkinDefinition, loadSkinPreferences, saveSkinPreferences } from './lib/skinPreferences.js'
+import { SIDEBAR_MATERIAL_OPTIONS, getSkinDefinition, loadSkinPreferences, saveSkinPreferences } from './lib/skinPreferences.js'
 
 const CalendarView = lazy(() => import('./components/CalendarView.jsx'))
 const CoffreView = lazy(() => import('./components/CoffreView.jsx'))
@@ -91,6 +91,13 @@ export default function App() {
 
   const selectSkinMotion = useCallback((motion) => {
     setSkinPreferences((current) => ({ ...current, motion }))
+  }, [])
+
+  const selectSidebarMaterial = useCallback((sidebarMaterial) => {
+    const material = SIDEBAR_MATERIAL_OPTIONS.find((option) => option.id === sidebarMaterial)
+    if (!material) return
+    setSkinPreferences((current) => ({ ...current, sidebarMaterial: material.id }))
+    setToast(`${material.label} activé sur la colonne.`)
   }, [])
 
   const selectVaultFamily = useCallback((family) => {
@@ -327,6 +334,7 @@ export default function App() {
       style={{ '--studio-sidebar-width': `${layout.sidebarWidth}px` }}
       data-skin={skinPreferences.skinId}
       data-skin-motion={skinPreferences.motion}
+      data-sidebar-material={skinPreferences.sidebarMaterial}
     >
       <SkinBackdrop key={skinPreferences.skinId} skinId={skinPreferences.skinId} motion={skinPreferences.motion} />
       <StudioSidebar
@@ -401,8 +409,10 @@ export default function App() {
           <SkinsView
             skinId={skinPreferences.skinId}
             motion={skinPreferences.motion}
+            sidebarMaterial={skinPreferences.sidebarMaterial}
             onSkin={selectSkin}
             onMotion={selectSkinMotion}
+            onSidebarMaterial={selectSidebarMaterial}
           />
         )}
         {section === 'settings' && (

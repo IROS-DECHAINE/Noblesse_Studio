@@ -313,6 +313,8 @@ export const expandItemsForRange = (items, rangeStartKey, rangeEndExclusiveKey) 
   return occurrences.sort((left, right) => occurrenceStartMs(left) - occurrenceStartMs(right))
 }
 
+export const expandItemsForDay = (items, dateKey) => expandItemsForRange(items, dateKey, addDaysKey(dateKey, 1))
+
 export const occurrenceStartMs = (occurrence) => occurrence.time.kind === 'allDay'
   ? dateFromKey(occurrence.time.startDate, '00:00').getTime()
   : new Date(occurrence.time.start).getTime()

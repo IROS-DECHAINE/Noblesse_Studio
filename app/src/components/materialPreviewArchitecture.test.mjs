@@ -11,14 +11,17 @@ function openingTag(source, componentName) {
   return match[0]
 }
 
-test('keeps one stable Canvas and resets the boundary by active asset without key-remounting WebGL', () => {
+test('keeps one stable Canvas, resets failures by active asset and preserves the camera between variants', () => {
   const boundaryTag = openingTag(previewSource, 'PreviewErrorBoundary')
   const canvasTag = openingTag(previewSource, 'Canvas')
+  const sceneTag = openingTag(previewSource, 'StudioPreviewScene')
 
   assert.doesNotMatch(boundaryTag, /\bkey\s*=/)
   assert.doesNotMatch(canvasTag, /\bkey\s*=/)
-  assert.match(previewSource, /const resetToken\s*=\s*`\$\{surface\.id\}:\$\{surface\.assetId\s*\|\|\s*['"]{2}\}:\$\{shape\}`/)
-  assert.match(boundaryTag, /\bresetToken=\{resetToken\}/)
+  assert.match(previewSource, /const renderResetToken\s*=\s*`\$\{surface\.id\}:\$\{surface\.assetId\s*\|\|\s*['"]{2}\}:\$\{shape\}`/)
+  assert.match(previewSource, /const cameraResetToken\s*=\s*`\$\{surface\.id\}:\$\{shape\}`/)
+  assert.match(boundaryTag, /\bresetToken=\{renderResetToken\}/)
+  assert.match(sceneTag, /\bresetToken=\{cameraResetToken\}/)
   assert.match(previewSource, /previousProps\.resetToken\s*!==\s*this\.props\.resetToken/)
 })
 

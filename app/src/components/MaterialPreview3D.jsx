@@ -68,13 +68,14 @@ export default function MaterialPreview3D({ descriptorState, shape, surface, pre
     () => descriptor ? materialPreviewResourceKey(descriptor) : '',
     [descriptor],
   )
-  const resetToken = `${surface.id}:${surface.assetId || ''}:${shape}`
+  const renderResetToken = `${surface.id}:${surface.assetId || ''}:${shape}`
+  const cameraResetToken = `${surface.id}:${shape}`
   const commitKey = materialPreviewCommitKey(resourceKey, shape, 0)
   const { committedResourceKey, markCommitted } = useCommittedLivePreview(commitKey)
   const [renderFailed, setRenderFailed] = useState(false)
   const controlsRef = useRef(null)
 
-  useEffect(() => setRenderFailed(false), [resetToken])
+  useEffect(() => setRenderFailed(false), [renderResetToken])
 
   const presentation = useAtomicPreviewFailover({
     committedResourceKey,
@@ -138,7 +139,7 @@ export default function MaterialPreview3D({ descriptorState, shape, surface, pre
         onCreated={({ gl }) => gl.setClearColor('#07111c', 0)}
       >
         <PreviewErrorBoundary
-          resetToken={resetToken}
+          resetToken={renderResetToken}
           onError={(error) => {
             console.error('[Noblesse Studio] Le rendu exact a échoué, la preuve source est conservée.', error)
             setRenderFailed(true)
@@ -149,11 +150,17 @@ export default function MaterialPreview3D({ descriptorState, shape, surface, pre
             controlsRef={controlsRef}
             onFirstFrame={markCommitted}
             presentation={sourcePresentation}
-            resetToken={resetToken}
+            resetToken={cameraResetToken}
             shape={shape}
           />
         </PreviewErrorBoundary>
       </Canvas>
+
+      <span
+        key={surface.assetId || surface.id}
+        className="material-preview-switch-shade"
+        aria-hidden="true"
+      />
 
       <span className="preview-help">Clic droit : tourner · molette : zoom · double-clic : centrer</span>
       {descriptor?.fidelityLabel && <span className="preview-fidelity">{descriptor.fidelityLabel}</span>}
